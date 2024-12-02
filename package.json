@@ -36,7 +36,8 @@
 		"react-hook-form": "^7.53.2",
 		"react-redux": "^9.1.2",
 		"redux-persist": "^6.0.0",
-		"sonner": "^1.7.0"
+		"sonner": "^1.7.0",
+		"swiper": "^11.1.15"
 	},
 	"devDependencies": {
 		"@next/eslint-plugin-next": "^15.0.3",
