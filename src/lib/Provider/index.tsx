@@ -8,6 +8,8 @@ import { ThemeProviderProps } from "next-themes/dist/types";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "sonner";
 import UserProvider from "@/src/context/user.provider";
+import { Provider } from "react-redux";
+import { store } from "@/src/redux/store";
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -20,12 +22,14 @@ export function Providers({ children, themeProps }: ProvidersProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <UserProvider>
-        <NextUIProvider navigate={router.push}>
-          <Toaster />
-          <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
-        </NextUIProvider>
-      </UserProvider>
+      <Provider store={store}>
+        <UserProvider>
+          <NextUIProvider navigate={router.push}>
+            <Toaster />
+            <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
+          </NextUIProvider>
+        </UserProvider>
+      </Provider>
     </QueryClientProvider>
   );
 }

@@ -17,29 +17,10 @@ const TopHeader = () => {
             alt="logo"
           />
         </Link>
-        {/*   <!-- logo end --> */}
 
-        {/*     <!-- right-content --> */}
         <div className="flex items-center">
-          {/*   <!-- login/register --> */}
-          <div className="mr-4 flex items-center">
-            <Link
-              href="/login"
-              className="text-secondary text-sm hover:text-primary font-medium leading-[26px] transition duration-200"
-            >
-              Login
-            </Link>
-            <span className="text-secondary text-sm">/</span>
-            <Link
-              href="/register"
-              className="text-secondary text-sm hover:text-primary font-medium leading-[26px] transition duration-200"
-            >
-              Register
-            </Link>
-          </div>
           <ThemeSwitch />
         </div>
-        {/*   <!-- right-content end--> */}
       </div>
     </header>
   );

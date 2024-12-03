@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
-
+import config from "@/src/config";
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://meeting-room-booking-system-navy.vercel.app/api",
+  baseUrl: config.base_url,
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
@@ -17,5 +17,5 @@ export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery,
   endpoints: () => ({}),
-  tagTypes: ["room", "slot", "user", "booking"],
+  tagTypes: ["product"],
 });

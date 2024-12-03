@@ -6,12 +6,10 @@ export interface IChildren {
 }
 
 export interface IUser {
-  _id: string;
+  id: string;
   name: string;
   email: string;
-  mobileNumber: string;
   role: "ADMIN" | "VENDOR" | "CUSTOMER";
-  status: string;
   profilePhoto?: string;
   iat: number;
   exp: number;

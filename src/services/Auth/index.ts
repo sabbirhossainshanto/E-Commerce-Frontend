@@ -8,10 +8,12 @@ import { FieldValues } from "react-hook-form";
 export const registerUser = async (payload: FieldValues) => {
   try {
     const { data } = await AxiosSecure.post("/auth/register", payload);
+
     cookies().set("accessToken", data?.data?.accessToken);
     cookies().set("refreshToken", data?.data?.refreshToken);
+    return data;
   } catch (error: any) {
-    throw new Error(error);
+    return error.response.data;
   }
 };
 
@@ -20,8 +22,9 @@ export const loginUser = async (payload: FieldValues) => {
     const { data } = await AxiosSecure.post("/auth/login", payload);
     cookies().set("accessToken", data?.data?.accessToken);
     cookies().set("refreshToken", data?.data?.refreshToken);
+    return data;
   } catch (error: any) {
-    throw new Error(error);
+    return error.response.data;
   }
 };
 export const logOut = () => {
@@ -35,15 +38,13 @@ export const getCurrentUser = async () => {
   if (accessToken) {
     decode = await jwtDecode(accessToken);
     return {
-      _id: decode?._id,
+      id: decode?.id,
       name: decode?.name,
       email: decode?.email,
-      mobileNumber: decode?.mobileNumber,
       role: decode?.role,
-      status: decode?.status,
       iat: decode?.iat,
       exp: decode?.exp,
-      profilePhoto: decode.profilePhoto,
+      profilePhoto: decode?.profilePhoto,
     };
   }
   return decode;
@@ -61,7 +62,7 @@ export const getNewAccessToken = async () => {
       },
     });
     return res.data;
-  } catch (error) {
-    throw new Error("Failed to get accessToken");
+  } catch (error: any) {
+    return error.response.data;
   }
 };

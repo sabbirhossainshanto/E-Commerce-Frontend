@@ -14,28 +14,35 @@ import { getCurrentUser } from "../services/Auth";
 export const UserContext = createContext<IUserContext | undefined>(undefined);
 
 interface IUserContext {
-  isLoading: boolean;
-  setIsLoading: Dispatch<SetStateAction<boolean>>;
+  isUserLoading: boolean;
+  setIsUserLoading: Dispatch<SetStateAction<boolean>>;
   user: IUser | null;
   setUser: (user: IUser | null) => void;
 }
 
 const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isUserLoading, setIsUserLoading] = useState(true);
   const [user, setUser] = useState<IUser | null>(null);
 
   const handleUser = async () => {
     const user = await getCurrentUser();
     setUser(user);
-    setIsLoading(false);
+    setIsUserLoading(false);
   };
 
   useEffect(() => {
     handleUser();
-  }, [isLoading]);
+  }, [isUserLoading]);
 
   return (
-    <UserContext.Provider value={{ isLoading, setIsLoading, setUser, user }}>
+    <UserContext.Provider
+      value={{
+        isUserLoading,
+        setIsUserLoading,
+        setUser,
+        user,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

@@ -1,6 +1,13 @@
+import { useUser } from "@/src/context/user.provider";
+import { logOut } from "@/src/services/Auth";
 import Link from "next/link";
 
 const AccountDropdown = () => {
+  const { setIsUserLoading } = useUser();
+  const handleLogout = () => {
+    logOut();
+    setIsUserLoading(true);
+  };
   return (
     <div className="relative group">
       <Link href="/" className="relative block text-center ml-5">
@@ -17,23 +24,9 @@ const AccountDropdown = () => {
 
       <div className="absolute top-full right-[1px] bg-white z-20 rounded-b-[3px] py-5 px-[15px] w-[205px] shadow-sm mt-3.5 group-hover:mt-[5px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
         <div>
-          <p className="text-sm leading-[18px] font-medium mb-4 text-secondary text-center">
-            Welcome to RAFCART Shop
+          <p className="text-sm leading-[18px] font-medium text-secondary text-center">
+            Welcome to CLICKONLINE
           </p>
-          <div className="flex justify-between">
-            <Link
-              href="/"
-              className="min-w-[85px] rounded-[3px] py-1 px-[15px] border border-primary bg-primary text-white inline-block text-center text-sm font-medium hover:bg-transparent hover:text-primary transition duration-300"
-            >
-              JOIN
-            </Link>
-            <Link
-              href="/"
-              className="min-w-[85px] rounded-[3px] py-1 px-2.5 border border-primary hover:bg-primary bg-white hover:text-white inline-block text-center text-sm font-medium text-primary transition duration-300"
-            >
-              Sing in
-            </Link>
-          </div>
         </div>
         <div className="pt-2.5">
           <Link
@@ -111,8 +104,8 @@ const AccountDropdown = () => {
             </svg>
             My Cart
           </Link>
-          <Link
-            href="/"
+          <button
+            onClick={handleLogout}
             className="flex items-center relative w-full mt-[7px] text-[15px] pl-8 text-[#464545] hover:text-primary transition duration-200"
           >
             <svg
@@ -127,7 +120,7 @@ const AccountDropdown = () => {
               ></path>
             </svg>
             Log out
-          </Link>
+          </button>
         </div>
       </div>
     </div>

@@ -6,8 +6,10 @@ import Search from "./Search";
 import AccountDropdown from "./AccountDropdown";
 import CartDropdown from "./CartDropdown";
 import WishlistDropdown from "./WishlistDropdown";
+import { useUser } from "@/src/context/user.provider";
 
 const Header = () => {
+  const { user } = useUser();
   return (
     <nav className="bg-[#FD3D57] py-1.5">
       <div className="container flex items-center justify-between">
@@ -40,12 +42,29 @@ const Header = () => {
         </div>
 
         <Search />
-
-        <div className="flex items-center">
-          <WishlistDropdown />
-          <CartDropdown />
-          <AccountDropdown />
-        </div>
+        {user?.email ? (
+          <div className="flex items-center">
+            <WishlistDropdown />
+            <CartDropdown />
+            <AccountDropdown />
+          </div>
+        ) : (
+          <div className="mr-4 flex items-center">
+            <Link
+              href="/login"
+              className="text-secondary text-sm hover:text-primary font-medium leading-[26px] transition duration-200"
+            >
+              Login
+            </Link>
+            <span className="text-secondary text-sm">/</span>
+            <Link
+              href="/register"
+              className="text-secondary text-sm hover:text-primary font-medium leading-[26px] transition duration-200"
+            >
+              Register
+            </Link>
+          </div>
+        )}
       </div>
     </nav>
   );

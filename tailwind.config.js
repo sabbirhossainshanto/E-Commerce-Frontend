@@ -14,6 +14,9 @@ module.exports = {
         mono: ["var(--font-mono)"],
       },
     },
+    color: {
+      primary: "#fd3d57",
+    },
   },
 
   darkMode: "class",
