@@ -43,3 +43,11 @@ export const updateProduct = async (payload: {
     return error.response.data;
   }
 };
+export const deleteProduct = async (id: string) => {
+  try {
+    const { data } = await AxiosSecure.delete(`/products/${id}`);
+    return data;
+  } catch (error: any) {
+    return error.response.data;
+  }
+};

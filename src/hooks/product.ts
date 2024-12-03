@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   createProduct,
+  deleteProduct,
   getMyProduct,
   getSingleProduct,
   updateProduct,
@@ -29,5 +30,11 @@ export const useUpdateProduct = () => {
   return useMutation<any, Error, { formData: FormData; id: string }>({
     mutationKey: ["update-products"],
     mutationFn: async (payload) => await updateProduct(payload),
+  });
+};
+export const useDeleteProduct = () => {
+  return useMutation<any, Error, string>({
+    mutationKey: ["update-products"],
+    mutationFn: async (id) => await deleteProduct(id),
   });
 };

@@ -12,8 +12,10 @@ import {
 import { DeleteIcon } from "@/src/components/icons";
 import React from "react";
 import { IProduct } from "@/src/types";
-import { useGetMyProducts } from "@/src/hooks/product";
+import { useDeleteProduct, useGetMyProducts } from "@/src/hooks/product";
 import UpdateProduct from "@/src/components/modal/vendor/UpdateProduct";
+import CreateProduct from "@/src/components/modal/vendor/CreateProduct";
+import { toast } from "sonner";
 
 const columns = [
   { name: "NAME", uid: "name" },
@@ -30,7 +32,8 @@ type TPickProduct = Pick<
 > & { actions: string; shopName: string; categoryName: string };
 
 const ManageProduct = () => {
-  const { data } = useGetMyProducts();
+  const { data, refetch } = useGetMyProducts();
+  const { mutate: deleteProduct } = useDeleteProduct();
 
   const productData =
     data?.data?.map((product) => ({
@@ -44,6 +47,19 @@ const ManageProduct = () => {
       categoryName: product.category.name,
       shopName: product.shop.shopName,
     })) || [];
+
+  const handleDeleteProduct = (id: string) => {
+    deleteProduct(id, {
+      onSuccess(data) {
+        if (data?.success) {
+          toast.success(data?.message);
+          refetch();
+        } else {
+          toast.error(data?.message);
+        }
+      },
+    });
+  };
 
   const renderCell = React.useCallback(
     (product: TPickProduct, columnKey: keyof TPickProduct) => {
@@ -87,7 +103,10 @@ const ManageProduct = () => {
             <div className="relative flex items-center justify-end gap-5">
               <UpdateProduct id={product.id} />
 
-              <button className="text-lg text-danger cursor-pointer active:opacity-50">
+              <button
+                onClick={() => handleDeleteProduct(product.id)}
+                className="text-lg text-danger cursor-pointer active:opacity-50"
+              >
                 <DeleteIcon />
               </button>
             </div>
@@ -101,6 +120,9 @@ const ManageProduct = () => {
 
   return (
     <div className="col-span-12 lg:col-span-9">
+      <div className="flex justify-end mb-5">
+        <CreateProduct />
+      </div>
       <Table aria-label="Example table with custom cells">
         <TableHeader columns={columns}>
           {(column) => (
