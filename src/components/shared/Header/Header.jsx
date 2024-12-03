@@ -1,6 +1,4 @@
 "use client";
-import img from "@/src/assets/img";
-import Image from "next/image";
 import Link from "next/link";
 import Search from "./Search";
 import AccountDropdown from "./AccountDropdown";
@@ -14,13 +12,7 @@ const Header = () => {
     <nav className="bg-[#FD3D57] py-1.5">
       <div className="container flex items-center justify-between">
         <Link href="/" className="lg:hidden w-[120px]">
-          <Image
-            height={100}
-            width={100}
-            src={img.logo}
-            className="w-full"
-            alt="Logo"
-          />
+          <span className="text-white">Click</span> <span>Shop</span>
         </Link>
         {/* <!-- All categories --> */}
         <div className="bg-secondary rounded-md w-[200px] relative hidden lg:block">

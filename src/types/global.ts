@@ -50,3 +50,11 @@ export type TQueryParam = {
   name: string;
   value: boolean | React.Key;
 };
+
+export interface IResponse<T> {
+  success: boolean;
+  message: string;
+  data?: T;
+  error: any;
+  meta?: any;
+}

@@ -4,6 +4,7 @@ import { useUser } from "@/src/context/user.provider";
 import { useUserLogin } from "@/src/hooks/auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { FaGreaterThan } from "react-icons/fa";
 import { MdOutlineHome } from "react-icons/md";
@@ -12,12 +13,16 @@ import { toast } from "sonner";
 
 const Login = () => {
   const { mutate: handleLogin, isPending, isSuccess } = useUserLogin();
-  const { setIsUserLoading } = useUser();
+  const { setIsUserLoading, user } = useUser();
   const router = useRouter();
   const { handleSubmit, register } = useForm({
     defaultValues: {
-      email: "web@hero.com",
-      password: "ph-password",
+      // email: "web@hero.com",
+      // password: "ph-password",
+      // email: "jiinat@gmail.com",
+      // password: "jiinat",
+      email: "sabbirshnt@gmail.com",
+      password: "sabbir",
     },
   });
 
@@ -26,7 +31,6 @@ const Login = () => {
       onSuccess(data) {
         if (data?.success) {
           toast.success(data?.message);
-          router.push("/");
         } else {
           toast.error(data?.message);
         }
@@ -38,6 +42,17 @@ const Login = () => {
     setIsUserLoading(true);
   };
 
+  useEffect(() => {
+    if (user && user?.role) {
+      if (user?.role === "ADMIN") {
+        router.push("/admin");
+      } else if (user?.role === "VENDOR") {
+        router.push("/vendor");
+      } else {
+        router.push("/");
+      }
+    }
+  }, [user]);
   return (
     <div className="py-10 bg-gray-50">
       <div className="flex items-center gap-2 container">

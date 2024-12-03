@@ -1,3 +1,5 @@
+"use client";
+
 import { useUser } from "@/src/context/user.provider";
 import { logOut } from "@/src/services/Auth";
 import Link from "next/link";
