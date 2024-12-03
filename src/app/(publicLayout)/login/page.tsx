@@ -19,10 +19,10 @@ const Login = () => {
     defaultValues: {
       // email: "web@hero.com",
       // password: "ph-password",
-      // email: "jiinat@gmail.com",
-      // password: "jiinat",
-      email: "sabbirshnt@gmail.com",
-      password: "sabbir",
+      email: "jiinat@gmail.com",
+      password: "jiinat",
+      // email: "sabbirshnt@gmail.com",
+      // password: "sabbir",
     },
   });
 

@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+.primary-color:hover {
+  @apply text-[#fd3d57];
+}
+.text-primary {
+  @apply text-[#fd3d57];
+}
+
 body {
   font-family: "Poppins", sans-serif;
   --tw-text-opacity: 1;

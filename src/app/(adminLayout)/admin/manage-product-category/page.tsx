@@ -5,11 +5,10 @@ import {
   TableColumn,
   TableBody,
   TableRow,
-  Tooltip,
   TableCell,
 } from "@nextui-org/react";
 
-import { DeleteIcon, EditIcon } from "@/src/components/icons";
+import { DeleteIcon } from "@/src/components/icons";
 import React from "react";
 import { ICategories } from "@/src/types";
 import { toast } from "sonner";
