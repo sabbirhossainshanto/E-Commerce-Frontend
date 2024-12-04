@@ -9,8 +9,8 @@ const Search = () => {
   const [searchTerm, setSearchTerm] = useState<string | null>(null);
   return (
     <div className="relative hidden lg:block">
-      <div className="border border-[#FD3D57] rounded-md w-[535px] xl:w-[675px] flex">
-        <div className="max-w-[250px] xl:max-w-[390px] h-auto flex-grow">
+      <div className="border-[2px] border-[#2b2d42] rounded-md w-[535px] xl:w-[675px] flex">
+        <div className="h-auto flex-grow">
           <input
             onChange={(e) => setSearchTerm(e.target.value)}
             type="text"

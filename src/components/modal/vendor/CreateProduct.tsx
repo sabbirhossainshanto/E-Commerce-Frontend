@@ -20,7 +20,6 @@ import { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Image from "next/image";
 import { TbFidgetSpinner } from "react-icons/tb";
-import { useGetMyShop } from "@/src/hooks/shop";
 import { useGetAllCategory } from "@/src/hooks/category";
 
 export default function CreateProduct() {
@@ -28,7 +27,6 @@ export default function CreateProduct() {
   const [images, setImages] = useState<File[]>([]);
   const { mutate: createProduct, isPending, isSuccess } = useCreateProduct();
   const { refetch: refetchMyProduct } = useGetMyProducts();
-  const { data: shop } = useGetMyShop();
   const { data: categories } = useGetAllCategory();
   const { handleSubmit, register } = useForm();
 
@@ -36,7 +34,6 @@ export default function CreateProduct() {
     const payload = Object.fromEntries(
       Object.entries({
         categoryId: values?.categoryId,
-        shopId: shop?.data?.id,
         name: values?.name,
         description: values?.description,
         discount: Number(values?.discount),

@@ -45,7 +45,7 @@ export default function UpdateProduct({ id }: { id: string }) {
       const formData = new FormData();
       formData.append("data", JSON.stringify(payload));
       for (let image of images) {
-        formData.append("file", image);
+        formData.append("files", image);
       }
       updateProduct(
         { formData, id: product?.data?.id },

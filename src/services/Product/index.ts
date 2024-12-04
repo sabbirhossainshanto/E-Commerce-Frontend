@@ -1,6 +1,7 @@
 "use server";
 
 import { AxiosSecure } from "@/src/lib/AxiosSecure";
+import { TQueryParam } from "@/src/types";
 
 export const createProduct = async (payload: FormData) => {
   try {
@@ -13,6 +14,23 @@ export const createProduct = async (payload: FormData) => {
     return error.response.data;
   }
 };
+
+export const getAllProduct = async (query: TQueryParam[]) => {
+  try {
+    const params = new URLSearchParams();
+
+    if (query?.length > 0) {
+      query.forEach((item) => params.append(item.name, item.value as string));
+    }
+    const { data } = await AxiosSecure.get("/products", {
+      params,
+    });
+    return data;
+  } catch (error: any) {
+    return error.response.data;
+  }
+};
+
 export const getMyProduct = async () => {
   try {
     const { data } = await AxiosSecure.get("/products/my-products");

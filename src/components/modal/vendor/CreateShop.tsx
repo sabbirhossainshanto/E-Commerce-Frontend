@@ -16,12 +16,10 @@ import { useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Image from "next/image";
 import { useCreateMyShop, useGetMyShop } from "@/src/hooks/shop";
-import { useUser } from "@/src/context/user.provider";
 import { TbFidgetSpinner } from "react-icons/tb";
 
 export default function CreateShop() {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const { user } = useUser();
   const { refetch } = useGetMyShop();
   const { mutate: createMyShop, isSuccess, isPending } = useCreateMyShop();
   const [image, setImage] = useState<File | null>(null);
@@ -29,7 +27,6 @@ export default function CreateShop() {
 
   const handleUpdateShop: SubmitHandler<FieldValues> = (values) => {
     const payload = {
-      userId: user?.id,
       shopName: values?.name,
       shopDetails: values?.shopDetails,
     };

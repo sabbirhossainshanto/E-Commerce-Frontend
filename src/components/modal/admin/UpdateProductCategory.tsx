@@ -18,10 +18,13 @@ import {
 } from "@/src/hooks/category";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { AiOutlinePlusCircle } from "react-icons/ai";
+import Image from "next/image";
 
 export default function UpdateProductCategory({ id }: { id: string }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const [image, setImage] = useState<File | null>(null);
   const { data: category } = useGetSingleCategory(id);
   const { handleSubmit, register, reset } = useForm({
     defaultValues: {
@@ -35,19 +38,27 @@ export default function UpdateProductCategory({ id }: { id: string }) {
     if (category?.data?.id) {
       const payload = {
         name: value?.name,
-        id: category?.data?.id,
       };
-      updateCategory(payload, {
-        onSuccess(data) {
-          if (data?.success) {
-            toast.success(data?.message);
-            refetchCategories();
-            onClose();
-          } else {
-            toast.error(data?.message);
-          }
-        },
-      });
+
+      const formData = new FormData();
+      formData.append("data", JSON.stringify(payload));
+      if (image) {
+        formData.append("file", image);
+      }
+      updateCategory(
+        { formData, id: category?.data?.id },
+        {
+          onSuccess(data) {
+            if (data?.success) {
+              toast.success(data?.message);
+              refetchCategories();
+              onClose();
+            } else {
+              toast.error(data?.message);
+            }
+          },
+        }
+      );
     }
   };
 
@@ -56,6 +67,14 @@ export default function UpdateProductCategory({ id }: { id: string }) {
       name: category?.data?.name,
     });
   }, [category]);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    if (e.target.files) {
+      const files = Array.from(e.target.files);
+      setImage(files[0]);
+    }
+  };
 
   return (
     <>
@@ -79,6 +98,46 @@ export default function UpdateProductCategory({ id }: { id: string }) {
                   placeholder="Enter category name"
                   variant="bordered"
                 />
+                <div className="mt-4">
+                  <label htmlFor="Image" className="text-xs">
+                    Category Image
+                  </label>
+                  <input
+                    type="file"
+                    onChange={handleImageChange}
+                    name="imageUrl"
+                    id="upload"
+                    className="hidden"
+                    multiple
+                  />
+                  <div className="w-full flex items-center flex-wrap">
+                    <label htmlFor="upload">
+                      <AiOutlinePlusCircle
+                        size={30}
+                        className="mt-3 cursor-pointer"
+                        color="#555"
+                      />
+                    </label>
+                    {image && (
+                      <Image
+                        height={120}
+                        width={120}
+                        src={URL.createObjectURL(image)}
+                        alt="Image"
+                        className="h-[120px] w-[120px] object-cover m-2"
+                      />
+                    )}
+                    {!image && category?.data?.image && (
+                      <Image
+                        height={120}
+                        width={120}
+                        src={category?.data?.image}
+                        alt="Image"
+                        className="h-[120px] w-[120px] object-cover m-2"
+                      />
+                    )}
+                  </div>
+                </div>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onPress={onClose}>

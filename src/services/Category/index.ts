@@ -2,7 +2,7 @@
 
 import { AxiosSecure } from "@/src/lib/AxiosSecure";
 
-export const createCategory = async (payload: { name: string }) => {
+export const createCategory = async (payload: FormData) => {
   try {
     const { data } = await AxiosSecure.post(
       "/categories/create-category",
@@ -32,12 +32,13 @@ export const getSingleCategory = async (id: string) => {
 };
 export const updateSingleCategory = async (payload: {
   id: string;
-  name: string;
+  formData: FormData;
 }) => {
   try {
-    const { data } = await AxiosSecure.patch(`/categories/${payload.id}`, {
-      name: payload.name,
-    });
+    const { data } = await AxiosSecure.patch(
+      `/categories/${payload.id}`,
+      payload.formData
+    );
     return data;
   } catch (error: any) {
     return error.response.data;

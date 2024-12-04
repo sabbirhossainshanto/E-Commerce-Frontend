@@ -8,6 +8,9 @@
 .text-primary {
   @apply text-[#fd3d57];
 }
+.bg-primary {
+  @apply bg-[#fd3d57];
+}
 
 body {
   font-family: "Poppins", sans-serif;

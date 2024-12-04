@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ThemeSwitch } from "../../theme-switch";
+import Search from "./Search";
 
 const TopHeader = () => {
   return (
@@ -10,7 +11,7 @@ const TopHeader = () => {
           <span className="text-primary">Click</span>
           <span>Shop</span>
         </Link>
-
+        <Search />
         <div className="flex items-center">
           <ThemeSwitch />
         </div>

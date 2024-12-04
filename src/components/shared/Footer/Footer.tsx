@@ -71,23 +71,23 @@ const Footer = () => {
                 <Image
                   height={30}
                   width={30}
-                  className="h-7 cursor-pointer"
+                  className=" cursor-pointer"
                   src={img.facebook}
-                  alt=""
+                  alt="facebook"
                 />
                 <Image
                   height={30}
                   width={30}
-                  className="h-7 cursor-pointer"
+                  className=" cursor-pointer"
                   src={img.instagram}
-                  alt=""
+                  alt="instagram"
                 />
                 <Image
                   height={30}
                   width={30}
-                  className="h-7 cursor-pointer"
+                  className=" cursor-pointer"
                   src={img.twitter}
-                  alt=""
+                  alt="twitter"
                 />
               </div>
             </div>
@@ -126,11 +126,15 @@ const Footer = () => {
               </span>
             </Link>
             <Image
-              height={40}
-              width={400}
-              className="h-10"
+              // height={40}
+              // width={400}
+              style={{
+                height: "auto",
+                width: "400px",
+              }}
+              className="object-contain"
               src={img.paymentMethod}
-              alt=""
+              alt="paymentMethod"
             />
           </div>
         </div>

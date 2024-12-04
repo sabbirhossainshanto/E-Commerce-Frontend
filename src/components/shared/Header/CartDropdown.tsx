@@ -1,8 +1,12 @@
-import img from "@/src/assets/img";
-import Image from "next/image";
+"use client";
+
+import { useGetMyCartProducts } from "@/src/hooks/cart";
 import Link from "next/link";
+import CartProduct from "../../UI/CartProduct/CartProduct";
 
 const CartDropdown = () => {
+  const { data: cartProducts } = useGetMyCartProducts();
+
   return (
     <div className="relative group hidden lg:block">
       <Link href="/" className="text-white ml-5 relative block text-center">
@@ -15,92 +19,14 @@ const CartDropdown = () => {
           </svg>
         </span>
         <span className="text-white text-[11px] leading-[10px]">Cart</span>
-        <span className="absolute bg-secondary -top-1 -right-2 text-white text-[11px] w-[18px] h-[18px] leading-[18px] text-center rounded-full overflow-hidden">
-          6
-        </span>
+        {cartProducts?.data && cartProducts?.data?.length > 0 && (
+          <span className="absolute bg-primary -top-1 -right-2 text-white text-[11px] w-[18px] h-[18px] leading-[18px] text-center rounded-full overflow-hidden">
+            {cartProducts?.data?.length}
+          </span>
+        )}
       </Link>
 
-      <div className="absolute top-full right-0 bg-white z-20 p-4 w-[300px] rounded-b-[3px] mt-3.5 group-hover:mt-[5px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-        <div className="mb-3 border-b border-[#d8d8d8]">
-          <h4 className="text-base text-secondary mb-2">2 Items</h4>
-        </div>
-        <div>
-          <Link href="/" className="flex items-start pr-5 mb-4 relative">
-            <span className="absolute right-0 hover:text-primary transition duration-300">
-              <svg width="18" height="18" viewBox="0 0 32 32">
-                <path
-                  fill="currentColor"
-                  d="M7.219 5.781L5.78 7.22L14.563 16L5.78 24.781l1.44 1.439L16 17.437l8.781 8.782l1.438-1.438L17.437 16l8.782-8.781L24.78 5.78L16 14.563z"
-                ></path>
-              </svg>
-            </span>
-            <div className="flex-shrink-0">
-              <Image
-                height={100}
-                width={100}
-                src={img.logo}
-                className="w-[75px] h-[60px] object-contain"
-                alt="product"
-              />
-            </div>
-
-            <div className="flex-grow pl-4">
-              <h5 className="text-base text-secondary hover:text-primary transition duration-300">
-                Men casual shoes
-              </h5>
-              <p className="text-[#464545] text-sm">
-                x1 <span className="ms-2">$450</span>
-              </p>
-            </div>
-          </Link>
-          <Link href="/" className="flex items-start pr-5 mb-4 relative">
-            <span className="absolute right-0 hover:text-primary transition duration-300">
-              <svg width="18" height="18" viewBox="0 0 32 32">
-                <path
-                  fill="currentColor"
-                  d="M7.219 5.781L5.78 7.22L14.563 16L5.78 24.781l1.44 1.439L16 17.437l8.781 8.782l1.438-1.438L17.437 16l8.782-8.781L24.78 5.78L16 14.563z"
-                ></path>
-              </svg>
-            </span>
-            <div className="flex-shrink-0">
-              <Image
-                height={100}
-                width={100}
-                src={img.logo}
-                className="w-[75px] h-[60px] object-contain"
-                alt="product"
-              />
-            </div>
-
-            <div className="flex-grow pl-4">
-              <h5 className="text-base text-secondary hover:text-primary transition duration-300">
-                Men casual shoes
-              </h5>
-              <p className="text-[#464545] text-sm">
-                x1 <span className="ms-2">$450</span>
-              </p>
-            </div>
-          </Link>
-        </div>
-        <div className="mt-4 pt-4 border-t border-[#d8d8d8] flex justify-between">
-          <h4 className="text-base text-secondary">SUB TOTAL:</h4>
-          <h4 className="text-base ml-2">$980.00</h4>
-        </div>
-        <div className="flex mt-4 gap-4">
-          <Link
-            href="/"
-            className="w-1/2 rounded-[3px] py-2 px-2.5 border border-primary bg-primary text-white inline-block text-center text-sm hover:bg-transparent hover:text-primary transition duration-300"
-          >
-            VIEW CART
-          </Link>
-          <Link
-            href="/"
-            className="w-1/2 rounded-[3px] py-2 px-2.5 border border-primary hover:bg-primary bg-white hover:text-white inline-block text-center text-sm text-primary transition duration-300"
-          >
-            CHECKOUT
-          </Link>
-        </div>
-      </div>
+      <CartProduct cartProducts={cartProducts?.data} />
     </div>
   );
 };

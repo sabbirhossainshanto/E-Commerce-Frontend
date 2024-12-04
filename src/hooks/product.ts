@@ -2,16 +2,24 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   createProduct,
   deleteProduct,
+  getAllProduct,
   getMyProduct,
   getSingleProduct,
   updateProduct,
 } from "../services/Product";
-import { IProduct, IResponse } from "../types";
+import { IProduct, IResponse, TQueryParam } from "../types";
 
 export const useCreateProduct = () => {
   return useMutation<any, Error, FormData>({
     mutationKey: ["create-product"],
     mutationFn: async (payload) => await createProduct(payload),
+  });
+};
+
+export const useGetAllProducts = (query: TQueryParam[]) => {
+  return useQuery<any, Error, IResponse<IProduct[]>>({
+    queryKey: ["all-products", query],
+    queryFn: async () => await getAllProduct(query),
   });
 };
 export const useGetMyProducts = () => {

@@ -13,7 +13,7 @@ const WishlistDropdown = () => {
         </svg>
       </span>
       <span className="text-white text-[11px] leading-[10px]">Wish List</span>
-      <span className="absolute bg-secondary -top-1 right-0 text-white text-[11px] w-[18px] h-[18px] leading-[18px] text-center rounded-full overflow-hidden">
+      <span className="absolute bg-primary -top-1 right-0 text-white text-[11px] w-[18px] h-[18px] leading-[18px] text-center rounded-full overflow-hidden">
         6
       </span>
     </Link>

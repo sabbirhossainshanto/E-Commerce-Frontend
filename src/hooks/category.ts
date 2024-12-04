@@ -9,7 +9,7 @@ import {
 } from "../services/Category";
 
 export const useCreateCategory = () => {
-  return useMutation<any, Error, { name: string }>({
+  return useMutation<any, Error, FormData>({
     mutationKey: ["create-category"],
     mutationFn: async (payload) => await createCategory(payload),
   });
@@ -29,7 +29,7 @@ export const useGetSingleCategory = (id: string) => {
   });
 };
 export const useUpdateSingleCategory = () => {
-  return useMutation<any, Error, { id: string; name: string }>({
+  return useMutation<any, Error, { id: string; formData: FormData }>({
     mutationKey: ["update-category"],
     mutationFn: async (payload) => await updateSingleCategory(payload),
   });

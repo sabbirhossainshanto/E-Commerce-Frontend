@@ -14,7 +14,12 @@ module.exports = {
         mono: ["var(--font-mono)"],
       },
       color: {
-        primaryColor: "#fd3d57",
+        primary: "#fd3d57",
+        secondary: "#2b2d42",
+      },
+      backgroundColor: {
+        primary: "#fd3d57",
+        secondary: "#2b2d42",
       },
     },
   },

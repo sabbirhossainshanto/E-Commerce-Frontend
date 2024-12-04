@@ -15,22 +15,27 @@ import { toast } from "sonner";
 import { useDeleteCategory, useGetAllCategory } from "@/src/hooks/category";
 import CreateProductCategory from "@/src/components/modal/admin/CreateProductCategory";
 import UpdateProductCategory from "@/src/components/modal/admin/UpdateProductCategory";
+import Image from "next/image";
 
 const columns = [
+  { name: "IMAGE", uid: "image" },
   { name: "NAME", uid: "name" },
   { name: "ACTIONS", uid: "actions" },
 ];
 
-type TCategory = Pick<ICategories, "name" | "id"> & { actions: string };
+type TCategory = Pick<ICategories, "name" | "id" | "image"> & {
+  actions: string;
+};
 
 const ManageProductCategory = () => {
   const { data, refetch: refetchCategory } = useGetAllCategory();
   const { mutate: deleteCategory } = useDeleteCategory();
 
   const categoryData =
-    data?.data?.map((user) => ({
-      id: user.id,
-      name: user?.name,
+    data?.data?.map((category) => ({
+      id: category.id,
+      name: category?.name,
+      image: category?.image,
     })) || [];
 
   const handleDeleteCategory = (category: TCategory) => {
@@ -51,6 +56,16 @@ const ManageProductCategory = () => {
       const cellValue = category[columnKey];
 
       switch (columnKey) {
+        case "image":
+          return (
+            <Image
+              className="rounded-2xl object-contain"
+              height={30}
+              width={30}
+              src={category?.image}
+              alt="Category"
+            />
+          );
         case "name":
           return <p>{category.name}</p>;
 
