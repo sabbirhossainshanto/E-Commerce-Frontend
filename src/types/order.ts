@@ -19,4 +19,5 @@ export interface IOrder {
   updatedAt: string;
   shop: IShop;
   product: IProduct;
+  isReviewed: boolean;
 }

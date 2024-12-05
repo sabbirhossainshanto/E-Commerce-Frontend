@@ -7,7 +7,7 @@ const TopHeader = () => {
     <header className="py-3 hidden lg:block">
       <div className="container mx-auto flex justify-between items-center">
         {/*  <!-- logo --> */}
-        <Link href="/" className="w-[125px] text-2xl">
+        <Link href="/" className="w-[125px] text-3xl font-medium">
           <span className="text-primary">Click</span>
           <span>Shop</span>
         </Link>

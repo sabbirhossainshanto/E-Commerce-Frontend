@@ -48,7 +48,12 @@ const ShopCard = ({ shop }: { shop: IShop }) => {
             <h5>Shop Name : {shop?.shopName}</h5>
           </div>
           <p className="mb-0">{shop?.shopDetails}</p>
-          <p className="mb-0"> User Name : {shop?.user?.name}</p>
+        </div>
+        <div className="mt-6 md:mt-0">
+          <div className="transition duration-300">
+            <h5>Vendor Email : {shop?.user?.email}</h5>
+          </div>
+          <p className="mb-0"> Followers : {shop?.follower?.length}</p>
         </div>
         {user?.id && (
           <div className="flex justify-between md:gap-12 items-center mt-4 md:mt-0">

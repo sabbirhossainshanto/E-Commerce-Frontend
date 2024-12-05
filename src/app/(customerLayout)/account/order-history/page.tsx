@@ -1,5 +1,6 @@
 "use client";
 
+import AddReviewToProduct from "@/src/components/modal/user/AddReviewToProduct";
 import { useDeleteMyOrder, useGetMyOrder } from "@/src/hooks/order";
 import { Button } from "@nextui-org/button";
 import Image from "next/image";
@@ -59,13 +60,18 @@ const OrderHistory = () => {
                   <span className={order.status}>{order?.status}</span>
                 </h5>
                 <div className="flex items-center gap-3">
-                  <Button className="mt-3 bg-green-500">Leave a Review</Button>
-                  <Button
-                    onClick={() => handleDeleteOrder(order?.id)}
-                    className="mt-3 bg-rose-500"
-                  >
-                    Delete
-                  </Button>
+                  {!order?.isReviewed && (
+                    <AddReviewToProduct productId={order?.productId} />
+                  )}
+                  {order?.status === "COMPLETED" ||
+                  order?.status === "CANCELLED" ? (
+                    <Button
+                      onClick={() => handleDeleteOrder(order?.id)}
+                      className="mt-3 bg-rose-500"
+                    >
+                      Delete
+                    </Button>
+                  ) : null}
                 </div>
               </div>
             </div>

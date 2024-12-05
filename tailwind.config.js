@@ -13,7 +13,7 @@ module.exports = {
         sans: ["var(--font-sans)"],
         mono: ["var(--font-mono)"],
       },
-      color: {
+      colors: {
         primary: "#fd3d57",
         secondary: "#2b2d42",
       },

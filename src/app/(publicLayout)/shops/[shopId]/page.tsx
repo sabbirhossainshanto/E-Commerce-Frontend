@@ -3,11 +3,10 @@ import ShopCard from "@/src/components/UI/ShopCard/ShopCard";
 import nexiosInstance from "@/src/lib/NexiosInstance";
 import { IResponse, IShop } from "@/src/types";
 import { NexiosResponse } from "nexios-http/types/interfaces";
-import Image from "next/image";
 
 const SingleShopPage = async ({ params }: { params: { shopId: string } }) => {
   const { data }: NexiosResponse<IResponse<IShop>> = await nexiosInstance.get(
-    `/shops/${params?.shopId}`
+    `/shops/single-shop/${params?.shopId}`
   );
 
   return (

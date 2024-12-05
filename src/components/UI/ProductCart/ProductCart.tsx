@@ -1,5 +1,6 @@
 "use client";
 
+import { useUser } from "@/src/context/user.provider";
 import { useAddToCart, useGetMyCartProducts } from "@/src/hooks/cart";
 import { IProduct } from "@/src/types";
 import Image from "next/image";
@@ -10,6 +11,7 @@ import { IoEyeOutline } from "react-icons/io5";
 import { toast } from "sonner";
 
 const ProductCart = ({ product }: { product: IProduct }) => {
+  const { user } = useUser();
   const { refetch: refetchCart } = useGetMyCartProducts();
   const { mutate: addToCart } = useAddToCart();
   const handleAddToCart = (product: IProduct) => {
@@ -116,6 +118,7 @@ const ProductCart = ({ product }: { product: IProduct }) => {
                 </span>
               </div>
               <p className="text-[13px] ml-[9px] text-[#687188]">(150)</p>
+
               <Link href={`/shops/${product?.shopId}`} className="ml-[9px]">
                 {" "}
                 <span className="underline text-rose-500">
@@ -124,6 +127,7 @@ const ProductCart = ({ product }: { product: IProduct }) => {
               </Link>
             </div>
           </div>
+
           <div className="absolute left-5 top-14 mt-[15px] group-hover:mt-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
             <button
               onClick={() => handleAddToCart(product)}

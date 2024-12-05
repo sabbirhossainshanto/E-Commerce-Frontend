@@ -171,6 +171,73 @@ const SingleProduct = ({ product }: { product: IProduct }) => {
           </div>
         </div>
       </div>
+
+      {/* Product Review */}
+      <div className="container pt-14">
+        <div className="flex items-start justify-between mb-[30px]">
+          <h2 className="text-[22px] sm:text-[32px] font-medium text-secondary">
+            Product Reviews
+          </h2>
+          <div className="pt-2">
+            <Link
+              href="/products"
+              className="text-[15px] font-medium text-primary flex items-center gap-1"
+            >
+              See More
+              <svg width="15" height="15" viewBox="0 0 32 32">
+                <path
+                  fill="currentColor"
+                  d="M12.969 4.281L11.53 5.72L21.812 16l-10.28 10.281l1.437 1.438l11-11l.687-.719l-.687-.719z"
+                ></path>
+              </svg>
+            </Link>
+          </div>
+        </div>
+        {product?.reviews?.map((review) => {
+          return (
+            <div key={review?.id} className="flex gap-5 border-b pb-5">
+              {review?.user?.profilePhoto && (
+                <div>
+                  <Image
+                    height={100}
+                    width={100}
+                    loading="lazy"
+                    src={review?.user?.profilePhoto}
+                    alt="user"
+                  />
+                </div>
+              )}
+
+              {/* <!-- content --> */}
+              <div>
+                <h5>by {review?.user?.name}</h5>
+                {/* <!-- rating --> */}
+                <div className="flex mt-2">
+                  {[review?.rating]?.map((rating, i) => {
+                    return (
+                      <span key={i} className="text-[#F6BC3E]">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2L9.19 8.63L2 9.24l5.46 4.73L5.82 21L12 17.27z"
+                          ></path>
+                        </svg>
+                      </span>
+                    );
+                  })}
+                </div>
+                <div className="text-xs mt-2">{review?.createdAt}</div>
+                <p className="mt-2">{review?.comment}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
       {/* Related product*/}
       <div className="container pt-14">
         <div className="flex items-start justify-between mb-[30px]">

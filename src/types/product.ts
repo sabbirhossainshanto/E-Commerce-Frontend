@@ -1,4 +1,5 @@
 import { ICategories } from "./category";
+import { IReview } from "./review";
 import { IShop } from "./shop";
 
 export interface IProduct {
@@ -15,4 +16,5 @@ export interface IProduct {
   updatedAt: string;
   category: ICategories;
   shop: IShop;
+  reviews: IReview[];
 }

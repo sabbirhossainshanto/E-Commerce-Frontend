@@ -22,7 +22,7 @@ export const getMyShop = async () => {
 };
 export const getSingleShop = async (id: string) => {
   try {
-    const { data } = await AxiosSecure.get(`/shops/${id}`);
+    const { data } = await AxiosSecure.get(`/shops/single-shop/${id}`);
     return data;
   } catch (error: any) {
     return error.response.data;

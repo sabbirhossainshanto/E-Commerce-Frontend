@@ -3,8 +3,10 @@ import Link from "next/link";
 import AccountDropdown from "./AccountDropdown";
 import CartDropdown from "./CartDropdown";
 import { useUser } from "@/src/context/user.provider";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
+  const pathname = usePathname();
   const { user } = useUser();
   return (
     <nav className="bg-secondary py-1.5">
@@ -32,11 +34,11 @@ const Header = () => {
         </div>
 
         {/* Nav lists */}
-        <ul className="flex items-center">
+        <ul className="flex items-center gap-3">
           <li>
             <Link
               href="/"
-              className="text-white leading-[26px] flex items-center text-base font-medium px-2.5 py-[15px] transition duration-300"
+              className={` leading-[26px] flex items-center text-base font-medium px-2.5 py-[15px] transition duration-300 ${pathname === "/" ? "text-primary" : "text-white"}`}
             >
               Home
             </Link>
@@ -44,9 +46,17 @@ const Header = () => {
           <li>
             <Link
               href="/products"
-              className="text-white leading-[26px] flex items-center text-base font-medium px-2.5 py-[15px] transition duration-300"
+              className={` leading-[26px] flex items-center text-base font-medium px-2.5 py-[15px] transition duration-300 ${pathname === "/products" ? "text-primary" : "text-white"}`}
             >
               Product
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/recent-products"
+              className={` leading-[26px] flex items-center text-base font-medium px-2.5 py-[15px] transition duration-300 ${pathname === "/recent-products" ? "text-primary" : "text-white"}`}
+            >
+              Recent Product
             </Link>
           </li>
         </ul>
