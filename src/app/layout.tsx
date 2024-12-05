@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { Providers } from "../lib/Provider";
 import { siteConfig } from "@/src/config/site";
 import { poppins } from "@/src/config/fonts";
+import ScrollToTop from "../components/UI/ScrollToTop/ScrollToTop";
 
 export const metadata: Metadata = {
   title: {
@@ -39,6 +40,7 @@ export default function RootLayout({
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
           {children}
+          <ScrollToTop />
         </Providers>
       </body>
     </html>

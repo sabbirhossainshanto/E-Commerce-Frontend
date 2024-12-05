@@ -1,9 +1,12 @@
+"use client";
+
 import { useAddToCart, useGetMyCartProducts } from "@/src/hooks/cart";
 import { IProduct } from "@/src/types";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { CiHeart } from "react-icons/ci";
-import { IoSearchOutline } from "react-icons/io5";
+import { IoEyeOutline } from "react-icons/io5";
 import { toast } from "sonner";
 
 const ProductCart = ({ product }: { product: IProduct }) => {
@@ -39,10 +42,16 @@ const ProductCart = ({ product }: { product: IProduct }) => {
           />
 
           <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-[#e5e5e58c] z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-            <button className="mx-2 h-10 w-10 bg-primary hover:bg-secondary transition text-center text-white flex justify-center items-center rounded-full">
-              <IoSearchOutline size={18} />
-            </button>
-            <button className="mx-2 h-10 w-10 bg-primary hover:bg-secondary  transition text-center text-white flex justify-center items-center rounded-full">
+            <Link
+              href={`/products/${product?.id}`}
+              className="mx-2 h-10 w-10 bg-primary hover:bg-secondary transition text-center text-white flex justify-center items-center rounded-full"
+            >
+              <IoEyeOutline size={18} />
+            </Link>
+            <button
+              onClick={() => toast.warning("Wishlist feature coming soon!")}
+              className="mx-2 h-10 w-10 bg-primary hover:bg-secondary  transition text-center text-white flex justify-center items-center rounded-full"
+            >
               <CiHeart size={18} />
             </button>
           </div>
@@ -107,6 +116,12 @@ const ProductCart = ({ product }: { product: IProduct }) => {
                 </span>
               </div>
               <p className="text-[13px] ml-[9px] text-[#687188]">(150)</p>
+              <Link href={`/shops/${product?.shopId}`} className="ml-[9px]">
+                {" "}
+                <span className="underline text-rose-500">
+                  {product?.shop?.shopName}
+                </span>
+              </Link>
             </div>
           </div>
           <div className="absolute left-5 top-14 mt-[15px] group-hover:mt-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">

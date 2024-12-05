@@ -8,3 +8,7 @@ export const UserStatus = {
   ACTIVE: "ACTIVE",
   BLOCKED: "BLOCKED",
 } as const;
+export const ShopStatus = {
+  ACTIVE: "ACTIVE",
+  BLOCKED: "BLOCKED",
+} as const;

@@ -77,9 +77,8 @@ const CartProduct = ({
       <div>
         {cartProducts?.map((cartProduct) => {
           return (
-            <Link
+            <div
               key={cartProduct?.id}
-              href="/"
               className="flex items-start pr-5 mb-4 relative"
             >
               <button
@@ -144,7 +143,7 @@ const CartProduct = ({
                   </div>
                 </div>
               </div>
-            </Link>
+            </div>
           );
         })}
       </div>

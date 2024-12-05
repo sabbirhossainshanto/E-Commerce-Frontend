@@ -1,5 +1,4 @@
 "use client";
-import img from "@/src/assets/img";
 import Hero from "@/src/components/modules/public/Home/Hero";
 import CategoryCard from "@/src/components/UI/CategoryCard/CategoryCard";
 import ProductCart from "@/src/components/UI/ProductCart/ProductCart";

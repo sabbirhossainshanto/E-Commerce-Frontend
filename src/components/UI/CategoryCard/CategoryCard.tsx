@@ -1,11 +1,21 @@
+import { useProduct } from "@/src/context/product.provider";
 import { ICategories } from "@/src/types";
 import Link from "next/link";
 
 const CategoryCard = ({ category }: { category: ICategories }) => {
+  const { setQuery, setSelectedCategory } = useProduct();
+  const handleFilterByCategory = (category: ICategories) => {
+    setQuery((prev) => {
+      const prevQuery = prev.filter((p) => p.name !== "category");
+      return [...prevQuery, { name: "category", value: category?.name }];
+    });
+    setSelectedCategory(category?.name);
+  };
   return (
     <div className="col-span-1 overflow-hidden">
       <Link
-        href="/product"
+        onClick={() => handleFilterByCategory(category)}
+        href="/products"
         className="group h-[150px] sm:h-[250px] flex items-center justify-center relative bg-cover bg-no-repeat bg-center after:absolute after:inset-0 after:bg-[#00000060] after:content-['']"
         style={{
           backgroundImage: `url(${category.image})`,

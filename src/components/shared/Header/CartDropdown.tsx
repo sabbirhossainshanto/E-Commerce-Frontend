@@ -1,7 +1,7 @@
 "use client";
 
 import { useGetMyCartProducts } from "@/src/hooks/cart";
-import Link from "next/link";
+
 import CartProduct from "../../UI/CartProduct/CartProduct";
 
 const CartDropdown = () => {
@@ -9,7 +9,7 @@ const CartDropdown = () => {
 
   return (
     <div className="relative group hidden lg:block">
-      <Link href="/" className="text-white ml-5 relative block text-center">
+      <div className="text-white ml-5 relative block text-center cursor-pointer">
         <span className="text-white flex justify-center">
           <svg width="28" height="28" viewBox="0 0 256 256">
             <path
@@ -24,7 +24,7 @@ const CartDropdown = () => {
             {cartProducts?.data?.length}
           </span>
         )}
-      </Link>
+      </div>
 
       <CartProduct cartProducts={cartProducts?.data} />
     </div>

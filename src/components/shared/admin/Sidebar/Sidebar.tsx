@@ -81,6 +81,12 @@ const Sidebar = () => {
             >
               Manage User
             </Link>
+            <Link
+              href="/admin/manage-shop"
+              className="pl-7 pt-1 block hover:text-primary"
+            >
+              Manage Shop
+            </Link>
           </div>
           <div className="border-b mt-3">
             <Link

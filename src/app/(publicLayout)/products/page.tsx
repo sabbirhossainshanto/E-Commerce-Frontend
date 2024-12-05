@@ -1,9 +1,9 @@
 "use client";
 
 import ProductCart from "@/src/components/UI/ProductCart/ProductCart";
+import { useProduct } from "@/src/context/product.provider";
 import { useGetAllCategory } from "@/src/hooks/category";
 import { useGetAllProducts } from "@/src/hooks/product";
-import { TQueryParam } from "@/src/types";
 import {
   Button,
   Dropdown,
@@ -12,11 +12,10 @@ import {
   DropdownTrigger,
   Input,
 } from "@nextui-org/react";
-import { useState } from "react";
 
 const ProductPage = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [query, setQuery] = useState<TQueryParam[]>([]);
+  const { query, setQuery, selectedCategory, setSelectedCategory } =
+    useProduct();
   const { data: products } = useGetAllProducts(query);
   const { data: categories } = useGetAllCategory();
 
@@ -67,8 +66,6 @@ const ProductPage = () => {
       ];
     });
   };
-
-  console.log(query);
 
   return (
     <div className="container pb-14 pt-12 relative">
@@ -173,11 +170,17 @@ const ProductPage = () => {
               Reset
             </Button>
           </div>
-          <div className="grid grid-cols-4 gap-5 mt-4">
-            {products?.data?.map((product) => (
-              <ProductCart key={product.id} product={product} />
-            ))}
-          </div>
+          {products?.data && products?.data?.length > 0 ? (
+            <div className="grid grid-cols-4 gap-5 mt-4">
+              {products?.data?.map((product) => (
+                <ProductCart key={product.id} product={product} />
+              ))}
+            </div>
+          ) : (
+            <div className="flex items-center justify-center w-full h-full">
+              <h5>No product available in search query!</h5>
+            </div>
+          )}
         </div>
       </div>
     </div>

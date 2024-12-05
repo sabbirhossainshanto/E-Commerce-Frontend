@@ -1,6 +1,13 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { IResponse, IShop } from "../types";
-import { createMyShop, getMyShop, updateMyShop } from "../services/Shop";
+import { IResponse, IShop, IUpdateShopStatus } from "../types";
+import {
+  createMyShop,
+  getAllShop,
+  getMyShop,
+  getSingleShop,
+  updateMyShop,
+  updateShopStatus,
+} from "../services/Shop";
 
 export const useCreateMyShop = () => {
   return useMutation<any, Error, FormData>({
@@ -14,9 +21,27 @@ export const useGetMyShop = () => {
     queryFn: async () => await getMyShop(),
   });
 };
+export const useGetSingleShop = (id: string) => {
+  return useQuery<any, Error, IResponse<IShop>>({
+    queryKey: ["get-single-shop"],
+    queryFn: async () => await getSingleShop(id),
+  });
+};
+export const useGetAllShop = () => {
+  return useQuery<any, Error, IResponse<IShop[]>>({
+    queryKey: ["get-all-shop"],
+    queryFn: async () => await getAllShop(),
+  });
+};
 export const useUpdateMyShop = () => {
   return useMutation<any, Error, FormData>({
     mutationKey: ["update-my-shop"],
     mutationFn: async (payload) => await updateMyShop(payload),
+  });
+};
+export const useUpdateShopStatus = () => {
+  return useMutation<any, Error, IUpdateShopStatus>({
+    mutationKey: ["update-shop-status"],
+    mutationFn: async (payload) => await updateShopStatus(payload),
   });
 };
