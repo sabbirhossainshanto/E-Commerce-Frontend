@@ -130,10 +130,10 @@ const AccountDropdown = () => {
             </Link>
           </div>
         )}
-        {user?.role === "CUSTOMER" && (
+        {user?.role === "USER" && (
           <div className="pt-2.5">
             <Link
-              href="/"
+              href="/account"
               className="flex items-center relative w-full mt-[7px] text-[15px] pl-8 text-[#464545] hover:text-primary transition duration-200"
             >
               <svg

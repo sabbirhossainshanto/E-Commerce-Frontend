@@ -97,14 +97,8 @@ const SingleProduct = ({ product }: { product: IProduct }) => {
 
               <div className="space-y-2 mt-4">
                 <p>
-                  <span className="font-medium pr-3">Availability:</span>
-                  {product?.inventory > 0 ? (
-                    <span className="text-[#08B54C] font-medium">In Stock</span>
-                  ) : (
-                    <span className="text-rose-500 font-medium">
-                      Out Of Stock
-                    </span>
-                  )}
+                  <span className="font-medium pr-3">Quantity:</span>
+                  <span className="font-medium">{product?.inventory}</span>
                 </p>
 
                 <p>

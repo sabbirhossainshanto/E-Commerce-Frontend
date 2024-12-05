@@ -11,6 +11,15 @@
 .bg-primary {
   @apply bg-[#fd3d57];
 }
+.PENDING {
+  @apply text-yellow-500;
+}
+.COMPLETED {
+  @apply text-green-500;
+}
+.CANCELLED {
+  @apply text-rose-500;
+}
 
 body {
   font-family: "Poppins", sans-serif;

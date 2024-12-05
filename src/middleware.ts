@@ -5,7 +5,7 @@ import { getCurrentUser } from "./services/Auth";
 const authRoutes = ["/login", "/register"];
 
 const roleBasedRoutes = {
-  USER: [/^\/profile/],
+  USER: [/^\/account/],
   ADMIN: [/^\/admin/],
   VENDOR: [/^\/vendor/],
 };
@@ -35,5 +35,5 @@ export async function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/profile", "/profile/:page*", "/admin", "/login", "/register"],
+  matcher: ["/account", "/account/:page*", "/admin", "/login", "/register"],
 };

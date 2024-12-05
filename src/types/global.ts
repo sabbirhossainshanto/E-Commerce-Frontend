@@ -9,7 +9,7 @@ export interface IUser {
   id: string;
   name: string;
   email: string;
-  role: "ADMIN" | "VENDOR" | "CUSTOMER";
+  role: "ADMIN" | "VENDOR" | "USER";
   profilePhoto?: string;
   iat: number;
   exp: number;
