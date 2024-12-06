@@ -45,9 +45,9 @@ export const updateSingleCategory = async (payload: {
   }
 };
 
-export const deleteCategory = async (id: string) => {
+export const deleteCoupon = async (id: string) => {
   try {
-    const { data } = await AxiosSecure.delete(`/categories/${id}`);
+    const { data } = await AxiosSecure.delete(`/coupons/${id}`);
     return data;
   } catch (error: any) {
     return error.response.data;

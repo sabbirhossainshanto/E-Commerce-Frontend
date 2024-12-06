@@ -16,6 +16,7 @@ import { useDeleteProduct, useGetMyProducts } from "@/src/hooks/product";
 import UpdateProduct from "@/src/components/modal/vendor/UpdateProduct";
 import CreateProduct from "@/src/components/modal/vendor/CreateProduct";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const columns = [
   { name: "NAME", uid: "name" },
@@ -32,6 +33,7 @@ type TPickProduct = Pick<
 > & { actions: string; shopName: string; categoryName: string };
 
 const ManageProduct = () => {
+  const router = useRouter();
   const { data, refetch } = useGetMyProducts();
   const { mutate: deleteProduct } = useDeleteProduct();
 
@@ -69,6 +71,8 @@ const ManageProduct = () => {
         case "name":
           return (
             <User
+              className="cursor-pointer"
+              onClick={() => router.push(`/products/${product?.id}`)}
               avatarProps={{ radius: "lg", src: product.images[0] }}
               description={product.shopName}
               name={cellValue}
