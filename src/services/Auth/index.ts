@@ -1,6 +1,7 @@
 "use server";
 
 import { AxiosSecure } from "@/src/lib/AxiosSecure";
+import { IChangePassword } from "@/src/types";
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
@@ -30,6 +31,25 @@ export const loginUser = async (payload: FieldValues) => {
 export const logOut = () => {
   cookies().delete("accessToken");
   cookies().delete("refreshToken");
+};
+
+export const changePassword = async (payload: IChangePassword) => {
+  try {
+    const { data } = await AxiosSecure.post("/auth/change-password", payload);
+
+    return data;
+  } catch (error: any) {
+    return error.response.data;
+  }
+};
+export const forgotPassword = async (payload: { email: string }) => {
+  try {
+    const { data } = await AxiosSecure.post("/auth/forgot-password", payload);
+
+    return data;
+  } catch (error: any) {
+    return error.response.data;
+  }
 };
 
 export const getCurrentUser = async () => {

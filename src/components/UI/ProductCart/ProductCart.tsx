@@ -1,5 +1,5 @@
 "use client";
-
+import Swal from "sweetalert2";
 import { useUser } from "@/src/context/user.provider";
 import { useAddToCart, useGetMyCartProducts } from "@/src/hooks/cart";
 import { IProduct } from "@/src/types";
@@ -9,25 +9,44 @@ import React from "react";
 import { CiHeart } from "react-icons/ci";
 import { IoEyeOutline } from "react-icons/io5";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import CountdownTimer from "../CountDownTimer/CountDownTimer";
 
 const ProductCart = ({ product }: { product: IProduct }) => {
+  const router = useRouter();
   const { user } = useUser();
   const { refetch: refetchCart } = useGetMyCartProducts();
   const { mutate: addToCart } = useAddToCart();
   const handleAddToCart = (product: IProduct) => {
-    addToCart(
-      { productId: product.id, quantity: 1 },
-      {
-        onSuccess(data) {
-          if (data?.success) {
-            refetchCart();
-            toast.success(data?.message);
-          } else {
-            toast.error(data?.message);
-          }
-        },
-      }
-    );
+    if (user?.email) {
+      addToCart(
+        { productId: product.id, quantity: 1 },
+        {
+          onSuccess(data) {
+            if (data?.success) {
+              refetchCart();
+              toast.success(data?.message);
+            } else {
+              toast.error(data?.message);
+            }
+          },
+        }
+      );
+    } else {
+      Swal.fire({
+        title: "Please login",
+        text: "Please login to add product in cart!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Login",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.push("/login");
+        }
+      });
+    }
   };
 
   return (
@@ -65,13 +84,27 @@ const ProductCart = ({ product }: { product: IProduct }) => {
           </h4>
 
           <div>
-            <div>
-              <span className="text-primary mr-[5px] font-medium">
+            <div className="flex items-center">
+              {product?.isFlashSale && (
+                <span className=" mr-[5px] font-medium">
+                  {(
+                    product?.price *
+                    (1 - product?.discount_percentage / 100)
+                  ).toFixed(2)}
+                </span>
+              )}
+
+              <span
+                className={` mr-[5px] font-medium ${product?.isFlashSale ? "line-through" : ""}`}
+              >
                 {product?.price}
               </span>
-              <span className="text-sm text-[#687188] line-through font-medium">
-                {(product?.price + 15).toFixed(2)}
-              </span>
+              {product?.isFlashSale && (
+                <div>
+                  {" "}
+                  <CountdownTimer saleEndTime={product?.sale_end_time} />
+                </div>
+              )}
             </div>
 
             <div className="flex items-center justify-start">

@@ -20,3 +20,9 @@ export interface IUpdateUserStatusRole {
 }
 
 export type IUserRole = "ADMIN" | "VENDOR" | "USER";
+
+export interface IChangePassword {
+  oldPassword: string;
+  newPassword: string;
+  confirmNewPassword?: string;
+}

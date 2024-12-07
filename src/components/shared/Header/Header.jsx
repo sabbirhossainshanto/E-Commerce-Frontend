@@ -4,6 +4,7 @@ import AccountDropdown from "./AccountDropdown";
 import CartDropdown from "./CartDropdown";
 import { useUser } from "@/src/context/user.provider";
 import { usePathname } from "next/navigation";
+import MenuDropdown from "./MenuDropdoen";
 
 const Header = () => {
   const pathname = usePathname();
@@ -12,10 +13,11 @@ const Header = () => {
     <nav className="bg-secondary py-1.5">
       <div className="container flex items-center justify-between">
         <Link href="/" className="lg:hidden w-[120px]">
-          <span className="text-white">Click</span> <span>Shop</span>
+          <span className="text-primary">Click</span>
+          <span className="text-white">Shop</span>
         </Link>
         {/* <!-- All categories --> */}
-        <div className="bg-primary rounded-md w-[200px] relative hidden lg:block">
+        {/* <div className="bg-primary rounded-md w-[200px] relative hidden lg:block">
           <div className="py-2.5 px-4 flex items-center justify-center">
             <span className="text-white mr-2.5">
               <svg width="20" height="20" viewBox="0 0 24 24">
@@ -31,10 +33,10 @@ const Header = () => {
             </span>
             <span className="text-white text-base">All categories</span>
           </div>
-        </div>
+        </div> */}
 
         {/* Nav lists */}
-        <ul className="flex items-center gap-3">
+        <ul className="lg:flex items-center hidden">
           <li>
             <Link
               href="/"
@@ -59,11 +61,20 @@ const Header = () => {
               Recent Product
             </Link>
           </li>
+          <li>
+            <Link
+              href="/flash-sale"
+              className={` leading-[26px] flex items-center text-base font-medium px-2.5 py-[15px] transition duration-300 ${pathname === "/flash-sale" ? "text-primary" : "text-white"}`}
+            >
+              Flash Sale
+            </Link>
+          </li>
         </ul>
         {user?.email ? (
           <div className="flex items-center">
             {/* TODO */}
             {/* <WishlistDropdown /> */}
+            <MenuDropdown />
             <CartDropdown />
             <AccountDropdown />
           </div>

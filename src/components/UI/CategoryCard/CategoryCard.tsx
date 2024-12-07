@@ -1,3 +1,5 @@
+"use client";
+
 import { useProduct } from "@/src/context/product.provider";
 import { ICategories } from "@/src/types";
 import Link from "next/link";

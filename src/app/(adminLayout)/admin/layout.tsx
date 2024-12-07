@@ -1,7 +1,7 @@
 "use client";
 
 import BreadCrumbs from "@/src/components/shared/admin/BreadCrumbs/BreadCrumbs";
-import Sidebar from "@/src/components/shared/admin/Sidebar/Sidebar";
+import AdminSidebar from "@/src/components/shared/admin/Sidebar/Sidebar";
 import Header from "@/src/components/shared/Header/Header";
 import TopHeader from "@/src/components/shared/Header/TopHeader";
 import { IChildren } from "@/src/types/global";
@@ -15,7 +15,7 @@ const layout = ({ children }: IChildren) => {
         <Header />
         <BreadCrumbs />
         <div className="container grid grid-cols-12 gap-6 pb-14">
-          <Sidebar />
+          <AdminSidebar />
           {children}
         </div>
       </main>

@@ -11,6 +11,8 @@ import {
   Input,
   Select,
   SelectItem,
+  DateValue,
+  DatePicker,
 } from "@nextui-org/react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -21,8 +23,14 @@ import Image from "next/image";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { useGetAllCategory } from "@/src/hooks/category";
 
-export default function CreateProduct() {
+export default function CreateFlashSale() {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const [sale_start_time, setSaleStartTime] = useState<DateValue | undefined>(
+    undefined
+  );
+  const [sale_end_time, setSaleEndTime] = useState<DateValue | undefined>(
+    undefined
+  );
   const [images, setImages] = useState<File[]>([]);
   const { mutate: createProduct, isPending, isSuccess } = useCreateProduct();
   const { refetch: refetchMyProduct } = useGetMyProducts();
@@ -30,33 +38,48 @@ export default function CreateProduct() {
   const { handleSubmit, register } = useForm();
 
   const handleUpdateProduct: SubmitHandler<FieldValues> = (values) => {
-    const payload = Object.fromEntries(
-      Object.entries({
-        categoryId: values?.categoryId,
-        name: values?.name,
-        description: values?.description,
-        discount: Number(values?.discount),
-        inventory: Number(values?.inventory),
-        price: Number(values?.price),
-      }).filter(([_, value]) => value != null)
-    );
+    if (sale_end_time && sale_start_time) {
+      const payload = Object.fromEntries(
+        Object.entries({
+          isFlashSale: true,
+          categoryId: values?.categoryId,
+          name: values?.name,
+          description: values?.description,
+          inventory: Number(values?.inventory),
+          price: Number(values?.price),
+          discount_percentage: Number(values?.discount_percentage),
+          sale_end_time: new Date(
+            sale_end_time.day,
+            sale_end_time.month - 1,
+            sale_end_time.year
+          ).toISOString(),
+          sale_start_time: new Date(
+            sale_start_time.day,
+            sale_start_time.month - 1,
+            sale_start_time.year
+          ).toISOString(),
+        }).filter(([_, value]) => value != null)
+      );
 
-    const formData = new FormData();
-    formData.append("data", JSON.stringify(payload));
-    for (let image of images) {
-      formData.append("files", image);
+      const formData = new FormData();
+      formData.append("data", JSON.stringify(payload));
+      for (let image of images) {
+        formData.append("files", image);
+      }
+      createProduct(formData, {
+        onSuccess(data) {
+          if (data?.success) {
+            toast.success(data?.message);
+            refetchMyProduct();
+            onClose();
+          } else {
+            toast.error(data?.message);
+          }
+        },
+      });
+    } else {
+      toast.error("Date is required");
     }
-    createProduct(formData, {
-      onSuccess(data) {
-        if (data?.success) {
-          toast.success(data?.message);
-          refetchMyProduct();
-          onClose();
-        } else {
-          toast.error(data?.message);
-        }
-      },
-    });
   };
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -73,7 +96,7 @@ export default function CreateProduct() {
   }, [isOpen]);
   return (
     <>
-      <Button onPress={onOpen}>Create Product</Button>
+      <Button onPress={onOpen}>Add Flash Sale</Button>
       <Modal
         size="2xl"
         isOpen={isOpen}
@@ -84,7 +107,7 @@ export default function CreateProduct() {
           {(onClose) => (
             <form onSubmit={handleSubmit(handleUpdateProduct)}>
               <ModalHeader className="flex flex-col gap-1">
-                Create Product
+                Add Flash Sale
               </ModalHeader>
               <ModalBody>
                 <div className="flex items-center gap-5">
@@ -112,37 +135,57 @@ export default function CreateProduct() {
                     variant="bordered"
                   />
                   <Input
+                    {...register("description", { required: true })}
                     labelPlacement="outside"
-                    {...register("discount")}
-                    label="Discount"
-                    placeholder="Discount"
+                    label="Description"
+                    placeholder="Description"
                     variant="bordered"
                   />
                 </div>
 
-                <Input
-                  {...register("description", { required: true })}
-                  labelPlacement="outside"
-                  label="Description"
-                  placeholder="Description"
-                  variant="bordered"
-                />
-                {categories?.data && (
-                  <Select
-                    {...register("categoryId", { required: true })}
+                <div className="flex items-center gap-5">
+                  {categories?.data && (
+                    <Select
+                      label="Product Category"
+                      labelPlacement="outside"
+                      {...register("categoryId", { required: true })}
+                      variant="bordered"
+                      placeholder="Product Category"
+                      className="max-w-full"
+                      aria-label="Role"
+                    >
+                      {categories?.data?.map((category) => (
+                        <SelectItem key={category.id}>
+                          {category?.name}
+                        </SelectItem>
+                      ))}
+                    </Select>
+                  )}
+                  <Input
+                    labelPlacement="outside"
+                    {...register("discount_percentage", { required: true })}
+                    type="number"
+                    label="Discount Percentage"
+                    placeholder="Discount Percentage"
                     variant="bordered"
-                    placeholder="Product Category"
-                    className="max-w-full"
-                    aria-label="Role"
-                  >
-                    {categories?.data?.map((category) => (
-                      <SelectItem key={category.id}>
-                        {category?.name}
-                      </SelectItem>
-                    ))}
-                  </Select>
-                )}
-
+                  />
+                </div>
+                <div className="flex items-center gap-5">
+                  <DatePicker
+                    onChange={(value) => setSaleStartTime(value)}
+                    labelPlacement="outside"
+                    variant="bordered"
+                    label="Sale Start Time"
+                    className="max-w-[284px]"
+                  />
+                  <DatePicker
+                    onChange={(value) => setSaleEndTime(value)}
+                    labelPlacement="outside"
+                    variant="bordered"
+                    label="Sale End Time"
+                    className="max-w-[284px]"
+                  />
+                </div>
                 <div className="mt-4">
                   <label htmlFor="Image" className="text-xs">
                     Product Images

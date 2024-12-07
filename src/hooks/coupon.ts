@@ -1,7 +1,12 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { ICategories, ICoupon, IResponse } from "../types";
-import { deleteCoupon, getSingleCategory } from "../services/Category";
-import { createCoupon, getAllCoupons } from "../services/Coupon";
+import { ICoupon, IResponse } from "../types";
+
+import {
+  createCoupon,
+  deleteCoupon,
+  getAllCoupons,
+  validateCoupon,
+} from "../services/Coupon";
 
 export const useCreateCoupon = () => {
   return useMutation<any, Error, Partial<ICoupon>>({
@@ -16,11 +21,17 @@ export const useGetAllCoupon = () => {
     queryFn: async () => await getAllCoupons(),
   });
 };
-
-export const useGetSingleCategory = (id: string) => {
-  return useQuery<any, Error, IResponse<ICategories>>({
-    queryKey: ["get-category", id],
-    queryFn: async () => await getSingleCategory(id),
+export const useValidateCoupon = () => {
+  return useMutation<
+    any,
+    Error,
+    {
+      totalAmount: number;
+      code: string;
+    }
+  >({
+    mutationKey: ["validate-coupon"],
+    mutationFn: async (payload) => await validateCoupon(payload),
   });
 };
 

@@ -9,7 +9,6 @@ export interface IProduct {
   price: number;
   inventory: number;
   categoryId: string;
-  discount: number | null;
   shopId: string;
   images: string[];
   createdAt: string;
@@ -17,4 +16,8 @@ export interface IProduct {
   category: ICategories;
   shop: IShop;
   reviews: IReview[];
+  isFlashSale: boolean;
+  discount_percentage: number;
+  sale_start_time: string;
+  sale_end_time: string;
 }

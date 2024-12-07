@@ -4,6 +4,7 @@ import {
   useUpdateCartProductQuantity,
 } from "@/src/hooks/cart";
 import { ICart } from "@/src/types";
+import { calculateDiscount } from "@/src/utils/calculateDiscount";
 import Image from "next/image";
 import Link from "next/link";
 import { FaMinus, FaPlus } from "react-icons/fa";
@@ -23,9 +24,18 @@ const CartProduct = ({
   const { mutate: deleteCartProduct } = useDeleteCartProduct();
   /* Total Amount of cart products */
   let totalAmount: number = 0;
+
   if (cartProducts) {
     for (const cartProduct of cartProducts) {
-      totalAmount += cartProduct?.product?.price * cartProduct?.quantity;
+      if (cartProduct?.product?.isFlashSale) {
+        const price = cartProduct?.product?.price * cartProduct?.quantity;
+        totalAmount += calculateDiscount(
+          price,
+          cartProduct.product.discount_percentage
+        );
+      } else {
+        totalAmount += cartProduct?.product?.price * cartProduct?.quantity;
+      }
     }
   }
 
@@ -108,7 +118,19 @@ const CartProduct = ({
                 </h5>
                 <p className="text-[#464545] text-sm">
                   Price:
-                  <span className="ms-2">{cartProduct?.product?.price}</span>
+                  <span className="ms-2">
+                    {cartProduct?.product?.isFlashSale
+                      ? calculateDiscount(
+                          cartProduct?.product?.price,
+                          cartProduct?.product?.discount_percentage
+                        ).toFixed(2)
+                      : cartProduct?.product?.price}
+                  </span>
+                  {cartProduct?.product?.isFlashSale && (
+                    <span className="ms-2 line-through">
+                      {cartProduct?.product?.price}
+                    </span>
+                  )}
                 </p>
 
                 <div>

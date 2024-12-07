@@ -20,6 +20,20 @@ export const getAllCoupons = async () => {
     return error.response.data;
   }
 };
+export const validateCoupon = async (payload: {
+  totalAmount: number;
+  code: string;
+}) => {
+  try {
+    const { data } = await AxiosSecure.post(
+      "/coupons/validate-coupon",
+      payload
+    );
+    return data;
+  } catch (error: any) {
+    return error.response.data;
+  }
+};
 
 export const deleteCoupon = async (id: string) => {
   try {

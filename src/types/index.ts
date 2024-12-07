@@ -9,6 +9,7 @@ export * from "./followShop";
 export * from "./order";
 export * from "./review";
 export * from "./coupon";
+export * from "./flashSale";
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;

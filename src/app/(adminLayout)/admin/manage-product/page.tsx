@@ -12,20 +12,16 @@ import {
 import { DeleteIcon } from "@/src/components/icons";
 import React from "react";
 import { IProduct } from "@/src/types";
-import { useDeleteProduct, useGetMyProducts } from "@/src/hooks/product";
+import { useDeleteProduct, useGetAllProducts } from "@/src/hooks/product";
 import UpdateProduct from "@/src/components/modal/vendor/UpdateProduct";
-import CreateProduct from "@/src/components/modal/vendor/CreateProduct";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import CreateFlashSale from "@/src/components/modal/vendor/CreateFlashSale";
-import moment from "moment";
 
 const columns = [
   { name: "NAME", uid: "name" },
   { name: "PRICE", uid: "price" },
   { name: "INVENTORY", uid: "inventory" },
-  { name: "DISCOUNT", uid: "discount_percentage" },
-  { name: "Sale End Time", uid: "sale_end_time" },
+  { name: "DISCOUNT", uid: "discount" },
   { name: "SHOP", uid: "shopName" },
   { name: "ACTIONS", uid: "actions" },
 ];
@@ -39,27 +35,26 @@ type TPickProduct = Pick<
   | "price"
   | "discount_percentage"
   | "id"
-  | "sale_end_time"
+  | "isFlashSale"
 > & { actions: string; shopName: string; categoryName: string };
 
 const ManageProduct = () => {
   const router = useRouter();
-  const { data, refetch } = useGetMyProducts();
+  const { data, refetch } = useGetAllProducts([]);
   const { mutate: deleteProduct } = useDeleteProduct();
+
   const productData =
     data?.data?.map((product) => ({
       id: product.id,
-      discount_percentage: product?.discount_percentage || "N/A",
+      discount_percentage: product?.discount_percentage,
       name: product?.name,
       description: product?.description,
       images: product?.images,
       inventory: product?.inventory,
       price: product?.price,
       categoryName: product.category.name,
-      sale_end_time: product?.sale_end_time
-        ? moment(product?.sale_end_time).format("DD-MM-YYYY")
-        : "N/A",
       shopName: product.shop.shopName,
+      isFlashSale: product?.isFlashSale,
     })) || [];
 
   const handleDeleteProduct = (id: string) => {
@@ -90,7 +85,30 @@ const ManageProduct = () => {
               name={cellValue}
             />
           );
-
+        case "price":
+          return (
+            <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+              {product.price}
+            </div>
+          );
+        case "inventory":
+          return (
+            <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+              {product.inventory}
+            </div>
+          );
+        case "discount_percentage":
+          return (
+            <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+              {product.discount_percentage || "N/A"}
+            </div>
+          );
+        case "shopName":
+          return (
+            <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+              {product.shopName}
+            </div>
+          );
         case "actions":
           return (
             <div className="relative flex items-center justify-end gap-5">
@@ -113,10 +131,6 @@ const ManageProduct = () => {
 
   return (
     <div className="col-span-12 lg:col-span-9">
-      <div className="flex justify-end gap-3 mb-5">
-        <CreateFlashSale />
-        <CreateProduct />
-      </div>
       <Table aria-label="Example table with custom cells">
         <TableHeader columns={columns}>
           {(column) => (

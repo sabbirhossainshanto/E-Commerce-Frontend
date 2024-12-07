@@ -13,8 +13,14 @@ import { useGetAllProducts } from "@/src/hooks/product";
 import ProductCart from "../ProductCart/ProductCart";
 import { useAddToCart, useGetMyCartProducts } from "@/src/hooks/cart";
 import { toast } from "sonner";
+import { useUser } from "@/src/context/user.provider";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
+import { calculateDiscount } from "@/src/utils/calculateDiscount";
 
 const SingleProduct = ({ product }: { product: IProduct }) => {
+  const { user } = useUser();
+  const router = useRouter();
   const { data: products } = useGetAllProducts([
     { name: "category", value: product?.category.name },
   ]);
@@ -24,19 +30,35 @@ const SingleProduct = ({ product }: { product: IProduct }) => {
   const [quantity, setQuantity] = useState(1);
 
   const handleAddToCart = (product: IProduct) => {
-    addToCart(
-      { productId: product.id, quantity: quantity },
-      {
-        onSuccess(data) {
-          if (data?.success) {
-            refetchCart();
-            toast.success(data?.message);
-          } else {
-            toast.error(data?.message);
-          }
-        },
-      }
-    );
+    if (user?.email) {
+      addToCart(
+        { productId: product.id, quantity: quantity },
+        {
+          onSuccess(data) {
+            if (data?.success) {
+              refetchCart();
+              toast.success(data?.message);
+            } else {
+              toast.error(data?.message);
+            }
+          },
+        }
+      );
+    } else {
+      Swal.fire({
+        title: "Please login",
+        text: "Please login to add product in cart!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Login",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.push("/login");
+        }
+      });
+    }
   };
 
   return (
@@ -116,16 +138,23 @@ const SingleProduct = ({ product }: { product: IProduct }) => {
                 </p>
               </div>
               <div className="mt-3 flex gap-3 items-center overflow-hidden">
-                <span className="line-through">
-                  {(product?.price + 20).toFixed(2)}
-                </span>
-                <span className="text-2xl text-primary font-semibold">
-                  {product?.price}
-                </span>
-                {product?.discount && (
-                  <div className="ml-3 text-sm bg-primary text-white px-2 py-[2px] relative after:absolute after:w-[14px] after:h-[14px] after:bg-primary after:-left-1 after:top-1 after:rotate-45">
-                    -{product?.discount}
-                  </div>
+                {product?.isFlashSale ? (
+                  <span className="text-2xl text-primary font-semibold">
+                    {calculateDiscount(
+                      product?.price,
+                      product?.discount_percentage
+                    ).toFixed(2)}
+                  </span>
+                ) : (
+                  <span className="text-2xl text-primary font-semibold">
+                    {product?.price}
+                  </span>
+                )}
+
+                {product?.isFlashSale && (
+                  <span className="line-through">
+                    {(product?.price).toFixed(2)}
+                  </span>
                 )}
               </div>
               <div className="mt-2">

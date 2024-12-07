@@ -2,6 +2,7 @@
 
 import AddReviewToProduct from "@/src/components/modal/user/AddReviewToProduct";
 import { useDeleteMyOrder, useGetMyOrder } from "@/src/hooks/order";
+import { calculateDiscount } from "@/src/utils/calculateDiscount";
 import { Button } from "@nextui-org/button";
 import Image from "next/image";
 import { toast } from "sonner";
@@ -49,7 +50,27 @@ const OrderHistory = () => {
                 Quantity: <span className="">{order?.quantity}</span>
               </p>
               <p className="mb-0">
-                Quantity: <span className="">{order?.product?.price}</span>
+                Product Price: <span className="">{order?.product?.price}</span>
+              </p>
+              {order?.discountedPrice ? (
+                <p className="mb-0">
+                  Discounted Price:{" "}
+                  <span className="">
+                    {calculateDiscount(
+                      order.product.price,
+                      order.product.discount_percentage
+                    ).toFixed(2)}
+                  </span>
+                </p>
+              ) : null}
+
+              <p className="mb-0">
+                Total Price:{" "}
+                <span className="">
+                  {order?.discountedPrice
+                    ? order?.discountedPrice
+                    : order.product?.price * order?.quantity}
+                </span>
               </p>
             </div>
 

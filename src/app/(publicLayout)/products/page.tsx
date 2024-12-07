@@ -69,7 +69,7 @@ const ProductPage = () => {
 
   return (
     <div className="container pb-14 pt-12 relative">
-      <div className="grid grid-cols-4 relative gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 relative gap-6">
         <div className="col-span-1">
           <div className="lg:opacity-100 lg:visible transition-all duration-300 absolute bg-white top-[80px] left-0 lg:static w-[320px] shadow lg:w-full p-4 z-20 opacity-0 invisible">
             <div className="mt-6 sm:mt-2">
@@ -124,8 +124,18 @@ const ProductPage = () => {
             </div>
           </div>
         </div>
-        <div className="col-span-4 lg:col-span-3">
+        <div className="col-span-1 lg:col-span-3">
           {/* Dropdown */}
+          <div className="w-[200px] md:hidden mb-5">
+            <Input
+              onChange={handleSearchChange}
+              onClear={handleRemoveSearch}
+              variant="bordered"
+              isClearable
+              type="text"
+              label="Search Product..."
+            />
+          </div>
           <div className="flex items-center gap-5">
             <Dropdown>
               <DropdownTrigger>
@@ -148,7 +158,7 @@ const ProductPage = () => {
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
-            <div className="w-[200px]">
+            <div className="hidden md:w-[200px]">
               <Input
                 onChange={handleSearchChange}
                 onClear={handleRemoveSearch}
@@ -171,7 +181,7 @@ const ProductPage = () => {
             </Button>
           </div>
           {products?.data && products?.data?.length > 0 ? (
-            <div className="grid grid-cols-4 gap-5 mt-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-4">
               {products?.data?.map((product) => (
                 <ProductCart key={product.id} product={product} />
               ))}

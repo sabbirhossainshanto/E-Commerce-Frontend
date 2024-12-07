@@ -14,6 +14,7 @@ import { EditIcon } from "../../icons";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import {
+  useGetAllProducts,
   useGetMyProducts,
   useGetSingleProduct,
   useUpdateProduct,
@@ -21,11 +22,14 @@ import {
 import { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Image from "next/image";
+import { useUser } from "@/src/context/user.provider";
 
 export default function UpdateProduct({ id }: { id: string }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const { user } = useUser();
   const [images, setImages] = useState<File[]>([]);
   const { refetch } = useGetMyProducts();
+  const { refetch: refetchAllProduct } = useGetAllProducts([]);
   const { data: product } = useGetSingleProduct(id);
   const { mutate: updateProduct } = useUpdateProduct();
   const { handleSubmit, register, reset } = useForm();
@@ -53,7 +57,12 @@ export default function UpdateProduct({ id }: { id: string }) {
           onSuccess(data) {
             if (data?.success) {
               toast.success(data?.message);
-              refetch();
+              if (user?.role === "VENDOR") {
+                refetch();
+              } else {
+                refetchAllProduct();
+              }
+
               onClose();
             } else {
               toast.error(data?.message);

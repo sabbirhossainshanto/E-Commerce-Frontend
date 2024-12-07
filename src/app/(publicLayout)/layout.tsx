@@ -7,7 +7,7 @@ const layout = ({ children }: IChildren) => {
   return (
     <div className="relative flex flex-col h-screen">
       <Navbar />
-      <main className="flex-grow">{children}</main>
+      <main className="flex-grow px-2 lg:px-0">{children}</main>
       <Footer />
     </div>
   );

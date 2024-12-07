@@ -4,6 +4,7 @@ import { IShop } from "./shop";
 export interface IOrderPayload {
   productId: string;
   quantity: number;
+  coupon?: string;
 }
 
 export interface IOrder {
@@ -20,4 +21,5 @@ export interface IOrder {
   shop: IShop;
   product: IProduct;
   isReviewed: boolean;
+  discountedPrice?: number;
 }

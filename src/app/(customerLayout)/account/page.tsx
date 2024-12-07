@@ -1,7 +1,10 @@
-import Link from "next/link";
+"use client";
+import { useUser } from "@/src/context/user.provider";
+import Image from "next/image";
 import React from "react";
 
 const UserHomePage = () => {
+  const { user } = useUser();
   return (
     <div className="col-span-12 lg:col-span-9">
       <div className="account_cont_wrap">
@@ -9,42 +12,20 @@ const UserHomePage = () => {
           <div className="col-span-12 md:col-span-4 box_shadow p-6 min-h-[225px]">
             <div className="flex justify-between items-center">
               <h4 className="text-lg">Personal Profile</h4>
-              <Link href="profile-information.html" className="text-primary">
-                Edit
-              </Link>
+              <p className="text-primary">Edit</p>
             </div>
             <div className="mt-4">
-              <p className="font-semibold">Russell Ahmed</p>
-              <p>example@mail.com</p>
-              <p>(123) 456-789</p>
-            </div>
-          </div>
-          <div className="col-span-12 md:col-span-4 box_shadow p-6 min-h-[225px]">
-            <div className="flex justify-between items-center">
-              <h4 className="text-lg">Shipping Address</h4>
-              <Link href="profile-information.html" className="text-primary">
-                Edit
-              </Link>
-            </div>
-            <div className="mt-4">
-              <p className="font-semibold">Ralph Bohner</p>
-              <p>3891 Ranchview Dr.</p>
-              <p>Richardson, Califora</p>
-              <p>(123) 456-789</p>
-            </div>
-          </div>
-          <div className="col-span-12 md:col-span-4 box_shadow p-6 min-h-[225px]">
-            <div className="flex justify-between items-center">
-              <h4 className="text-lg">Billing Address</h4>
-              <Link href="profile-information.html" className="text-primary">
-                Edit
-              </Link>
-            </div>
-            <div className="mt-4">
-              <p className="font-semibold">Ralph Bohner</p>
-              <p>3891 Ranchview Dr.</p>
-              <p>Richardson, Califora</p>
-              <p>(123) 456-789</p>
+              <p className="font-semibold">{user?.name}</p>
+              <p>{user?.email}</p>
+              {user?.profilePhoto && (
+                <Image
+                  height={100}
+                  width={100}
+                  alt="Profile"
+                  className="mt-5"
+                  src={user?.profilePhoto}
+                />
+              )}
             </div>
           </div>
         </div>
