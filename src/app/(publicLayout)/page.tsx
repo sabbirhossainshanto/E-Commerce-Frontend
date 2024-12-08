@@ -10,7 +10,7 @@ import Link from "next/link";
 
 export default function Home() {
   const { data: products } = useGetAllProducts([]);
-  const { data: categories } = useGetAllCategory();
+  const { data: categories } = useGetAllCategory([]);
   const { data } = useGetAllFlashSale();
 
   return (

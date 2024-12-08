@@ -17,7 +17,7 @@ const ProductPage = () => {
   const { query, setQuery, selectedCategory, setSelectedCategory } =
     useProduct();
   const { data: products } = useGetAllProducts(query);
-  const { data: categories } = useGetAllCategory();
+  const { data: categories } = useGetAllCategory([]);
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked, value } = e.target;

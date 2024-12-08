@@ -18,9 +18,12 @@ interface IUserContext {
   setIsUserLoading: Dispatch<SetStateAction<boolean>>;
   user: IUser | null;
   setUser: (user: IUser | null) => void;
+  showCompareModal: boolean;
+  setShowCompareModal: Dispatch<SetStateAction<boolean>>;
 }
 
 const UserProvider = ({ children }: { children: ReactNode }) => {
+  const [showCompareModal, setShowCompareModal] = useState(false);
   const [isUserLoading, setIsUserLoading] = useState(true);
   const [user, setUser] = useState<IUser | null>(null);
 
@@ -41,6 +44,8 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
         setIsUserLoading,
         setUser,
         user,
+        showCompareModal,
+        setShowCompareModal,
       }}
     >
       {children}

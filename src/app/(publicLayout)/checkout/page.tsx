@@ -96,12 +96,9 @@ const CheckoutPage = () => {
                 />
               </div>
               <div className="mt-6 md:mt-0">
-                <a
-                  href="product-view.html"
-                  className="hover:text-primary transition durition-300"
-                >
+                <p className="transition duration-300">
                   <h5>{cart?.product?.name}</h5>
-                </a>
+                </p>
                 <p className="mb-0">
                   Quantity: <span className="">{cart?.quantity}</span>
                 </p>

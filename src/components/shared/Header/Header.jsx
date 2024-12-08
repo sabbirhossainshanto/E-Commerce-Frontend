@@ -5,10 +5,13 @@ import CartDropdown from "./CartDropdown";
 import { useUser } from "@/src/context/user.provider";
 import { usePathname } from "next/navigation";
 import MenuDropdown from "./MenuDropdoen";
+import { useGetMyComparison } from "@/src/hooks/compare";
+import Comparison from "../../modal/Comparison";
 
 const Header = () => {
   const pathname = usePathname();
   const { user } = useUser();
+  const { data: comparisons } = useGetMyComparison();
   return (
     <nav className="bg-secondary py-1.5">
       <div className="container flex items-center justify-between">
@@ -75,6 +78,10 @@ const Header = () => {
             {/* TODO */}
             {/* <WishlistDropdown /> */}
             <MenuDropdown />
+            {comparisons?.data && comparisons?.data?.length > 0 && (
+              <Comparison comparisons={comparisons?.data} />
+            )}
+
             <CartDropdown />
             <AccountDropdown />
           </div>

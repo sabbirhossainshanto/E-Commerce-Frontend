@@ -9,10 +9,6 @@ export default {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        sans: ["var(--font-sans)"],
-        mono: ["var(--font-mono)"],
-      },
       colors: {
         primary: "#fd3d57",
         secondary: "#2b2d42",

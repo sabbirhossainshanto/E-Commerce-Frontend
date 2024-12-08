@@ -31,7 +31,7 @@ export default function UpdateProductCategory({ id }: { id: string }) {
       name: category?.data?.name,
     },
   });
-  const { refetch: refetchCategories } = useGetAllCategory();
+  const { refetch: refetchCategories } = useGetAllCategory([]);
   const { mutate: updateCategory } = useUpdateSingleCategory();
 
   const handleUpdateCategory: SubmitHandler<FieldValues> = (value) => {

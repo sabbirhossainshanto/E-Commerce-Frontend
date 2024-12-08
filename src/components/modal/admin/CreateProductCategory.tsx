@@ -10,19 +10,21 @@ import {
   useDisclosure,
   Input,
 } from "@nextui-org/react";
-import { useCreateCategory, useGetAllCategory } from "@/src/hooks/category";
+import { useCreateCategory } from "@/src/hooks/category";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useState } from "react";
 import Image from "next/image";
 import { AiOutlinePlusCircle } from "react-icons/ai";
+import { useQueryClient } from "@tanstack/react-query";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 export default function CreateProductCategory() {
+  const queryClient = useQueryClient();
   const { handleSubmit, register, reset } = useForm();
   const [image, setImage] = useState<File | null>(null);
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const { mutate: createCategory } = useCreateCategory();
-  const { refetch } = useGetAllCategory([]);
+  const { mutate: createCategory, isPending, isSuccess } = useCreateCategory();
 
   const handleCreateCategory: SubmitHandler<FieldValues> = (value) => {
     const payload = { name: value?.name };
@@ -35,7 +37,7 @@ export default function CreateProductCategory() {
       onSuccess(data) {
         if (data?.success) {
           toast.success(data?.message);
-          refetch();
+          queryClient.invalidateQueries({ queryKey: ["get-categories"] });
           reset();
           setImage(null);
           onClose();
@@ -110,7 +112,14 @@ export default function CreateProductCategory() {
                   Cancel
                 </Button>
                 <Button type="submit" color="primary">
-                  Create
+                  {isPending && !isSuccess ? (
+                    <span className="flex items-center gap-2 justify-center text-base">
+                      <span>Please Wait</span>{" "}
+                      <TbFidgetSpinner className="animate-spin" />
+                    </span>
+                  ) : (
+                    <span> Create</span>
+                  )}
                 </Button>
               </ModalFooter>
             </form>

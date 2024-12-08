@@ -17,15 +17,16 @@ import {
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { TbFidgetSpinner } from "react-icons/tb";
-import { useCreateCoupon, useGetAllCoupon } from "@/src/hooks/coupon";
+import { useCreateCoupon } from "@/src/hooks/coupon";
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function CreateCoupon() {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [expiryDate, setExpiryDate] = useState<DateValue | undefined>(
     undefined
   );
-  const { refetch: refetchCoupon } = useGetAllCoupon([]);
+  const queryClient = useQueryClient();
   const { mutate: createCoupon, isPending, isSuccess } = useCreateCoupon();
   const { handleSubmit, register } = useForm();
 
@@ -42,7 +43,7 @@ export default function CreateCoupon() {
       onSuccess(data) {
         if (data?.success) {
           toast.success(data?.message);
-          refetchCoupon();
+          queryClient.invalidateQueries({ queryKey: ["get-coupons"] });
           onClose();
         } else {
           toast.error(data?.message);

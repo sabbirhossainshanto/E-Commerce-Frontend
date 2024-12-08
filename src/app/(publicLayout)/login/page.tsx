@@ -96,6 +96,7 @@ const Login = () => {
             <div className="flex justify-between items-center mt-6">
               <div className="flex gap-3 items-center">
                 <input
+                  defaultChecked
                   type="checkbox"
                   className="focus:ring-0 text-primary border border-primary focus:bg-primary focus:outline-none"
                   id="save-default"
@@ -131,7 +132,7 @@ const Login = () => {
           </div>
         </form>
 
-        <div className="flex justify-center mt-4 relative after:absolute after:w-full after:h-[1px] after:bg-gray-300 after:top-3">
+        {/* <div className="flex justify-center mt-4 relative after:absolute after:w-full after:h-[1px] after:bg-gray-300 after:top-3">
           <p className="px-2 bg-white z-10">Or login in with</p>
         </div>
 
@@ -142,7 +143,7 @@ const Login = () => {
           <button className="default_btn w-full bg-google hover:bg-white hover:border-[#D85040] hover:text-[#D85040]">
             <i className="fab fa-google me-2"></i> Google
           </button>
-        </div>
+        </div> */}
 
         <p className="text-center mt-3 mb-0">
           {"Don't"} have an account.?{" "}

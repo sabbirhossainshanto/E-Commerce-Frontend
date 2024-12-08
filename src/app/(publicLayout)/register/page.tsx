@@ -23,15 +23,7 @@ const Register = () => {
   } = useUserRegister();
   const router = useRouter();
 
-  const { handleSubmit, register } = useForm({
-    defaultValues: {
-      name: "Hero",
-      email: "web@hero.com",
-      password: "ph-password",
-      confirmPassword: "ph-password",
-      role: "USER",
-    },
-  });
+  const { handleSubmit, register } = useForm();
 
   /* Register function */
   const handleRegister: SubmitHandler<FieldValues> = async (data) => {

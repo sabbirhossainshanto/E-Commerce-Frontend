@@ -13,25 +13,21 @@ import {
 import { EditIcon } from "../../icons";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import {
-  useGetAllProducts,
-  useGetMyProducts,
-  useGetSingleProduct,
-  useUpdateProduct,
-} from "@/src/hooks/product";
+import { useGetSingleProduct, useUpdateProduct } from "@/src/hooks/product";
 import { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Image from "next/image";
 import { useUser } from "@/src/context/user.provider";
+import { useQueryClient } from "@tanstack/react-query";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 export default function UpdateProduct({ id }: { id: string }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const queryClient = useQueryClient();
   const { user } = useUser();
   const [images, setImages] = useState<File[]>([]);
-  const { refetch } = useGetMyProducts();
-  const { refetch: refetchAllProduct } = useGetAllProducts([]);
   const { data: product } = useGetSingleProduct(id);
-  const { mutate: updateProduct } = useUpdateProduct();
+  const { mutate: updateProduct, isPending, isSuccess } = useUpdateProduct();
   const { handleSubmit, register, reset } = useForm();
 
   const handleUpdateProduct: SubmitHandler<FieldValues> = (values) => {
@@ -40,7 +36,6 @@ export default function UpdateProduct({ id }: { id: string }) {
         Object.entries({
           name: values?.name,
           description: values?.description,
-          discount: Number(values?.discount),
           inventory: Number(values?.inventory),
           price: Number(values?.price),
         }).filter(([_, value]) => value != null)
@@ -58,9 +53,9 @@ export default function UpdateProduct({ id }: { id: string }) {
             if (data?.success) {
               toast.success(data?.message);
               if (user?.role === "VENDOR") {
-                refetch();
+                queryClient.invalidateQueries({ queryKey: ["my-products"] });
               } else {
-                refetchAllProduct();
+                queryClient.invalidateQueries({ queryKey: ["all-products"] });
               }
 
               onClose();
@@ -88,7 +83,6 @@ export default function UpdateProduct({ id }: { id: string }) {
       reset({
         name: product?.data?.name,
         description: product?.data?.description,
-        discount: product?.data?.discount,
         inventory: product?.data?.inventory,
         price: product?.data?.price,
       });
@@ -140,21 +134,13 @@ export default function UpdateProduct({ id }: { id: string }) {
                     variant="bordered"
                   />
                   <Input
+                    {...register("description", { required: true })}
                     labelPlacement="outside"
-                    {...register("discount")}
-                    label="Discount"
-                    placeholder="Discount"
+                    label="Description"
+                    placeholder="Description"
                     variant="bordered"
                   />
                 </div>
-
-                <Input
-                  {...register("description", { required: true })}
-                  labelPlacement="outside"
-                  label="Description"
-                  placeholder="Description"
-                  variant="bordered"
-                />
 
                 <div className="mt-4">
                   <label htmlFor="Image" className="text-xs">
@@ -207,7 +193,14 @@ export default function UpdateProduct({ id }: { id: string }) {
                   Cancel
                 </Button>
                 <Button type="submit" color="primary">
-                  Update
+                  {isPending && !isSuccess ? (
+                    <span className="flex items-center gap-2 justify-center text-base">
+                      <span>Please Wait</span>{" "}
+                      <TbFidgetSpinner className="animate-spin" />
+                    </span>
+                  ) : (
+                    <span> Update</span>
+                  )}
                 </Button>
               </ModalFooter>
             </form>

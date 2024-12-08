@@ -11,10 +11,14 @@ import { IoEyeOutline } from "react-icons/io5";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import CountdownTimer from "../CountDownTimer/CountDownTimer";
+import { useCreateCompare, useGetMyComparison } from "@/src/hooks/compare";
 
 const ProductCart = ({ product }: { product: IProduct }) => {
   const router = useRouter();
-  const { user } = useUser();
+  const { user, setShowCompareModal } = useUser();
+  const { data: comparisons, refetch: refetchComparison } =
+    useGetMyComparison();
+  const { mutate: addToCompare } = useCreateCompare();
   const { data: cartProduct, refetch: refetchCart } = useGetMyCartProducts();
   const { mutate: addToCart } = useAddToCart();
 
@@ -23,10 +27,11 @@ const ProductCart = ({ product }: { product: IProduct }) => {
       const isDifferentShop = cartProduct?.data?.find(
         (cart) => cart.product?.shopId !== product?.shopId
       );
+
       if (isDifferentShop) {
         Swal.fire({
           title: "Detect Different Shop",
-          text: "Adding multiple shop product is not allowed! Replace the cart with the new product!",
+          text: "Adding multiple shop product is not allowed! Replace the comparison product with the new product!",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
@@ -56,6 +61,75 @@ const ProductCart = ({ product }: { product: IProduct }) => {
             onSuccess(data) {
               if (data?.success) {
                 refetchCart();
+                toast.success(data?.message);
+              } else {
+                toast.error(data?.message);
+              }
+            },
+          }
+        );
+      }
+    } else {
+      Swal.fire({
+        title: "Please login",
+        text: "Please login to add product in cart!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Login",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.push("/login");
+        }
+      });
+    }
+  };
+
+  const handleAddToCompare = (
+    product: IProduct & { type?: "replaceProduct" }
+  ) => {
+    if (user?.email) {
+      const isDifferentShop = comparisons?.data?.find(
+        (compare) => compare.product?.shopId !== product?.shopId
+      );
+
+      if (isDifferentShop) {
+        Swal.fire({
+          title: "Detect Different Shop",
+          text: "Adding multiple shop product is not allowed! Replace the cart with the new product!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, Replace",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            addToCompare(
+              { productId: product.id, type: "replaceProduct" },
+              {
+                onSuccess(data) {
+                  if (data?.success) {
+                    refetchComparison();
+                    toast.success(data?.message);
+                  } else {
+                    toast.error(data?.message);
+                  }
+                },
+              }
+            );
+          }
+        });
+      } else {
+        addToCompare(
+          { productId: product.id },
+          {
+            onSuccess(data) {
+              if (data?.success) {
+                refetchComparison();
+                if (comparisons?.data?.length === 2) {
+                  setShowCompareModal(true);
+                }
                 toast.success(data?.message);
               } else {
                 toast.error(data?.message);
@@ -193,7 +267,13 @@ const ProductCart = ({ product }: { product: IProduct }) => {
             </div>
           </div>
 
-          <div className="absolute left-5 top-14 mt-[15px] group-hover:mt-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+          <div className="absolute left-5 top-3 mt-[15px] group-hover:mt-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col gap-4">
+            <button
+              onClick={() => handleAddToCompare(product)}
+              className="default_btn bg-secondary border-none hover:bg-white px-[15px]"
+            >
+              ADD TO COMPARE
+            </button>
             <button
               onClick={() => handleAddToCart(product)}
               className="default_btn primary-color hover:bg-white px-[15px]"

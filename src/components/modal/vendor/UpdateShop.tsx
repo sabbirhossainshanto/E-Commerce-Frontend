@@ -17,11 +17,12 @@ import { IShop } from "@/src/types";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Image from "next/image";
 import { useGetMyShop, useUpdateMyShop } from "@/src/hooks/shop";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 export default function UpdateShop({ shop }: { shop: IShop }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const { refetch } = useGetMyShop();
-  const { mutate: updateMyShop } = useUpdateMyShop();
+  const { mutate: updateMyShop, isPending, isSuccess } = useUpdateMyShop();
   const [image, setImage] = useState<File | null>(null);
 
   const { handleSubmit, register } = useForm({
@@ -140,7 +141,14 @@ export default function UpdateShop({ shop }: { shop: IShop }) {
                   Cancel
                 </Button>
                 <Button type="submit" color="primary">
-                  Update Shop
+                  {isPending && !isSuccess ? (
+                    <span className="flex items-center gap-2 justify-center text-base">
+                      <span>Please Wait</span>{" "}
+                      <TbFidgetSpinner className="animate-spin" />
+                    </span>
+                  ) : (
+                    <span> Update Shop</span>
+                  )}
                 </Button>
               </ModalFooter>
             </form>

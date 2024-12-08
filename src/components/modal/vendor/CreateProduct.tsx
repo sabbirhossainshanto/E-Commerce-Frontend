@@ -14,19 +14,20 @@ import {
 } from "@nextui-org/react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { useCreateProduct, useGetMyProducts } from "@/src/hooks/product";
+import { useCreateProduct } from "@/src/hooks/product";
 import { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Image from "next/image";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { useGetAllCategory } from "@/src/hooks/category";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function CreateProduct() {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [images, setImages] = useState<File[]>([]);
   const { mutate: createProduct, isPending, isSuccess } = useCreateProduct();
-  const { refetch: refetchMyProduct } = useGetMyProducts();
-  const { data: categories } = useGetAllCategory();
+  const queryClient = useQueryClient();
+  const { data: categories } = useGetAllCategory([]);
   const { handleSubmit, register } = useForm();
 
   const handleUpdateProduct: SubmitHandler<FieldValues> = (values) => {
@@ -49,7 +50,7 @@ export default function CreateProduct() {
       onSuccess(data) {
         if (data?.success) {
           toast.success(data?.message);
-          refetchMyProduct();
+          queryClient.invalidateQueries({ queryKey: ["my-products"] });
           onClose();
         } else {
           toast.error(data?.message);

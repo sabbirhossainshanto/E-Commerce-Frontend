@@ -15,7 +15,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { useAddReviewToProduct } from "@/src/hooks/review";
-import { useGetMyOrder } from "@/src/hooks/order";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function AddReviewToProduct({
   productId,
@@ -24,7 +24,7 @@ export default function AddReviewToProduct({
 }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const { mutate: addReview, isSuccess, isPending } = useAddReviewToProduct();
-  const { refetch } = useGetMyOrder();
+  const queryClient = useQueryClient();
   const { handleSubmit, register } = useForm();
 
   const handleAddReviewToProduct: SubmitHandler<FieldValues> = (values) => {
@@ -38,7 +38,7 @@ export default function AddReviewToProduct({
       onSuccess(data) {
         if (data?.success) {
           toast.success(data?.message);
-          refetch();
+          queryClient.invalidateQueries({ queryKey: ["my-order"] });
           onClose();
         } else {
           toast.error(data?.message);
