@@ -1,11 +1,17 @@
 "use server";
 
 import { AxiosSecure } from "@/src/lib/AxiosSecure";
-import { IUpdateUserStatusRole } from "@/src/types";
+import { IUpdateUserStatusRole, TQueryParam } from "@/src/types";
 
-export const getAllUser = async () => {
+export const getAllUser = async (query: TQueryParam[]) => {
   try {
-    const { data } = await AxiosSecure.get("/users");
+    const params = new URLSearchParams();
+    if (query?.length > 0) {
+      query.forEach((item) => params.append(item.name, item.value as string));
+    }
+    const { data } = await AxiosSecure.get("/users", {
+      params,
+    });
     return data;
   } catch (error: any) {
     return error.response.data;

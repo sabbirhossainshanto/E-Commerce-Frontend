@@ -31,9 +31,13 @@ export const getAllProduct = async (query: TQueryParam[]) => {
   }
 };
 
-export const getMyProduct = async () => {
+export const getMyProduct = async (query: TQueryParam[]) => {
   try {
-    const { data } = await AxiosSecure.get("/products/my-products");
+    const params = new URLSearchParams();
+    if (query?.length > 0) {
+      query.forEach((item) => params.append(item.name, item.value as string));
+    }
+    const { data } = await AxiosSecure.get("/products/my-products", { params });
     return data;
   } catch (error: any) {
     return error.response.data;

@@ -1,7 +1,7 @@
 "use server";
 
 import { AxiosSecure } from "@/src/lib/AxiosSecure";
-import { IUpdateShopStatus } from "@/src/types";
+import { IUpdateShopStatus, TQueryParam } from "@/src/types";
 
 export const createMyShop = async (payload: FormData) => {
   try {
@@ -28,9 +28,13 @@ export const getSingleShop = async (id: string) => {
     return error.response.data;
   }
 };
-export const getAllShop = async () => {
+export const getAllShop = async (query: TQueryParam[]) => {
   try {
-    const { data } = await AxiosSecure.get("/shops");
+    const params = new URLSearchParams();
+    if (query?.length > 0) {
+      query.forEach((item) => params.append(item.name, item.value as string));
+    }
+    const { data } = await AxiosSecure.get("/shops", { params });
     return data;
   } catch (error: any) {
     return error.response.data;

@@ -15,14 +15,16 @@ import {
   DropdownItem,
   Select,
   SelectItem,
+  Pagination,
+  Spinner,
 } from "@nextui-org/react";
 
 import { VerticalDotsIcon } from "@/src/components/icons";
-import React from "react";
+import React, { useState } from "react";
 import { useGetAllUser, useUpdateUserStatusRole } from "@/src/hooks/user";
 import { IFullUser, IUserRole } from "@/src/types";
 import { toast } from "sonner";
-import { UserRole, UserStatus } from "@/src/const/const";
+import { limit, UserRole, UserStatus } from "@/src/const/const";
 
 const columns = [
   { name: "NAME", uid: "name" },
@@ -37,9 +39,18 @@ type IUser = Pick<
 > & { actions: string };
 
 const ManageUser = () => {
-  const { data, refetch: refetchUser } = useGetAllUser();
+  const [page, setPage] = useState(1);
+  const {
+    data,
+    refetch: refetchUser,
+    isLoading,
+  } = useGetAllUser([
+    { name: "limit", value: limit },
+    { name: "page", value: page },
+  ]);
   const { mutate: updateStatusRole } = useUpdateUserStatusRole();
 
+  const meta = data?.meta;
   const userData =
     data?.data?.map((user) => ({
       id: user.id,
@@ -206,7 +217,11 @@ const ManageUser = () => {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={userData}>
+        <TableBody
+          loadingContent={<Spinner />}
+          isLoading={isLoading}
+          items={userData}
+        >
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
@@ -218,6 +233,17 @@ const ManageUser = () => {
           )}
         </TableBody>
       </Table>
+      {!isLoading && (
+        <div className="my-10 flex justify-end">
+          <Pagination
+            loop
+            showControls
+            onChange={(page) => setPage(page)}
+            page={page}
+            total={meta?.total ? Math.ceil(meta?.total / limit) : 1}
+          />
+        </div>
+      )}
     </div>
   );
 };

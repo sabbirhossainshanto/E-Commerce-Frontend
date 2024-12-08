@@ -1,10 +1,11 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { IOrder, IOrderPayload, IResponse } from "../types";
+import { IOrder, IOrderPayload, IResponse, TQueryParam } from "../types";
 import {
   createOrder,
   deleteMyOrder,
   getAllOrders,
   getMyOrders,
+  getShopOrders,
   updateOrderStatus,
 } from "../services/Order";
 
@@ -14,16 +15,27 @@ export const useCreateOrder = () => {
     mutationFn: async (payload) => await createOrder(payload),
   });
 };
-export const useGetMyOrder = () => {
+export const useGetMyOrder = (query: TQueryParam[]) => {
   return useQuery<any, Error, IResponse<IOrder[]>>({
-    queryKey: ["my-order"],
-    queryFn: async () => await getMyOrders(),
+    queryKey: ["my-order", query],
+    queryFn: async () => await getMyOrders(query),
   });
 };
-export const useGetAllOrder = () => {
+export const useGetShopOrder = (payload: {
+  limit: number;
+  page: number;
+  shopId: string;
+}) => {
   return useQuery<any, Error, IResponse<IOrder[]>>({
-    queryKey: ["all-order"],
-    queryFn: async () => await getAllOrders(),
+    queryKey: ["shop-order", payload],
+    enabled: !!payload.shopId,
+    queryFn: async () => await getShopOrders(payload),
+  });
+};
+export const useGetAllOrder = (query: TQueryParam[]) => {
+  return useQuery<any, Error, IResponse<IOrder[]>>({
+    queryKey: ["all-order", query],
+    queryFn: async () => await getAllOrders(query),
   });
 };
 export const useUpdateOrderStatus = () => {

@@ -1,12 +1,17 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { getAllUser, updateUserRoleStatus } from "../services/User";
-import { IFullUser, IResponse, IUpdateUserStatusRole } from "../types";
+import {
+  IFullUser,
+  IResponse,
+  IUpdateUserStatusRole,
+  TQueryParam,
+} from "../types";
 
-export const useGetAllUser = () => {
+export const useGetAllUser = (query: TQueryParam[]) => {
   return useQuery<any, Error, IResponse<IFullUser[]>>({
-    queryKey: ["get-user"],
-    queryFn: async () => await getAllUser(),
+    queryKey: ["get-user", query],
+    queryFn: async () => await getAllUser(query),
   });
 };
 

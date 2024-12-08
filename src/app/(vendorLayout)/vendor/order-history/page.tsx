@@ -8,11 +8,15 @@ import {
   TableCell,
   User,
   Chip,
+  Pagination,
+  Spinner,
 } from "@nextui-org/react";
 import { IOrder } from "@/src/types";
-import React from "react";
+import React, { useState } from "react";
 import { useGetMyShop } from "@/src/hooks/shop";
 import { useRouter } from "next/navigation";
+import { limit } from "@/src/const/const";
+import { useGetShopOrder } from "@/src/hooks/order";
 
 const columns = [
   { name: "PRODUCT", uid: "product" },
@@ -31,11 +35,19 @@ type TOrder = Pick<IOrder, "id" | "isPaid" | "status" | "quantity"> & {
 };
 
 const ManageUser = () => {
+  const [page, setPage] = useState(1);
   const { data } = useGetMyShop();
+  const shopId = data?.data?.id;
+  const { data: shopOrder, isLoading } = useGetShopOrder({
+    limit,
+    page,
+    shopId: shopId as string,
+  });
+  const meta = shopOrder?.meta;
   const router = useRouter();
 
   const orderData =
-    data?.data?.orders?.map((order) => ({
+    shopOrder?.data?.map((order) => ({
       id: order?.productId,
       isPaid: order?.isPaid,
       status: order?.status,
@@ -114,7 +126,11 @@ const ManageUser = () => {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={orderData}>
+        <TableBody
+          loadingContent={<Spinner />}
+          isLoading={isLoading}
+          items={orderData}
+        >
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
@@ -126,6 +142,18 @@ const ManageUser = () => {
           )}
         </TableBody>
       </Table>
+
+      {!isLoading && (
+        <div className="my-10 flex justify-end">
+          <Pagination
+            loop
+            showControls
+            onChange={(page) => setPage(page)}
+            page={page}
+            total={meta?.total ? Math.ceil(meta.total / limit) : 1}
+          />
+        </div>
+      )}
     </div>
   );
 };

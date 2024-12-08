@@ -6,14 +6,17 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  Spinner,
+  Pagination,
 } from "@nextui-org/react";
 
 import { DeleteIcon } from "@/src/components/icons";
-import React from "react";
+import React, { useState } from "react";
 import { ICoupon } from "@/src/types";
 import { useDeleteCoupon, useGetAllCoupon } from "@/src/hooks/coupon";
 import CreateCoupon from "@/src/components/modal/admin/CreateCoupon";
 import { toast } from "sonner";
+import { limit } from "@/src/const/const";
 
 const columns = [
   { name: "CODE", uid: "code" },
@@ -41,9 +44,17 @@ type TCouponData = Pick<
 };
 
 const ManageCoupon = () => {
-  const { data, refetch: refetchCoupon } = useGetAllCoupon();
+  const [page, setPage] = useState(1);
+  const {
+    data,
+    refetch: refetchCoupon,
+    isLoading,
+  } = useGetAllCoupon([
+    { name: "limit", value: limit },
+    { name: "page", value: page },
+  ]);
   const { mutate: deleteCoupon } = useDeleteCoupon();
-
+  const meta = data?.meta;
   const couponData =
     data?.data?.map((coupon) => ({
       id: coupon.id,
@@ -108,7 +119,11 @@ const ManageCoupon = () => {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={couponData}>
+        <TableBody
+          loadingContent={<Spinner />}
+          isLoading={isLoading}
+          items={couponData}
+        >
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
@@ -123,6 +138,17 @@ const ManageCoupon = () => {
           )}
         </TableBody>
       </Table>
+      {!isLoading && (
+        <div className="my-10 flex justify-end">
+          <Pagination
+            loop
+            showControls
+            onChange={(page) => setPage(page)}
+            page={page}
+            total={meta?.total ? Math.ceil(meta?.total / limit) : 1}
+          />
+        </div>
+      )}
     </div>
   );
 };

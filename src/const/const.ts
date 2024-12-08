@@ -19,3 +19,13 @@ export const OrderStatus = {
   COMPLETED: "COMPLETED",
   CANCELLED: "CANCELLED",
 } as const;
+
+export const protectedRoute = [
+  "/account",
+  "/account/:page*",
+  "/admin",
+  "/login",
+  "/register",
+];
+
+export const limit = 2;

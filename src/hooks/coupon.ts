@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { ICoupon, IResponse } from "../types";
+import { ICoupon, IResponse, TQueryParam } from "../types";
 
 import {
   createCoupon,
@@ -15,10 +15,10 @@ export const useCreateCoupon = () => {
   });
 };
 
-export const useGetAllCoupon = () => {
+export const useGetAllCoupon = (query: TQueryParam[]) => {
   return useQuery<any, Error, IResponse<ICoupon[]>>({
-    queryKey: ["get-coupons"],
-    queryFn: async () => await getAllCoupons(),
+    queryKey: ["get-coupons", query],
+    queryFn: async () => await getAllCoupons(query),
   });
 };
 export const useValidateCoupon = () => {

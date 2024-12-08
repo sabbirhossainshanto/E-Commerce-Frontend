@@ -10,13 +10,15 @@ import {
   Chip,
   Select,
   SelectItem,
+  Spinner,
+  Pagination,
 } from "@nextui-org/react";
 
 import { IOrder } from "@/src/types";
 import { toast } from "sonner";
-import { OrderStatus } from "@/src/const/const";
+import { limit, OrderStatus } from "@/src/const/const";
 import { useGetAllOrder, useUpdateOrderStatus } from "@/src/hooks/order";
-import React from "react";
+import React, { useState } from "react";
 
 const columns = [
   { name: "PRODUCT", uid: "product" },
@@ -35,8 +37,17 @@ type TOrder = Pick<IOrder, "id" | "isPaid" | "status" | "quantity"> & {
 };
 
 const ManageUser = () => {
-  const { data, refetch: refetchAllOrder } = useGetAllOrder();
+  const [page, setPage] = useState(1);
+  const {
+    data,
+    refetch: refetchAllOrder,
+    isLoading,
+  } = useGetAllOrder([
+    { name: "limit", value: limit },
+    { name: "page", value: page },
+  ]);
   const { mutate: updateOrder } = useUpdateOrderStatus();
+  const meta = data?.meta;
 
   const orderData =
     data?.data?.map((order) => ({
@@ -150,7 +161,11 @@ const ManageUser = () => {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={orderData}>
+        <TableBody
+          loadingContent={<Spinner />}
+          isLoading={isLoading}
+          items={orderData}
+        >
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
@@ -162,6 +177,17 @@ const ManageUser = () => {
           )}
         </TableBody>
       </Table>
+      {!isLoading && (
+        <div className="my-10 flex justify-end">
+          <Pagination
+            loop
+            showControls
+            onChange={(page) => setPage(page)}
+            page={page}
+            total={meta?.total ? Math.ceil(meta?.total / limit) : 1}
+          />
+        </div>
+      )}
     </div>
   );
 };

@@ -1,16 +1,23 @@
 "use client";
 
 import AddReviewToProduct from "@/src/components/modal/user/AddReviewToProduct";
+import { limit } from "@/src/const/const";
 import { useDeleteMyOrder, useGetMyOrder } from "@/src/hooks/order";
 import { calculateDiscount } from "@/src/utils/calculateDiscount";
 import { Button } from "@nextui-org/button";
+import { Pagination } from "@nextui-org/react";
 import Image from "next/image";
+import { useState } from "react";
 import { toast } from "sonner";
 
 const OrderHistory = () => {
+  const [page, setPage] = useState(1);
   const { mutate: deleteOrder } = useDeleteMyOrder();
-  const { data, refetch } = useGetMyOrder();
-
+  const { data, refetch, isLoading } = useGetMyOrder([
+    { name: "limit", value: limit },
+    { name: "page", value: page },
+  ]);
+  const meta = data?.meta;
   const handleDeleteOrder = (id: string) => {
     deleteOrder(id, {
       onSuccess(data) {
@@ -99,6 +106,18 @@ const OrderHistory = () => {
           </div>
         );
       })}
+
+      {!isLoading && (
+        <div className="my-10 flex justify-end">
+          <Pagination
+            loop
+            showControls
+            onChange={(page) => setPage(page)}
+            page={page}
+            total={meta?.total ? Math.ceil(meta?.total / limit) : 1}
+          />
+        </div>
+      )}
     </div>
   );
 };

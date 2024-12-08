@@ -56,5 +56,9 @@ export interface IResponse<T> {
   message: string;
   data?: T;
   error: any;
-  meta?: any;
+  meta?: {
+    total: number;
+    page: number;
+    limit: number;
+  };
 }

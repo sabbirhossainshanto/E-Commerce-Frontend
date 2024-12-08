@@ -14,7 +14,6 @@ import {
   DatePicker,
   DateValue,
 } from "@nextui-org/react";
-import { PlusIcon } from "../../icons";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { TbFidgetSpinner } from "react-icons/tb";
@@ -26,7 +25,7 @@ export default function CreateCoupon() {
   const [expiryDate, setExpiryDate] = useState<DateValue | undefined>(
     undefined
   );
-  const { refetch: refetchCoupon } = useGetAllCoupon();
+  const { refetch: refetchCoupon } = useGetAllCoupon([]);
   const { mutate: createCoupon, isPending, isSuccess } = useCreateCoupon();
   const { handleSubmit, register } = useForm();
 
@@ -54,13 +53,7 @@ export default function CreateCoupon() {
 
   return (
     <>
-      <Button
-        onPress={onOpen}
-        className="default_btn"
-        endContent={<PlusIcon />}
-      >
-        Add New
-      </Button>
+      <Button onPress={onOpen}>Add New</Button>
       <Modal
         size="2xl"
         isOpen={isOpen}

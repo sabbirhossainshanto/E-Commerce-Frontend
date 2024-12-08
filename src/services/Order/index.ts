@@ -1,7 +1,7 @@
 "use server";
 
 import { AxiosSecure } from "@/src/lib/AxiosSecure";
-import { IOrderPayload } from "@/src/types";
+import { IOrderPayload, TQueryParam } from "@/src/types";
 
 export const createOrder = async (payload: IOrderPayload[]) => {
   try {
@@ -11,17 +11,47 @@ export const createOrder = async (payload: IOrderPayload[]) => {
     return error.response.data;
   }
 };
-export const getMyOrders = async () => {
+export const getMyOrders = async (query: TQueryParam[]) => {
   try {
-    const { data } = await AxiosSecure.get("/orders/my-order");
+    const params = new URLSearchParams();
+    if (query?.length > 0) {
+      query.forEach((item) => params.append(item.name, item.value as string));
+    }
+    const { data } = await AxiosSecure.get("/orders/my-order", { params });
     return data;
   } catch (error: any) {
     return error.response.data;
   }
 };
-export const getAllOrders = async () => {
+export const getShopOrders = async (payload: {
+  limit: number;
+  page: number;
+  shopId: string;
+}) => {
   try {
-    const { data } = await AxiosSecure.get("/orders");
+    const params = new URLSearchParams();
+    if (payload?.limit && payload.page) {
+      params.append("limit", payload.limit.toString());
+      params.append("page", payload.page.toString());
+    }
+    const { data } = await AxiosSecure.get(
+      `/orders/shop-order/${payload.shopId}`,
+      {
+        params,
+      }
+    );
+    return data;
+  } catch (error: any) {
+    return error.response.data;
+  }
+};
+export const getAllOrders = async (query: TQueryParam[]) => {
+  try {
+    const params = new URLSearchParams();
+    if (query?.length > 0) {
+      query.forEach((item) => params.append(item.name, item.value as string));
+    }
+    const { data } = await AxiosSecure.get("/orders", { params });
     return data;
   } catch (error: any) {
     return error.response.data;

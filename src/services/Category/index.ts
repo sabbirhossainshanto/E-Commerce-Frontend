@@ -1,6 +1,7 @@
 "use server";
 
 import { AxiosSecure } from "@/src/lib/AxiosSecure";
+import { TQueryParam } from "@/src/types";
 
 export const createCategory = async (payload: FormData) => {
   try {
@@ -14,9 +15,13 @@ export const createCategory = async (payload: FormData) => {
   }
 };
 
-export const getAllCategories = async () => {
+export const getAllCategories = async (query: TQueryParam[]) => {
   try {
-    const { data } = await AxiosSecure.get("/categories");
+    const params = new URLSearchParams();
+    if (query?.length > 0) {
+      query.forEach((item) => params.append(item.name, item.value as string));
+    }
+    const { data } = await AxiosSecure.get("/categories", { params });
     return data;
   } catch (error: any) {
     return error.response.data;

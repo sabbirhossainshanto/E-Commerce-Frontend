@@ -6,16 +6,19 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  Pagination,
+  Spinner,
 } from "@nextui-org/react";
 
 import { DeleteIcon } from "@/src/components/icons";
-import React from "react";
+import React, { useState } from "react";
 import { ICategories } from "@/src/types";
 import { toast } from "sonner";
 import { useDeleteCategory, useGetAllCategory } from "@/src/hooks/category";
 import CreateProductCategory from "@/src/components/modal/admin/CreateProductCategory";
 import UpdateProductCategory from "@/src/components/modal/admin/UpdateProductCategory";
 import Image from "next/image";
+import { limit } from "@/src/const/const";
 
 const columns = [
   { name: "IMAGE", uid: "image" },
@@ -28,9 +31,17 @@ type TCategory = Pick<ICategories, "name" | "id" | "image"> & {
 };
 
 const ManageProductCategory = () => {
-  const { data, refetch: refetchCategory } = useGetAllCategory();
+  const [page, setPage] = useState(1);
+  const {
+    data,
+    refetch: refetchCategory,
+    isLoading,
+  } = useGetAllCategory([
+    { name: "limit", value: limit },
+    { name: "page", value: page },
+  ]);
   const { mutate: deleteCategory } = useDeleteCategory();
-
+  const meta = data?.meta;
   const categoryData =
     data?.data?.map((category) => ({
       id: category.id,
@@ -105,7 +116,11 @@ const ManageProductCategory = () => {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={categoryData}>
+        <TableBody
+          loadingContent={<Spinner />}
+          isLoading={isLoading}
+          items={categoryData}
+        >
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
@@ -117,6 +132,17 @@ const ManageProductCategory = () => {
           )}
         </TableBody>
       </Table>
+      {!isLoading && (
+        <div className="my-10 flex justify-end">
+          <Pagination
+            loop
+            showControls
+            onChange={(page) => setPage(page)}
+            page={page}
+            total={meta?.total ? Math.ceil(meta?.total / limit) : 1}
+          />
+        </div>
+      )}
     </div>
   );
 };

@@ -24,26 +24,57 @@ const SingleProduct = ({ product }: { product: IProduct }) => {
   const { data: products } = useGetAllProducts([
     { name: "category", value: product?.category.name },
   ]);
-  const { refetch: refetchCart } = useGetMyCartProducts();
+  const { data: cartProduct, refetch: refetchCart } = useGetMyCartProducts();
   const { mutate: addToCart } = useAddToCart();
   const [activeImg, setActiveImg] = useState<number>(0);
   const [quantity, setQuantity] = useState(1);
 
   const handleAddToCart = (product: IProduct) => {
     if (user?.email) {
-      addToCart(
-        { productId: product.id, quantity: quantity },
-        {
-          onSuccess(data) {
-            if (data?.success) {
-              refetchCart();
-              toast.success(data?.message);
-            } else {
-              toast.error(data?.message);
-            }
-          },
-        }
+      const isDifferentShop = cartProduct?.data?.find(
+        (cart) => cart.product?.shopId !== product?.shopId
       );
+      if (isDifferentShop) {
+        Swal.fire({
+          title: "Detect Different Shop",
+          text: "Adding multiple shop product is not allowed! Replace the cart with the new product!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, Replace",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            addToCart(
+              { productId: product.id, quantity: 1, type: "replaceProduct" },
+              {
+                onSuccess(data) {
+                  if (data?.success) {
+                    refetchCart();
+                    toast.success(data?.message);
+                  } else {
+                    toast.error(data?.message);
+                  }
+                },
+              }
+            );
+          }
+        });
+      } else {
+        addToCart(
+          { productId: product.id, quantity: 1 },
+          {
+            onSuccess(data) {
+              if (data?.success) {
+                refetchCart();
+                toast.success(data?.message);
+              } else {
+                toast.error(data?.message);
+              }
+            },
+          }
+        );
+      }
     } else {
       Swal.fire({
         title: "Please login",

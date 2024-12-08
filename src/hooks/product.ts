@@ -22,10 +22,10 @@ export const useGetAllProducts = (query: TQueryParam[]) => {
     queryFn: async () => await getAllProduct(query),
   });
 };
-export const useGetMyProducts = () => {
+export const useGetMyProducts = (query: TQueryParam[]) => {
   return useQuery<any, Error, IResponse<IProduct[]>>({
-    queryKey: ["my-products"],
-    queryFn: async () => await getMyProduct(),
+    queryKey: ["my-products", query],
+    queryFn: async () => await getMyProduct(query),
   });
 };
 export const useGetSingleProduct = (id: string) => {

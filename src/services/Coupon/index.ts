@@ -1,7 +1,7 @@
 "use server";
 
 import { AxiosSecure } from "@/src/lib/AxiosSecure";
-import { ICoupon } from "@/src/types";
+import { ICoupon, TQueryParam } from "@/src/types";
 
 export const createCoupon = async (payload: Partial<ICoupon>) => {
   try {
@@ -12,9 +12,13 @@ export const createCoupon = async (payload: Partial<ICoupon>) => {
   }
 };
 
-export const getAllCoupons = async () => {
+export const getAllCoupons = async (query: TQueryParam[]) => {
   try {
-    const { data } = await AxiosSecure.get("/coupons");
+    const params = new URLSearchParams();
+    if (query?.length > 0) {
+      query.forEach((item) => params.append(item.name, item.value as string));
+    }
+    const { data } = await AxiosSecure.get("/coupons", { params });
     return data;
   } catch (error: any) {
     return error.response.data;

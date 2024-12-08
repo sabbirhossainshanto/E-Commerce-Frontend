@@ -35,7 +35,6 @@ export default function CreateProduct() {
         categoryId: values?.categoryId,
         name: values?.name,
         description: values?.description,
-        discount: Number(values?.discount),
         inventory: Number(values?.inventory),
         price: Number(values?.price),
       }).filter(([_, value]) => value != null)
@@ -111,13 +110,21 @@ export default function CreateProduct() {
                     placeholder="Inventory"
                     variant="bordered"
                   />
-                  <Input
-                    labelPlacement="outside"
-                    {...register("discount")}
-                    label="Discount"
-                    placeholder="Discount"
-                    variant="bordered"
-                  />
+                  {categories?.data && (
+                    <Select
+                      {...register("categoryId", { required: true })}
+                      variant="bordered"
+                      placeholder="Product Category"
+                      className="max-w-full"
+                      aria-label="Role"
+                    >
+                      {categories?.data?.map((category) => (
+                        <SelectItem key={category.id}>
+                          {category?.name}
+                        </SelectItem>
+                      ))}
+                    </Select>
+                  )}
                 </div>
 
                 <Input
@@ -127,21 +134,6 @@ export default function CreateProduct() {
                   placeholder="Description"
                   variant="bordered"
                 />
-                {categories?.data && (
-                  <Select
-                    {...register("categoryId", { required: true })}
-                    variant="bordered"
-                    placeholder="Product Category"
-                    className="max-w-full"
-                    aria-label="Role"
-                  >
-                    {categories?.data?.map((category) => (
-                      <SelectItem key={category.id}>
-                        {category?.name}
-                      </SelectItem>
-                    ))}
-                  </Select>
-                )}
 
                 <div className="mt-4">
                   <label htmlFor="Image" className="text-xs">

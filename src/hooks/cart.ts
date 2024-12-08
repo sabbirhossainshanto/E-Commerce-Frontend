@@ -8,7 +8,11 @@ import {
 import { ICart, IResponse, IUpdateCartProductQuantity } from "../types";
 
 export const useAddToCart = () => {
-  return useMutation<any, Error, { quantity: number; productId: string }>({
+  return useMutation<
+    any,
+    Error,
+    { quantity: number; productId: string; type?: "replaceProduct" }
+  >({
     mutationKey: ["add-to-cart"],
     mutationFn: async (payload) => await addToCart(payload),
   });

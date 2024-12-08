@@ -10,34 +10,43 @@ import {
   useDisclosure,
   Input,
 } from "@nextui-org/react";
-import { useCreateCategory, useGetAllCategory } from "@/src/hooks/category";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { AiOutlinePlusCircle } from "react-icons/ai";
+import { useUpdateProfile } from "@/src/hooks/profile";
+import { logOut } from "@/src/services/Auth";
+import { useUser } from "@/src/context/user.provider";
+import { useRouter } from "next/navigation";
+import { TbFidgetSpinner } from "react-icons/tb";
 
-export default function CreateProductCategory() {
+export default function UpdateProfile() {
+  const { user } = useUser();
+  const router = useRouter();
+  const { setIsUserLoading } = useUser();
   const { handleSubmit, register, reset } = useForm();
   const [image, setImage] = useState<File | null>(null);
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const { mutate: createCategory } = useCreateCategory();
-  const { refetch } = useGetAllCategory([]);
 
-  const handleCreateCategory: SubmitHandler<FieldValues> = (value) => {
+  const { mutate: updateProfile, isPending, isSuccess } = useUpdateProfile();
+
+  const handleUpdateProfile: SubmitHandler<FieldValues> = (value) => {
     const payload = { name: value?.name };
     const formData = new FormData();
     formData.append("data", JSON.stringify(payload));
     if (image) {
       formData.append("file", image);
     }
-    createCategory(formData, {
+    updateProfile(formData, {
       onSuccess(data) {
         if (data?.success) {
           toast.success(data?.message);
-          refetch();
+          logOut();
+          setIsUserLoading(true);
           reset();
           setImage(null);
+          router.push("/login");
           onClose();
         } else {
           toast.error(data?.message);
@@ -54,28 +63,34 @@ export default function CreateProductCategory() {
     }
   };
 
+  useEffect(() => {
+    reset({
+      name: user?.name,
+    });
+  }, [user]);
+
   return (
     <>
-      <Button onPress={onOpen}>Add New</Button>
+      <Button onPress={onOpen}>Update Profile</Button>
 
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
         <ModalContent>
           {(onClose) => (
-            <form onSubmit={handleSubmit(handleCreateCategory)}>
+            <form onSubmit={handleSubmit(handleUpdateProfile)}>
               <ModalHeader className="flex flex-col gap-1">
-                Create Product Category
+                Update Profile
               </ModalHeader>
               <ModalBody>
                 <Input
                   {...register("name", { required: true })}
-                  label="Category"
-                  placeholder="Enter category name"
+                  label="Name"
+                  placeholder="Enter Name"
                   variant="bordered"
                 />
 
                 <div className="mt-4">
                   <label htmlFor="Image" className="text-xs">
-                    Category Image
+                    Profile Photo
                   </label>
                   <input
                     type="file"
@@ -110,7 +125,14 @@ export default function CreateProductCategory() {
                   Cancel
                 </Button>
                 <Button type="submit" color="primary">
-                  Create
+                  {isPending && !isSuccess ? (
+                    <span className="flex items-center gap-2 justify-center text-base">
+                      <span>Please Wait</span>{" "}
+                      <TbFidgetSpinner className="animate-spin" />
+                    </span>
+                  ) : (
+                    <span> Update</span>
+                  )}
                 </Button>
               </ModalFooter>
             </form>

@@ -6,6 +6,7 @@ import { IUpdateCartProductQuantity } from "@/src/types";
 export const addToCart = async (payload: {
   quantity: number;
   productId: string;
+  type?: "replaceProduct";
 }) => {
   try {
     const { data } = await AxiosSecure.post("/carts/add-to-cart", payload);

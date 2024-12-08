@@ -1,4 +1,5 @@
 "use client";
+import UpdateProfile from "@/src/components/modal/UpdateProfile";
 import { useUser } from "@/src/context/user.provider";
 import Image from "next/image";
 import React from "react";
@@ -12,7 +13,7 @@ const UserHomePage = () => {
           <div className="col-span-12 md:col-span-4 box_shadow p-6 min-h-[225px]">
             <div className="flex justify-between items-center">
               <h4 className="text-lg">Personal Profile</h4>
-              <p className="text-primary">Edit</p>
+              <UpdateProfile />
             </div>
             <div className="mt-4">
               <p className="font-semibold">{user?.name}</p>

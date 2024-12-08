@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { ICategories, IResponse } from "../types";
+import { ICategories, IResponse, TQueryParam } from "../types";
 import {
   createCategory,
   deleteCategory,
@@ -15,10 +15,10 @@ export const useCreateCategory = () => {
   });
 };
 
-export const useGetAllCategory = () => {
+export const useGetAllCategory = (query: TQueryParam[]) => {
   return useQuery<any, Error, IResponse<ICategories[]>>({
-    queryKey: ["get-categories"],
-    queryFn: async () => await getAllCategories(),
+    queryKey: ["get-categories", query],
+    queryFn: async () => await getAllCategories(query),
   });
 };
 

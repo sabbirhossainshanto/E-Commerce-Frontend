@@ -10,13 +10,14 @@ import {
   Chip,
   Select,
   SelectItem,
+  Pagination,
 } from "@nextui-org/react";
 
 import { toast } from "sonner";
 import { useGetAllShop, useUpdateShopStatus } from "@/src/hooks/shop";
 import { IShop, IUpdateShopStatus } from "@/src/types";
-import React from "react";
-import { ShopStatus } from "@/src/const/const";
+import React, { useState } from "react";
+import { limit, ShopStatus } from "@/src/const/const";
 
 const columns = [
   { name: "SHOPNAME", uid: "shopName" },
@@ -34,8 +35,17 @@ type TPickShop = Pick<
 };
 
 const ManageUser = () => {
-  const { data, refetch: refetchShop } = useGetAllShop();
+  const [page, setPage] = useState(1);
+  const {
+    data,
+    refetch: refetchShop,
+    isLoading,
+  } = useGetAllShop([
+    { name: "limit", value: limit },
+    { name: "page", value: page },
+  ]);
   const { mutate: updateStatusRole } = useUpdateShopStatus();
+  const meta = data?.meta;
 
   const shopData =
     data?.data?.map((shop) => ({
@@ -145,6 +155,17 @@ const ManageUser = () => {
           )}
         </TableBody>
       </Table>
+      {!isLoading && (
+        <div className="my-10 flex justify-end">
+          <Pagination
+            loop
+            showControls
+            onChange={(page) => setPage(page)}
+            page={page}
+            total={meta?.total ? Math.ceil(meta?.total / limit) : 1}
+          />
+        </div>
+      )}
     </div>
   );
 };

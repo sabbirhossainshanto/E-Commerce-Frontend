@@ -3,12 +3,15 @@
 import { useUser } from "@/src/context/user.provider";
 import { logOut } from "@/src/services/Auth";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { AiOutlineUser } from "react-icons/ai";
 
 const AccountDropdown = () => {
+  const router = useRouter();
   const { setIsUserLoading, user } = useUser();
   const handleLogout = () => {
     logOut();
+    router.push("/");
     setIsUserLoading(true);
   };
   return (
@@ -105,7 +108,7 @@ const AccountDropdown = () => {
               My Order
             </Link>
 
-            <Link
+            {/* <Link
               href="/account/my-cart"
               className="flex items-center relative w-full mt-[7px] text-[15px] pl-8 text-[#464545] hover:text-primary transition duration-200"
             >
@@ -128,7 +131,7 @@ const AccountDropdown = () => {
                 </g>
               </svg>
               My Cart
-            </Link>
+            </Link> */}
           </div>
         )}
 

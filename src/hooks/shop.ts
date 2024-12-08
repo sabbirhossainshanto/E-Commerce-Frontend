@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { IResponse, IShop, IUpdateShopStatus } from "../types";
+import { IResponse, IShop, IUpdateShopStatus, TQueryParam } from "../types";
 import {
   createMyShop,
   getAllShop,
@@ -27,10 +27,10 @@ export const useGetSingleShop = (id: string) => {
     queryFn: async () => await getSingleShop(id),
   });
 };
-export const useGetAllShop = () => {
+export const useGetAllShop = (query: TQueryParam[]) => {
   return useQuery<any, Error, IResponse<IShop[]>>({
-    queryKey: ["get-all-shop"],
-    queryFn: async () => await getAllShop(),
+    queryKey: ["get-all-shop", query],
+    queryFn: async () => await getAllShop(query),
   });
 };
 export const useUpdateMyShop = () => {
