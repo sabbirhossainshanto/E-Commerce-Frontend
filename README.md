@@ -1,53 +1,133 @@
-# Next.js & NextUI Template
+# E-Commerce Application
 
-This is a template for creating applications using Next.js 14 (app directory) and NextUI (v2).
+The E-Commerce Application provides a comprehensive online shopping experience for users, vendors, and administrators. The platform is designed to be intuitive, responsive, and secure, enabling users to browse and purchase products, vendors to manage their shops, and administrators to monitor and control the system effectively. Built using modern web development technologies, this application ensures high performance, scalability, and professional-grade features like third-party payment integration and file storage.
 
-[Try it on CodeSandbox](https://githubbox.com/nextui-org/next-app-template)
+## 🔗 Links
 
-## Technologies Used
+- [Live Frontend URL](https://e-commerce-rho-nine.vercel.app/)
+- [Live Backend URL](https://e-commerce-backend-neon-seven.vercel.app/)
 
-- [Next.js 14](https://nextjs.org/docs/getting-started)
-- [NextUI v2](https://nextui.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
+- **Technologies Used**
 
-## How to Use
+1. **Backend**
+   - **Authentication:** JWT-based authentication.
+   - **Database:** Relational database PostgreSQL with Prisma.
+   - **Server:** Node.js with Express for handling APIs with Typescript.
+   - **Image Uploads:** Cloudinary.
+   - **Data Validation:** Zod.
+   - **Others:** Nodemailer,multer,http-status,dotenv,ts-node-dev,cors,bcrypt,axios.
+2. **Frontend**
+   - **Framework:**NextJs with state management using Context API With Typescript..
+3. **Payment Gateway**
+   - Amarpay
 
-### Use the template with create-next-app
+---
 
-To create a new project based on this template using `create-next-app`, run the following command:
+- **Run Locally**
 
-```bash
-npx create-next-app -e https://github.com/nextui-org/next-app-template
-```
-
-### Install dependencies
-
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
-
-```bash
-npm install
-```
-
-### Run the development server
+1. **Backend**
+   Clone the project
 
 ```bash
-npm run dev
+  git clone https://github.com/sabbirhossainshanto/E-Commerce-Backend
 ```
 
-### Setup pnpm (optional)
-
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
+Go to the project directory
 
 ```bash
-public-hoist-pattern[]=*@nextui-org/*
+  cd my-project
 ```
 
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
+Install dependencies
 
-## License
+```bash
+  npm install
+```
 
-Licensed under the [MIT license](https://github.com/nextui-org/next-app-template/blob/main/LICENSE).
+## Environment Variables
+
+```bash
+DATABASE_URL="Your Database"
+PORT=3000
+BCRYPT_SALT_ROUND="12"
+JWT_ACCESS_SECRET="your secret key"
+JWT_ACCESS_EXPIRES_IN="10d"
+JWT_REFRESH_SECRET="your secret key"
+JWT_REFRESH_EXPIRES_IN="30d"
+RESET_PASSWORD_SECRET="your secret key"
+RESET_PASSWORD_EXPIRES_IN="5m"
+SENDER_EMAIL="your email"
+APP_PASSWORD="your password"
+CLIENT_BASE_URL="http://localhost:3001"
+SERVER_BASE_URL="http://localhost:3000"
+PAYMENT_URL="Amarpay Payment url"
+PAYMENT_VERIFY_URL="Amarpay Payment verifyurl"
+STORE_ID="Your store id"
+SIGNATURE_KEY="your signature key"
+```
+
+Start the server
+
+```bash
+  npm run dev
+```
+
+1. **Frontend**
+   Clone the project
+
+```bash
+  git clone https://github.com/sabbirhossainshanto/E-Commerce-Frontend
+```
+
+Go to the project directory
+
+```bash
+  cd my-project
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+## Environment Variables
+
+```bash
+NEXT_PUBLIC_BASE_URL="http://localhost:3000/api/v1"
+```
+
+Start the server
+
+```bash
+  npm run dev
+```
+
+### **Roles and Responsibilities**
+
+1. **Admin**
+
+   - Manage users, vendors, and their shops.
+   - Blacklist vendors and dynamically manage product categories.
+   - Blacklist vendor shops to restrict their operations.
+   - Monitor transactions and review platform activities.
+
+2. **Vendor**
+   - Create and manage shop details, including logo and description.
+   - Add, edit, duplicate, or delete products with attributes like price, category, inventory, etc.
+   - View customer reviews, ratings, and order history.
+3. **Vendor**
+   - Browse and filter products by price, category, and keywords.
+   - Add items to the cart, compare products, and apply coupons at checkout.
+   - View order history and leave reviews for purchased products.
+   - Follow specific vendor shops for a personalized experience.
+4. **User (Customer)**
+   - Browse and filter products by price, category, and keywords.
+   - Add items to the cart, compare products, and apply coupons at checkout.
+   - View order history and leave reviews for purchased products.
+   - Follow specific vendor shops for a personalized experience.
+5. **Additional Features**
+   - Flash sales section and recent product views.
+   - Responsive design for mobile and desktop.
+6. **Pagination**
+   - Implement paginated APIs for all list-based data.

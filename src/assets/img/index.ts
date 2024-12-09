@@ -7,6 +7,7 @@ import facebook from "../images//facebook.png";
 import twitter from "../images/twitter.png";
 import paymentMethod from "../images/payment-method.png";
 import scrollToTop from "../images/scrolling.png";
+import loader from "../images/preloader.gif";
 
 export default {
   logo,
@@ -18,4 +19,5 @@ export default {
   twitter,
   paymentMethod,
   scrollToTop,
+  loader,
 };

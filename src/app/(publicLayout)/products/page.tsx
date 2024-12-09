@@ -158,7 +158,7 @@ const ProductPage = () => {
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
-            <div className="hidden md:w-[200px]">
+            <div className="hidden md:block md:w-[200px]">
               <Input
                 onChange={handleSearchChange}
                 onClear={handleRemoveSearch}

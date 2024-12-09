@@ -180,12 +180,14 @@ const CartProduct = ({
         >
           VIEW CART
         </Link> */}
-        <Link
-          href="/checkout"
-          className="w-1/2 flex items-center justify-center rounded-[3px] py-2 px-2.5 border border-rose-500  bg-white hover:bg-rose-500 hover:text-white  text-center text-sm text-rose-500 transition duration-300"
-        >
-          CHECKOUT
-        </Link>
+        {cartProducts && cartProducts?.length > 0 && (
+          <Link
+            href="/checkout"
+            className="w-1/2 flex items-center justify-center rounded-[3px] py-2 px-2.5 border border-rose-500  bg-white hover:bg-rose-500 hover:text-white  text-center text-sm text-rose-500 transition duration-300"
+          >
+            CHECKOUT
+          </Link>
+        )}
       </div>
     </div>
   );

@@ -17,12 +17,12 @@ const Login = () => {
   const router = useRouter();
   const { handleSubmit, register } = useForm({
     defaultValues: {
-      email: "web@hero.com",
-      password: "ph-password",
+      // email: "web@hero.com",
+      // password: "ph-password",
       // email: "jiinat@gmail.com",
       // password: "jiinat",
-      // email: "sabbirshnt@gmail.com",
-      // password: "1111",
+      email: "sabbirshnt@gmail.com",
+      password: "1111",
     },
   });
 
