@@ -28,7 +28,7 @@ export default function CreateProduct() {
   const { mutate: createProduct, isPending, isSuccess } = useCreateProduct();
   const queryClient = useQueryClient();
   const { data: categories } = useGetAllCategory([]);
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, reset } = useForm();
 
   const handleUpdateProduct: SubmitHandler<FieldValues> = (values) => {
     const payload = Object.fromEntries(
@@ -49,6 +49,8 @@ export default function CreateProduct() {
     createProduct(formData, {
       onSuccess(data) {
         if (data?.success) {
+          reset();
+          setImages([]);
           toast.success(data?.message);
           queryClient.invalidateQueries({ queryKey: ["my-products"] });
           onClose();
@@ -113,6 +115,8 @@ export default function CreateProduct() {
                   />
                   {categories?.data && (
                     <Select
+                      labelPlacement="outside"
+                      label="Product Category"
                       {...register("categoryId", { required: true })}
                       variant="bordered"
                       placeholder="Product Category"

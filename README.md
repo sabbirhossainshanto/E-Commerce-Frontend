@@ -103,7 +103,7 @@ Start the server
   npm run dev
 ```
 
-### **Roles and Responsibilities**
+### **Key Features & Functionality**
 
 1. **Admin**
 
@@ -113,21 +113,18 @@ Start the server
    - Monitor transactions and review platform activities.
 
 2. **Vendor**
+
    - Create and manage shop details, including logo and description.
    - Add, edit, duplicate, or delete products with attributes like price, category, inventory, etc.
    - View customer reviews, ratings, and order history.
-3. **Vendor**
+
+3. **User (Customer)**
    - Browse and filter products by price, category, and keywords.
    - Add items to the cart, compare products, and apply coupons at checkout.
    - View order history and leave reviews for purchased products.
    - Follow specific vendor shops for a personalized experience.
-4. **User (Customer)**
-   - Browse and filter products by price, category, and keywords.
-   - Add items to the cart, compare products, and apply coupons at checkout.
-   - View order history and leave reviews for purchased products.
-   - Follow specific vendor shops for a personalized experience.
-5. **Additional Features**
+4. **Additional Features**
    - Flash sales section and recent product views.
    - Responsive design for mobile and desktop.
-6. **Pagination**
+5. **Pagination**
    - Implement paginated APIs for all list-based data.

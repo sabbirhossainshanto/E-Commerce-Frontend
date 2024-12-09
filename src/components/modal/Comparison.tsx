@@ -78,7 +78,7 @@ export default function Comparison({
         placement="top-center"
       >
         <ModalContent>
-          {(onClose) => (
+          {() => (
             <>
               <ModalHeader className="flex flex-col gap-1">
                 Comparison Product
