@@ -15,6 +15,10 @@ export const vendorNavlist = [
         path: "/vendor/manage-product",
         text: "Manage Product",
       },
+      {
+        path: "/vendor/manage-flash-sale",
+        text: "Manage Flash Sale",
+      },
     ],
   },
   {

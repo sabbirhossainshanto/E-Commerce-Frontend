@@ -7,7 +7,7 @@ import { Navigation } from "swiper/modules";
 import Image from "next/image";
 import Link from "next/link";
 import { IProduct } from "@/src/types";
-import { FaMinus, FaPlus } from "react-icons/fa";
+import { FaMinus, FaPlus, FaStar } from "react-icons/fa";
 import { IoCartOutline } from "react-icons/io5";
 import { useGetAllProducts } from "@/src/hooks/product";
 import ProductCart from "../ProductCart/ProductCart";
@@ -17,6 +17,7 @@ import { useUser } from "@/src/context/user.provider";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { calculateDiscount } from "@/src/utils/calculateDiscount";
+import moment from "moment";
 
 const SingleProduct = ({ product }: { product: IProduct }) => {
   const { user } = useUser();
@@ -233,100 +234,82 @@ const SingleProduct = ({ product }: { product: IProduct }) => {
       </div>
 
       {/* Product Review */}
-      <div className="container pt-14">
-        <div className="flex items-start justify-between mb-[30px]">
-          <h2 className="text-[22px] sm:text-[32px] font-medium text-secondary">
-            Product Reviews
-          </h2>
-          <div className="pt-2">
-            <Link
-              href="/products"
-              className="text-[15px] font-medium text-primary flex items-center gap-1"
-            >
-              See More
-              <svg width="15" height="15" viewBox="0 0 32 32">
-                <path
-                  fill="currentColor"
-                  d="M12.969 4.281L11.53 5.72L21.812 16l-10.28 10.281l1.437 1.438l11-11l.687-.719l-.687-.719z"
-                ></path>
-              </svg>
-            </Link>
+      {product?.reviews?.length > 0 && (
+        <div className="container pt-14">
+          <div className="flex items-start justify-between mb-[30px]">
+            <h2 className="text-[22px] sm:text-[32px] font-medium text-secondary">
+              Product Reviews
+            </h2>
           </div>
-        </div>
-        {product?.reviews?.map((review) => {
-          return (
-            <div key={review?.id} className="flex gap-5 border-b pb-5">
-              {review?.user?.profilePhoto && (
-                <div>
-                  <Image
-                    height={100}
-                    width={100}
-                    loading="lazy"
-                    src={review?.user?.profilePhoto}
-                    alt="user"
-                  />
-                </div>
-              )}
+          {product?.reviews?.map((review) => {
+            return (
+              <div key={review?.id} className="flex gap-5 border-b pb-5">
+                {review?.user?.profilePhoto && (
+                  <div>
+                    <Image
+                      height={100}
+                      width={100}
+                      loading="lazy"
+                      src={review?.user?.profilePhoto}
+                      alt="user"
+                    />
+                  </div>
+                )}
 
-              {/* <!-- content --> */}
-              <div>
-                <h5>by {review?.user?.name}</h5>
-                {/* <!-- rating --> */}
-                <div className="flex mt-2">
-                  {[review?.rating]?.map((rating, i) => {
-                    return (
-                      <span key={i} className="text-[#F6BC3E]">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="18"
-                          height="18"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            fill="currentColor"
-                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2L9.19 8.63L2 9.24l5.46 4.73L5.82 21L12 17.27z"
-                          ></path>
-                        </svg>
-                      </span>
-                    );
-                  })}
+                {/* <!-- content --> */}
+                <div>
+                  <h5>Review {review?.user?.name}</h5>
+                  {/* <!-- rating --> */}
+                  <h5 className="flex items-center gap-1 mt-2">
+                    <span>Rating :</span>
+                    {Array(review?.rating)
+                      .fill(0)
+                      .map((_, i) => (
+                        <FaStar className="text-yellow-500" key={i} />
+                      ))}
+                  </h5>
+                  <div className="text-xs mt-2">
+                    {moment(review?.createdAt).format("DD-MM-YYYY")}
+                  </div>
+                  <p className="mt-2">{review?.comment}</p>
                 </div>
-                <div className="text-xs mt-2">{review?.createdAt}</div>
-                <p className="mt-2">{review?.comment}</p>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
+
       {/* Related product*/}
-      <div className="container pt-14">
-        <div className="flex items-start justify-between mb-[30px]">
-          <h2 className="text-[22px] sm:text-[32px] font-medium text-secondary">
-            Related Product
-          </h2>
-          <div className="pt-2">
-            <Link
-              href="/products"
-              className="text-[15px] font-medium text-primary flex items-center gap-1"
-            >
-              See More
-              <svg width="15" height="15" viewBox="0 0 32 32">
-                <path
-                  fill="currentColor"
-                  d="M12.969 4.281L11.53 5.72L21.812 16l-10.28 10.281l1.437 1.438l11-11l.687-.719l-.687-.719z"
-                ></path>
-              </svg>
-            </Link>
+      {products?.data && products?.data?.length > 0 && (
+        <div className="container pt-14">
+          <div className="flex items-start justify-between mb-[30px]">
+            <h2 className="text-[22px] sm:text-[32px] font-medium text-secondary">
+              Related Product
+            </h2>
+            <div className="pt-2">
+              <Link
+                href="/products"
+                className="text-[15px] font-medium text-primary flex items-center gap-1"
+              >
+                See More
+                <svg width="15" height="15" viewBox="0 0 32 32">
+                  <path
+                    fill="currentColor"
+                    d="M12.969 4.281L11.53 5.72L21.812 16l-10.28 10.281l1.437 1.438l11-11l.687-.719l-.687-.719z"
+                  ></path>
+                </svg>
+              </Link>
+            </div>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {products?.data
+              ?.slice(0, 4)
+              ?.map((product) => (
+                <ProductCart key={product.id} product={product} />
+              ))}
           </div>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products?.data
-            ?.slice(0, 4)
-            ?.map((product) => (
-              <ProductCart key={product.id} product={product} />
-            ))}
-        </div>
-      </div>
+      )}
     </div>
   );
 };

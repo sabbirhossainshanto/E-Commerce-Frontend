@@ -1,6 +1,7 @@
 "use client";
 
 import AddReviewToProduct from "@/src/components/modal/user/AddReviewToProduct";
+import Loading from "@/src/components/shared/Loading/Loading";
 import { limit } from "@/src/const/const";
 import { useDeleteMyOrder, useGetMyOrder } from "@/src/hooks/order";
 import { calculateDiscount } from "@/src/utils/calculateDiscount";
@@ -33,6 +34,7 @@ const OrderHistory = () => {
 
   return (
     <div className="col-span-12 lg:col-span-9">
+      {isLoading && <Loading />}
       {data?.data?.map((order) => {
         return (
           <div
@@ -106,6 +108,11 @@ const OrderHistory = () => {
           </div>
         );
       })}
+      {data?.data?.length === 0 && (
+        <h1 className="flex items-center justify-center min-h-[30vh]">
+          You dont have any order!
+        </h1>
+      )}
 
       {!isLoading && (
         <div className="my-10 flex justify-end">

@@ -12,15 +12,24 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import CountdownTimer from "../CountDownTimer/CountDownTimer";
 import { useCreateCompare, useGetMyComparison } from "@/src/hooks/compare";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const ProductCart = ({ product }: { product: IProduct }) => {
   const router = useRouter();
   const { user, setShowCompareModal } = useUser();
   const { data: comparisons, refetch: refetchComparison } =
     useGetMyComparison();
-  const { mutate: addToCompare } = useCreateCompare();
+  const {
+    mutate: addToCompare,
+    isPending: isComparisonPending,
+    isSuccess: isComparisonSuccess,
+  } = useCreateCompare();
   const { data: cartProduct, refetch: refetchCart } = useGetMyCartProducts();
-  const { mutate: addToCart } = useAddToCart();
+  const {
+    mutate: addToCart,
+    isPending: isCartPending,
+    isSuccess: isCartSuccess,
+  } = useAddToCart();
 
   const handleAddToCart = (product: IProduct & { type?: "replaceProduct" }) => {
     if (user?.email) {
@@ -258,7 +267,7 @@ const ProductCart = ({ product }: { product: IProduct }) => {
               </div>
               <p className="text-[13px] ml-[9px] text-[#687188]">(150)</p>
 
-              <Link href={`/shops/${product?.shopId}`} className="ml-[9px]">
+              <Link href={`/shops/${product?.shopId}`} className="ml-[20px]">
                 {" "}
                 <span className="underline text-rose-500">
                   {product?.shop?.shopName}
@@ -267,18 +276,32 @@ const ProductCart = ({ product }: { product: IProduct }) => {
             </div>
           </div>
 
-          <div className="absolute left-5 top-3 mt-[15px] group-hover:mt-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col gap-4">
+          <div className="absolute left-1.5 top-3 mt-[15px] group-hover:mt-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col gap-4">
             <button
               onClick={() => handleAddToCompare(product)}
-              className="default_btn bg-secondary border-none hover:bg-white px-[15px]"
+              className="default_btn bg-secondary border-none hover:bg-white"
             >
-              ADD TO COMPARE
+              {isComparisonPending && !isComparisonSuccess ? (
+                <span className="flex items-center gap-2 justify-center text-sm">
+                  <span>Please Wait</span>{" "}
+                  <TbFidgetSpinner className="animate-spin" />
+                </span>
+              ) : (
+                <span> ADD TO COMPARE</span>
+              )}
             </button>
             <button
               onClick={() => handleAddToCart(product)}
-              className="default_btn primary-color hover:bg-white px-[15px]"
+              className="default_btn primary-color hover:bg-white "
             >
-              ADD TO CART
+              {isCartPending && !isCartSuccess ? (
+                <span className="flex items-center gap-2 justify-center text-base">
+                  <span>Please Wait</span>{" "}
+                  <TbFidgetSpinner className="animate-spin" />
+                </span>
+              ) : (
+                <span> ADD TO CART</span>
+              )}
             </button>
           </div>
         </div>

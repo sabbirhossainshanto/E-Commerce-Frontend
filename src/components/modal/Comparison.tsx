@@ -10,6 +10,7 @@ import { useAddToCart, useGetMyCartProducts } from "@/src/hooks/cart";
 import { toast } from "sonner";
 import { useUser } from "@/src/context/user.provider";
 import { useDeleteComparison, useGetMyComparison } from "@/src/hooks/compare";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 export default function Comparison({
   comparisons,
@@ -18,9 +19,17 @@ export default function Comparison({
 }) {
   const { refetch: refetchComparison } = useGetMyComparison();
   const { showCompareModal, setShowCompareModal } = useUser();
-  const { mutate: deleteComparison } = useDeleteComparison();
+  const {
+    mutate: deleteComparison,
+    isSuccess: isComparisonSuccess,
+    isPending: isComparisonPending,
+  } = useDeleteComparison();
   const { refetch: refetchCart } = useGetMyCartProducts();
-  const { mutate: addToCart } = useAddToCart();
+  const {
+    mutate: addToCart,
+    isSuccess: isCartSuccess,
+    isPending: isCartPending,
+  } = useAddToCart();
 
   const handleAddToCart = (compare: ICompare) => {
     addToCart(
@@ -107,7 +116,7 @@ export default function Comparison({
                         <p className="mb-0">
                           Quantity:{" "}
                           <span className="">
-                            {compare?.product?.description}
+                            {compare?.product?.inventory}
                           </span>
                         </p>
                         <span>
@@ -134,13 +143,30 @@ export default function Comparison({
                           onClick={() => handleAddToCart(compare)}
                           className="default_btn bg-secondary border-none hover:bg-white px-[15px]"
                         >
-                          ADD TO CART
+                          {isCartPending && !isCartSuccess ? (
+                            <span className="flex items-center gap-2 justify-center text-base">
+                              <span>Please Wait</span>{" "}
+                              <TbFidgetSpinner className="animate-spin" />
+                            </span>
+                          ) : (
+                            <span>ADD TO CART</span>
+                          )}
                         </button>
                         <button
                           className="default_btn  text-white bg-primary"
                           onClick={() => handleDeleteComparison(compare.id)}
                         >
-                          <GoTrash size={17} />
+                          {isComparisonPending && !isComparisonSuccess ? (
+                            <span className="flex items-center gap-2 justify-center text-base">
+                              <span>Please Wait</span>{" "}
+                              <TbFidgetSpinner className="animate-spin" />
+                            </span>
+                          ) : (
+                            <span>
+                              {" "}
+                              <GoTrash size={17} />
+                            </span>
+                          )}
                         </button>
                       </div>
                     </div>

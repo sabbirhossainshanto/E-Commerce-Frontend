@@ -1,5 +1,6 @@
 "use client";
 
+import Loading from "@/src/components/shared/Loading/Loading";
 import { useGetMyCartProducts } from "@/src/hooks/cart";
 import { useValidateCoupon } from "@/src/hooks/coupon";
 import { useCreateOrder } from "@/src/hooks/order";
@@ -10,6 +11,7 @@ import { Input } from "@nextui-org/input";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { TbFidgetSpinner } from "react-icons/tb";
 import { toast } from "sonner";
 
 const CheckoutPage = () => {
@@ -18,8 +20,8 @@ const CheckoutPage = () => {
   const [discountedTotal, setDiscountedTotal] = useState<number | null>(null);
   const { mutate: validateCoupon } = useValidateCoupon();
   const router = useRouter();
-  const { mutate: createOrder } = useCreateOrder();
-  const { data } = useGetMyCartProducts();
+  const { mutate: createOrder, isPending, isSuccess } = useCreateOrder();
+  const { data, isLoading } = useGetMyCartProducts();
 
   let total: number = 0;
 
@@ -74,6 +76,9 @@ const CheckoutPage = () => {
     });
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div className="container grid grid-cols-12 gap-6 pt-14">
       <div className="col-span-12  lg:col-span-9">
@@ -172,7 +177,14 @@ const CheckoutPage = () => {
               onClick={() => handleCreateOrder(data?.data as ICart[])}
               className="block w-full px-8 lg:px-2 xl:px-8 py-2 text-center bg-primary hover:bg-transparent text-white hover:text-primary hover:border-primary border transition duration-300 rounded-lg uppercase text-sm"
             >
-              Proceed to checkout
+              {isPending && !isSuccess ? (
+                <span className="flex items-center gap-2 justify-center text-base">
+                  <span>Please Wait</span>{" "}
+                  <TbFidgetSpinner className="animate-spin" />
+                </span>
+              ) : (
+                <span> Proceed to checkout</span>
+              )}
             </Button>
           </div>
         </div>

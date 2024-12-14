@@ -1,10 +1,15 @@
 "use client";
 
+import Loading from "@/src/components/shared/Loading/Loading";
 import ProductCart from "@/src/components/UI/ProductCart/ProductCart";
 import { useGetAllFlashSale } from "@/src/hooks/flashSale";
 
 const FlashSale = () => {
-  const { data: flashSale } = useGetAllFlashSale();
+  const { data: flashSale, isLoading } = useGetAllFlashSale();
+
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <section className="flex flex-col items-center justify-center gap-4 pt-14">
       <div className="container pb-14">

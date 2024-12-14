@@ -15,13 +15,12 @@ import { DeleteIcon } from "@/src/components/icons";
 import React, { useState } from "react";
 import { IProduct } from "@/src/types";
 import { useDeleteProduct, useGetMyProducts } from "@/src/hooks/product";
-import UpdateProduct from "@/src/components/modal/vendor/UpdateProduct";
-import CreateProduct from "@/src/components/modal/vendor/CreateProduct";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import CreateFlashSale from "@/src/components/modal/vendor/CreateFlashSale";
 import moment from "moment";
 import { limit } from "@/src/const/const";
-import Link from "next/link";
+import UpdateFlashSale from "@/src/components/modal/vendor/UpdateFlashSale";
 
 const columns = [
   { name: "NAME", uid: "name" },
@@ -45,16 +44,15 @@ type TPickProduct = Pick<
   | "sale_end_time"
 > & { actions: string; shopName: string; categoryName: string };
 
-const ManageProduct = () => {
+const ManageFlashSale = () => {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const { data, refetch, isLoading } = useGetMyProducts([
     { name: "limit", value: limit },
     { name: "page", value: page },
-    { name: "searchTerm", value: "product" },
+    { name: "searchTerm", value: "flashSale" },
   ]);
   const meta = data?.meta;
-
   const { mutate: deleteProduct } = useDeleteProduct();
   const productData =
     data?.data?.map((product) => ({
@@ -104,7 +102,7 @@ const ManageProduct = () => {
         case "actions":
           return (
             <div className="relative flex items-center justify-end gap-5">
-              <UpdateProduct id={product.id} />
+              <UpdateFlashSale id={product.id} />
 
               <button
                 onClick={() => handleDeleteProduct(product.id)}
@@ -112,12 +110,6 @@ const ManageProduct = () => {
               >
                 <DeleteIcon />
               </button>
-              <Link
-                className="underline"
-                href={`/vendor/product-review/${product?.id}`}
-              >
-                See Review
-              </Link>
             </div>
           );
         default:
@@ -130,7 +122,7 @@ const ManageProduct = () => {
   return (
     <div className="col-span-12 lg:col-span-9">
       <div className="flex justify-end gap-3 mb-5">
-        <CreateProduct />
+        <CreateFlashSale />
       </div>
       <Table aria-label="Example table with custom cells">
         <TableHeader columns={columns}>
@@ -177,4 +169,4 @@ const ManageProduct = () => {
   );
 };
 
-export default ManageProduct;
+export default ManageFlashSale;

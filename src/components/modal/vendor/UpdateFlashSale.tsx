@@ -9,56 +9,64 @@ import {
   Button,
   useDisclosure,
   Input,
-  Select,
-  SelectItem,
-  DateValue,
   DatePicker,
+  DateValue,
+  SelectItem,
+  Select,
 } from "@nextui-org/react";
+import { EditIcon } from "../../icons";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { useCreateProduct } from "@/src/hooks/product";
+import { useGetSingleProduct, useUpdateProduct } from "@/src/hooks/product";
 import { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Image from "next/image";
+import { useUser } from "@/src/context/user.provider";
+import { useQueryClient } from "@tanstack/react-query";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { useGetAllCategory } from "@/src/hooks/category";
-import { useQueryClient } from "@tanstack/react-query";
 
-export default function CreateFlashSale() {
-  const queryClient = useQueryClient();
+export default function UpdateFlashSale({ id }: { id: string }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const queryClient = useQueryClient();
+  const { user } = useUser();
   const [sale_start_time, setSaleStartTime] = useState<DateValue | undefined>(
     undefined
   );
+
   const [sale_end_time, setSaleEndTime] = useState<DateValue | undefined>(
     undefined
   );
-  const [images, setImages] = useState<File[]>([]);
-  const { mutate: createProduct, isPending, isSuccess } = useCreateProduct();
+
   const { data: categories } = useGetAllCategory([]);
-  const { handleSubmit, register } = useForm();
+  const [images, setImages] = useState<File[]>([]);
+  const { data: product } = useGetSingleProduct(id);
+  const { mutate: updateProduct, isPending, isSuccess } = useUpdateProduct();
+  const { handleSubmit, register, reset } = useForm();
 
   const handleUpdateProduct: SubmitHandler<FieldValues> = (values) => {
-    if (sale_end_time && sale_start_time) {
+    if (product?.data?.id) {
       const payload = Object.fromEntries(
         Object.entries({
-          isFlashSale: true,
-          categoryId: values?.categoryId,
+          discount_percentage: values?.discount_percentage,
+          sale_end_time: sale_end_time
+            ? new Date(
+                sale_end_time.year,
+                sale_end_time.month - 1,
+                sale_end_time.day
+              ).toISOString()
+            : undefined,
+          sale_start_time: sale_start_time
+            ? new Date(
+                sale_start_time.year,
+                sale_start_time.month - 1,
+                sale_start_time.day
+              ).toISOString()
+            : undefined,
           name: values?.name,
           description: values?.description,
           inventory: Number(values?.inventory),
           price: Number(values?.price),
-          discount_percentage: Number(values?.discount_percentage),
-          sale_end_time: new Date(
-            sale_end_time.year,
-            sale_end_time.month - 1,
-            sale_end_time.day
-          ).toISOString(),
-          sale_start_time: new Date(
-            sale_start_time.year,
-            sale_start_time.month - 1,
-            sale_start_time.day
-          ).toISOString(),
         }).filter(([_, value]) => value != null)
       );
 
@@ -67,19 +75,25 @@ export default function CreateFlashSale() {
       for (let image of images) {
         formData.append("files", image);
       }
-      createProduct(formData, {
-        onSuccess(data) {
-          if (data?.success) {
-            toast.success(data?.message);
-            queryClient.invalidateQueries({ queryKey: ["my-products"] });
-            onClose();
-          } else {
-            toast.error(data?.message);
-          }
-        },
-      });
-    } else {
-      toast.error("Date is required");
+      updateProduct(
+        { formData, id: product?.data?.id },
+        {
+          onSuccess(data) {
+            if (data?.success) {
+              toast.success(data?.message);
+              if (user?.role === "VENDOR") {
+                queryClient.invalidateQueries({ queryKey: ["my-products"] });
+              } else {
+                queryClient.invalidateQueries({ queryKey: ["all-products"] });
+              }
+
+              onClose();
+            } else {
+              toast.error(data?.message);
+            }
+          },
+        }
+      );
     }
   };
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,12 +108,29 @@ export default function CreateFlashSale() {
     if (!isOpen) {
       setImages([]);
     }
-  }, [isOpen]);
+    if (product?.data) {
+      reset({
+        categoryId: product?.data?.categoryId,
+        discount_percentage: product?.data?.discount_percentage,
+        sale_start_time: product?.data?.sale_start_time,
+        sale_end_time: product?.data?.sale_end_time,
+        name: product?.data?.name,
+        description: product?.data?.description,
+        inventory: product?.data?.inventory,
+        price: product?.data?.price,
+      });
+    }
+  }, [isOpen, product]);
   return (
     <>
-      <Button onPress={onOpen}>Add Flash Sale</Button>
+      <button
+        onClick={onOpen}
+        className="text-lg text-default-400 cursor-pointer active:opacity-50"
+      >
+        <EditIcon />
+      </button>
       <Modal
-        size="2xl"
+        size="4xl"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         placement="top-center"
@@ -108,7 +139,7 @@ export default function CreateFlashSale() {
           {(onClose) => (
             <form onSubmit={handleSubmit(handleUpdateProduct)}>
               <ModalHeader className="flex flex-col gap-1">
-                Add Flash Sale
+                Edit Flash Sale
               </ModalHeader>
               <ModalBody>
                 <div className="flex items-center gap-5">
@@ -126,8 +157,6 @@ export default function CreateFlashSale() {
                     placeholder="Price"
                     variant="bordered"
                   />
-                </div>
-                <div className="flex items-center gap-5">
                   <Input
                     labelPlacement="outside"
                     {...register("inventory", { required: true })}
@@ -135,6 +164,8 @@ export default function CreateFlashSale() {
                     placeholder="Inventory"
                     variant="bordered"
                   />
+                </div>
+                <div className="flex items-center gap-5">
                   <Input
                     {...register("description", { required: true })}
                     labelPlacement="outside"
@@ -142,9 +173,6 @@ export default function CreateFlashSale() {
                     placeholder="Description"
                     variant="bordered"
                   />
-                </div>
-
-                <div className="flex items-center gap-5">
                   {categories?.data && (
                     <Select
                       label="Product Category"
@@ -171,7 +199,8 @@ export default function CreateFlashSale() {
                     variant="bordered"
                   />
                 </div>
-                <div className="flex items-center gap-5">
+
+                <div className="grid grid-cols-3 items-center gap-5">
                   <DatePicker
                     onChange={(value) => setSaleStartTime(value)}
                     labelPlacement="outside"
@@ -218,6 +247,18 @@ export default function CreateFlashSale() {
                           className="h-[120px] w-[120px] object-cover m-2"
                         />
                       ))}
+                    {product?.data?.images &&
+                      images?.length === 0 &&
+                      product?.data?.images?.map((img, i) => (
+                        <Image
+                          key={i}
+                          height={120}
+                          width={120}
+                          src={img}
+                          alt="Image"
+                          className="h-[120px] w-[120px] object-cover m-2"
+                        />
+                      ))}
                   </div>
                 </div>
               </ModalBody>
@@ -232,7 +273,7 @@ export default function CreateFlashSale() {
                       <TbFidgetSpinner className="animate-spin" />
                     </span>
                   ) : (
-                    <span> Create Product</span>
+                    <span> Update</span>
                   )}
                 </Button>
               </ModalFooter>

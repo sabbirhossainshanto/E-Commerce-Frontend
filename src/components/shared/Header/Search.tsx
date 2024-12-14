@@ -4,12 +4,15 @@ import { useGetAllProducts } from "@/src/hooks/product";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const { data: products } = useGetAllProducts([
-    { name: "searchTerm", value: searchTerm },
-  ]);
+  const {
+    data: products,
+    isLoading,
+    isFetching,
+  } = useGetAllProducts([{ name: "searchTerm", value: searchTerm }]);
 
   return (
     <div className="relative hidden lg:block">
@@ -26,7 +29,14 @@ const Search = () => {
         {/* <!-- search btn --> */}
         <div className="w-[142px]">
           <button className="bg-secondary rounded-r-md w-full px-4 py-2.5 text-white text-base font-medium">
-            Search
+            {(isLoading || isFetching) && searchTerm ? (
+              <span className="flex items-center gap-2 justify-center text-base">
+                <span>Please Wait</span>{" "}
+                <TbFidgetSpinner className="animate-spin" />
+              </span>
+            ) : (
+              <span> Search</span>
+            )}
           </button>
         </div>
       </div>
@@ -44,13 +54,15 @@ const Search = () => {
                 className="flex items-center py-2 border-b border-[#ebebeb] hover:bg-[#f2f0f0] transition-all duration-300"
               >
                 <div className="w-[90px] p-2.5">
-                  <Image
-                    height={100}
-                    width={100}
-                    src={product?.images[0]}
-                    className="w-full h-[50px] object-contain"
-                    alt="product"
-                  />
+                  {product?.images?.length > 0 && (
+                    <Image
+                      height={100}
+                      width={100}
+                      src={product?.images[0]}
+                      className="w-full h-[50px] object-contain"
+                      alt="product"
+                    />
+                  )}
                 </div>
                 <div className="pl-2">
                   <h4 className="text-lg font-medium text-secondary mb-1.5">

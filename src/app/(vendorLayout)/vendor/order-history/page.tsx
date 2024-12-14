@@ -37,6 +37,7 @@ type TOrder = Pick<IOrder, "id" | "isPaid" | "status" | "quantity"> & {
 const ManageUser = () => {
   const [page, setPage] = useState(1);
   const { data } = useGetMyShop();
+
   const shopId = data?.data?.id;
   const { data: shopOrder, isLoading } = useGetShopOrder({
     limit,

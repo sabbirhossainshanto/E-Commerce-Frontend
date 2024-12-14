@@ -1,5 +1,6 @@
 "use client";
 
+import Loading from "@/src/components/shared/Loading/Loading";
 import ProductCart from "@/src/components/UI/ProductCart/ProductCart";
 import { useProduct } from "@/src/context/product.provider";
 import { useGetAllCategory } from "@/src/hooks/category";
@@ -16,7 +17,7 @@ import {
 const ProductPage = () => {
   const { query, setQuery, selectedCategory, setSelectedCategory } =
     useProduct();
-  const { data: products } = useGetAllProducts(query);
+  const { data: products, isLoading } = useGetAllProducts(query);
   const { data: categories } = useGetAllCategory([]);
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,7 +109,7 @@ const ProductPage = () => {
                 </div>
               </div>
               {/* Price Range */}
-              <div className="pb-4 border-b border-[#E9E4E4] mb-4">
+              {/* <div className="pb-4 border-b border-[#E9E4E4] mb-4">
                 <h4 className="text-xl font-medium  text-secondary uppercase">
                   Price
                 </h4>
@@ -119,7 +120,7 @@ const ProductPage = () => {
                   500
                 </span>
                 <input type="range" className="range" min="0" max="1000" />
-              </div>
+              </div> */}
               {/* Price Range */}
             </div>
           </div>
@@ -180,17 +181,19 @@ const ProductPage = () => {
               Reset
             </Button>
           </div>
-          {products?.data && products?.data?.length > 0 ? (
+          {products?.data && products?.data?.length > 0 && (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-4">
               {products?.data?.map((product) => (
                 <ProductCart key={product.id} product={product} />
               ))}
             </div>
-          ) : (
+          )}
+          {products?.data?.length === 0 && (
             <div className="flex items-center justify-center w-full h-full">
               <h5>No product available in search query!</h5>
             </div>
           )}
+          {isLoading && <Loading />}
         </div>
       </div>
     </div>
