@@ -89,6 +89,7 @@ const ChangePassword = () => {
               <div className="flex justify-between items-center mt-6">
                 <div className="flex gap-3 items-center">
                   <input
+                    defaultChecked
                     type="checkbox"
                     className="focus:ring-0 text-primary border border-primary focus:bg-primary focus:outline-none"
                     id="save-default"

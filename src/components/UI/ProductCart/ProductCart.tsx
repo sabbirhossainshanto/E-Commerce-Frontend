@@ -13,6 +13,10 @@ import { useRouter } from "next/navigation";
 import CountdownTimer from "../CountDownTimer/CountDownTimer";
 import { useCreateCompare, useGetMyComparison } from "@/src/hooks/compare";
 import { TbFidgetSpinner } from "react-icons/tb";
+import {
+  useAddToWishlist,
+  useGetMyWishlistProducts,
+} from "@/src/hooks/wishlist";
 
 const ProductCart = ({ product }: { product: IProduct }) => {
   const router = useRouter();
@@ -24,6 +28,8 @@ const ProductCart = ({ product }: { product: IProduct }) => {
     isPending: isComparisonPending,
     isSuccess: isComparisonSuccess,
   } = useCreateCompare();
+  const { mutate: addToWishlist } = useAddToWishlist();
+  const { refetch: refetchWishListProduct } = useGetMyWishlistProducts([]);
   const { data: cartProduct, refetch: refetchCart } = useGetMyCartProducts();
   const {
     mutate: addToCart,
@@ -82,6 +88,37 @@ const ProductCart = ({ product }: { product: IProduct }) => {
       Swal.fire({
         title: "Please login",
         text: "Please login to add product in cart!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Login",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.push("/login");
+        }
+      });
+    }
+  };
+  const handleAddToWishlist = (product: IProduct) => {
+    if (user?.email) {
+      addToWishlist(
+        { productId: product.id, quantity: 1 },
+        {
+          onSuccess(data) {
+            if (data?.success) {
+              refetchWishListProduct();
+              toast.success(data?.message);
+            } else {
+              toast.error(data?.message);
+            }
+          },
+        }
+      );
+    } else {
+      Swal.fire({
+        title: "Please login",
+        text: "Please login to add product in wishlist!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -185,7 +222,7 @@ const ProductCart = ({ product }: { product: IProduct }) => {
               <IoEyeOutline size={18} />
             </Link>
             <button
-              onClick={() => toast.warning("Wishlist feature coming soon!")}
+              onClick={() => handleAddToWishlist(product)}
               className="mx-2 h-10 w-10 bg-primary hover:bg-secondary  transition text-center text-white flex justify-center items-center rounded-full"
             >
               <CiHeart size={18} />
@@ -194,7 +231,7 @@ const ProductCart = ({ product }: { product: IProduct }) => {
         </div>
 
         <div className="p-5 h-[125px] overflow-hidden relative">
-          <h4 className="text-secondary text-lg font-medium mb-[5px]">
+          <h4 className="text-primary text-lg font-medium mb-[5px]">
             {product?.name}
           </h4>
 

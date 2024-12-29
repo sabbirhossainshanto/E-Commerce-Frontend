@@ -77,7 +77,7 @@ const ProductPage = () => {
               {/* Category */}
               <div className="pb-4 border-b border-[#E9E4E4] mb-4">
                 <div className="flex justify-between items-start">
-                  <h4 className="text-xl text-left font-medium mb-3 text-secondary uppercase">
+                  <h4 className="text-xl text-left font-medium mb-3 text-primary uppercase">
                     Categories
                   </h4>
                 </div>
@@ -98,7 +98,7 @@ const ProductPage = () => {
                         />
                         <label
                           htmlFor="cat-women"
-                          className="cursor-pointer text-secondary"
+                          className="cursor-pointer text-primary"
                         >
                           {category?.name}
                         </label>

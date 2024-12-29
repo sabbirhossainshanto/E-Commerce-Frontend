@@ -1,5 +1,7 @@
 "use client";
+import Advertisement from "@/src/components/modules/public/Home/Advertisement";
 import Hero from "@/src/components/modules/public/Home/Hero";
+import Sponsors from "@/src/components/modules/public/Home/Sponsors";
 import CategoryCard from "@/src/components/UI/CategoryCard/CategoryCard";
 import ProductCart from "@/src/components/UI/ProductCart/ProductCart";
 import { useGetAllCategory } from "@/src/hooks/category";
@@ -16,11 +18,12 @@ export default function Home() {
   return (
     <section className="flex flex-col items-center justify-center gap-4">
       <Hero />
-
+      {/* Advertisement */}
+      <Advertisement />
       {/* Recommended for you section */}
-      <div className="container pb-14">
+      <div className="container mt-20">
         <div className="flex items-start justify-between mb-[30px]">
-          <h2 className="text-[22px] sm:text-[32px] font-medium text-secondary">
+          <h2 className="text-[22px] sm:text-[32px] font-medium text-primary">
             Recommended For You
           </h2>
           <div className="pt-2">
@@ -46,8 +49,8 @@ export default function Home() {
       </div>
       {/* Shop By category section */}
 
-      <div className="container pb-14">
-        <h2 className="text-[28px] text-secondary mb-6">SHOP BY CATEGORY</h2>
+      <div className="container mt-20">
+        <h2 className="text-[28px] text-primary mb-6">SHOP BY CATEGORY</h2>
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
           {categories?.data?.map((category) => (
             <CategoryCard key={category.id} category={category} />
@@ -55,9 +58,9 @@ export default function Home() {
         </div>
       </div>
       {/* Flash same  section */}
-      <div className="container pb-14">
+      <div className="container mt-20">
         <div className="flex items-start justify-between mb-[30px]">
-          <h2 className="text-[22px] sm:text-[32px] font-medium text-secondary">
+          <h2 className="text-[22px] sm:text-[32px] font-medium text-primary">
             Flash Sale
           </h2>
           <div className="pt-2">
@@ -81,6 +84,7 @@ export default function Home() {
           ))}
         </div>
       </div>
+      <Sponsors />
     </section>
   );
 }

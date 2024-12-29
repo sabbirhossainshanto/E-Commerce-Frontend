@@ -114,7 +114,7 @@ const OrderHistory = () => {
         </h1>
       )}
 
-      {!isLoading && (
+      {!isLoading && data?.data && data?.data?.length > 0 && (
         <div className="my-10 flex justify-end">
           <Pagination
             loop

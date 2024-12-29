@@ -8,7 +8,7 @@ const TopHeader = () => {
       <div className="container mx-auto flex justify-between items-center">
         {/*  <!-- logo --> */}
         <Link href="/" className="w-[125px] text-3xl font-medium">
-          <span className="text-primary">Click</span>
+          <span className="text-secondary">Click</span>
           <span>Shop</span>
         </Link>
         <Search />

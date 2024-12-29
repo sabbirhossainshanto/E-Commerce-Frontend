@@ -31,10 +31,10 @@ const Hero = () => {
                 <div className="sm:flex items-center justify-center">
                   <div className="w-full sm:w-1/2 pr-3">
                     <div className="max-w-full py-24 lg:py-28 lg:pl-8 xl:pl-[95px] text-center sm:text-left">
-                      <p className="text-base mb-2 text-secondary">
+                      <p className="text-base mb-2 text-primary">
                         Get up to 50% off Today only
                       </p>
-                      <h1 className="text-[36px] sm:text-[29px] md:text-[36px] xl:text-[40px] leading-10 text-secondary font-medium mb-4">
+                      <h1 className="text-[36px] sm:text-[29px] md:text-[36px] xl:text-[40px] leading-10 text-primary font-medium mb-4">
                         Apple iPhone XR
                       </h1>
                       <div className="mb-1 leading-[22px] font-medium">
@@ -71,10 +71,10 @@ const Hero = () => {
                 <div className="sm:flex items-center justify-center">
                   <div className="w-full sm:w-1/2 px-3">
                     <div className="max-w-full py-24 lg:py-28 lg:pl-8  text-center sm:text-left">
-                      <p className="text-base mb-2 text-secondary">
+                      <p className="text-base mb-2 text-primary">
                         Get up to 50% off Today only
                       </p>
-                      <h1 className="text-[36px] sm:text-[29px] md:text-[36px] xl:text-[40px] leading-10 text-secondary font-medium mb-4">
+                      <h1 className="text-[36px] sm:text-[29px] md:text-[36px] xl:text-[40px] leading-10 text-primary font-medium mb-4">
                         iPhone 11 Pro Max{" "}
                       </h1>
                       <div className="mb-1 leading-[22px] font-medium">
@@ -112,10 +112,10 @@ const Hero = () => {
                 <div className="sm:flex items-center justify-center">
                   <div className="w-full sm:w-1/2 px-3">
                     <div className="max-w-full py-24 lg:py-28 lg:pl-8 xl:pl-[95px] text-center sm:text-left">
-                      <p className="text-base mb-2 text-secondary">
+                      <p className="text-base mb-2 text-primary">
                         Get up to 50% off Today only
                       </p>
-                      <h1 className="text-[36px] sm:text-[29px] md:text-[36px] xl:text-[40px] leading-10 text-secondary font-medium mb-4">
+                      <h1 className="text-[36px] sm:text-[29px] md:text-[36px] xl:text-[40px] leading-10 text-primary font-medium mb-4">
                         iPhone 12 Pro Max{" "}
                       </h1>
                       <div className="mb-1 leading-[22px] font-medium">
@@ -152,10 +152,10 @@ const Hero = () => {
                 <div className="sm:flex items-center justify-center">
                   <div className="w-full sm:w-1/2 pr-3">
                     <div className="max-w-full py-24 lg:py-28 lg:pl-8 xl:pl-[95px] text-center sm:text-left">
-                      <p className="text-base mb-2 text-secondary">
+                      <p className="text-base mb-2 text-primary">
                         Get up to 50% off Today only
                       </p>
-                      <h1 className="text-[36px] sm:text-[29px] md:text-[36px] xl:text-[40px] leading-10 text-secondary font-medium mb-4">
+                      <h1 className="text-[36px] sm:text-[29px] md:text-[36px] xl:text-[40px] leading-10 text-primary font-medium mb-4">
                         Apple iPhone XR
                       </h1>
                       <div className="mb-1 leading-[22px] font-medium">
@@ -192,10 +192,10 @@ const Hero = () => {
                 <div className="sm:flex items-center justify-center">
                   <div className="w-full sm:w-1/2 px-3">
                     <div className="max-w-full py-24 lg:py-28 lg:pl-8  text-center sm:text-left">
-                      <p className="text-base mb-2 text-secondary">
+                      <p className="text-base mb-2 text-primary">
                         Get up to 50% off Today only
                       </p>
-                      <h1 className="text-[36px] sm:text-[29px] md:text-[36px] xl:text-[40px] leading-10 text-secondary font-medium mb-4">
+                      <h1 className="text-[36px] sm:text-[29px] md:text-[36px] xl:text-[40px] leading-10 text-primary font-medium mb-4">
                         iPhone 11 Pro Max{" "}
                       </h1>
                       <div className="mb-1 leading-[22px] font-medium">

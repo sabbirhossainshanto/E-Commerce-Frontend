@@ -5,12 +5,13 @@ import { useUser } from "@/src/context/user.provider";
 import { logOut } from "@/src/services/Auth";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
 import { CiBoxList } from "react-icons/ci";
 
 const UserSidebar = () => {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const { user, setIsUserLoading } = useUser();
   const router = useRouter();
@@ -70,7 +71,7 @@ const UserSidebar = () => {
                       onClick={() => setOpen(false)}
                       key={child?.path}
                       href={child?.path}
-                      className="pl-7 pt-1 block hover:text-primary mb-3"
+                      className={`pl-7 pt-1 block hover:text-secondary mb-3 ${pathname == child.path ? "text-secondary" : ""}`}
                     >
                       {child?.text}
                     </Link>

@@ -5,12 +5,7 @@
 .primary-color:hover {
   @apply text-[#fd3d57];
 }
-.text-primary {
-  @apply text-[#fd3d57];
-}
-.bg-primary {
-  @apply bg-[#fd3d57];
-}
+
 .PENDING {
   @apply text-yellow-500;
 }
@@ -30,18 +25,6 @@ body {
 .container {
   margin-right: auto;
   margin-left: auto;
-}
-
-.bg-secondary {
-  background-color: #2b2d42 !important;
-}
-
-.text-secondary {
-  color: rgb(43 45 66 / 1) !important;
-}
-
-.text-primary {
-  color: rgb(253 61 87 / 1) !important;
 }
 
 .default_btn {

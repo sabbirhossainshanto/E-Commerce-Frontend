@@ -33,6 +33,7 @@ const ResetPassword = () => {
       }
     );
     const result = res.data;
+
     if (result?.success) {
       toast.success(result?.message);
       router.push("/login");

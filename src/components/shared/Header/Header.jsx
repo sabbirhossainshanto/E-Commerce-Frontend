@@ -7,13 +7,28 @@ import { usePathname } from "next/navigation";
 import MenuDropdown from "./MenuDropdoen";
 import { useGetMyComparison } from "@/src/hooks/compare";
 import Comparison from "../../modal/Comparison";
+import Wishlist from "./Wishlist";
+import { useEffect, useState } from "react";
 
 const Header = () => {
   const pathname = usePathname();
   const { user } = useUser();
   const { data: comparisons } = useGetMyComparison();
+  const [navbarSticky, setNavbarSticky] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 65) {
+        setNavbarSticky(true);
+      } else {
+        setNavbarSticky(false);
+      }
+    });
+  }, [navbarSticky]);
   return (
-    <nav className="bg-secondary py-1.5">
+    <nav
+      className={`bg-primary py-1.5  ${navbarSticky ? "z-40 shadow-2xl fixed top-0 left-0 right-0" : ""}`}
+    >
       <div className="container flex items-center justify-between">
         <Link href="/" className="lg:hidden w-[120px]">
           <span className="text-primary">Click</span>
@@ -43,7 +58,7 @@ const Header = () => {
           <li>
             <Link
               href="/"
-              className={` leading-[26px] flex items-center text-base font-medium px-2.5 py-[15px] transition duration-300 ${pathname === "/" ? "text-primary" : "text-white"}`}
+              className={` leading-[26px] flex items-center text-base font-medium px-2.5 py-[15px] transition duration-300 ${pathname === "/" ? "text-secondary" : "text-white"}`}
             >
               Home
             </Link>
@@ -51,7 +66,7 @@ const Header = () => {
           <li>
             <Link
               href="/products"
-              className={` leading-[26px] flex items-center text-base font-medium px-2.5 py-[15px] transition duration-300 ${pathname === "/products" ? "text-primary" : "text-white"}`}
+              className={` leading-[26px] flex items-center text-base font-medium px-2.5 py-[15px] transition duration-300 ${pathname === "/products" ? "text-secondary" : "text-white"}`}
             >
               Product
             </Link>
@@ -59,7 +74,7 @@ const Header = () => {
           <li>
             <Link
               href="/recent-products"
-              className={` leading-[26px] flex items-center text-base font-medium px-2.5 py-[15px] transition duration-300 ${pathname === "/recent-products" ? "text-primary" : "text-white"}`}
+              className={` leading-[26px] flex items-center text-base font-medium px-2.5 py-[15px] transition duration-300 ${pathname === "/recent-products" ? "text-secondary" : "text-white"}`}
             >
               Recent Product
             </Link>
@@ -67,7 +82,7 @@ const Header = () => {
           <li>
             <Link
               href="/flash-sale"
-              className={` leading-[26px] flex items-center text-base font-medium px-2.5 py-[15px] transition duration-300 ${pathname === "/flash-sale" ? "text-primary" : "text-white"}`}
+              className={` leading-[26px] flex items-center text-base font-medium px-2.5 py-[15px] transition duration-300 ${pathname === "/flash-sale" ? "text-secondary" : "text-white"}`}
             >
               Flash Sale
             </Link>
@@ -75,8 +90,7 @@ const Header = () => {
         </ul>
         {user?.email ? (
           <div className="flex items-center">
-            {/* TODO */}
-            {/* <WishlistDropdown /> */}
+            <Wishlist />
             <MenuDropdown />
             {comparisons?.data && comparisons?.data?.length > 0 && (
               <Comparison comparisons={comparisons?.data} />
@@ -89,14 +103,14 @@ const Header = () => {
           <div className="mr-4 flex items-center">
             <Link
               href="/login"
-              className="text-white text-sm hover:text-primary font-medium leading-[26px] transition duration-200"
+              className="text-white text-sm hover:text-secondary font-medium leading-[26px] transition duration-200"
             >
               Login
             </Link>
             <span className="text-white text-sm">/</span>
             <Link
               href="/register"
-              className="text-white text-sm hover:text-primary font-medium leading-[26px] transition duration-200"
+              className="text-white text-sm hover:text-secondary font-medium leading-[26px] transition duration-200"
             >
               Register
             </Link>

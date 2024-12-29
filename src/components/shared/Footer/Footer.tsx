@@ -1,15 +1,67 @@
+"use client";
+
 import img from "@/src/assets/img";
+import { useCreateSubscriber } from "@/src/hooks/subscriber";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { CiLocationOn } from "react-icons/ci";
 import { IoCallOutline } from "react-icons/io5";
 import { LuMessageCircle } from "react-icons/lu";
+import { toast } from "sonner";
+import { z } from "zod";
 
 const Footer = () => {
+  const [email, setEmail] = useState("");
+  const { mutate } = useCreateSubscriber();
+
+  const handleSubscribe = () => {
+    const isValidEmail = z.string().email();
+    const parseEmail = isValidEmail.safeParse(email);
+    if (parseEmail.success) {
+      mutate(
+        { email },
+        {
+          onSuccess(data) {
+            if (data?.success) {
+              toast?.success(data?.message);
+            } else {
+              toast?.error(data?.message);
+            }
+          },
+        }
+      );
+    } else {
+      toast?.error("Please provide a valid email");
+    }
+  };
+
   return (
     <div className="relative mt-16 bg-[#ffebee]">
-      <svg
+      <div className="md:flex md:justify-between md:items-center sm:px-12 px-4 bg-primary py-7">
+        <h1 className="lg:text-3xl text-2xl md:mb-0 mb-6 lg:leading-normal font-semibold md:w-2/5 text-white">
+          <span className="text-[#56d879]">Subscribe</span> us for get news{" "}
+          <br />
+          events and offers
+        </h1>
+        <div>
+          <input
+            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            required
+            placeholder="Enter your email..."
+            className="text-gray-800
+                sm:w-72 w-full sm:mr-5 mr-1 lg:mb-0 mb-4 py-2.5 rounded px-2 focus:outline-none"
+          />
+          <button
+            onClick={handleSubscribe}
+            className="bg-secondary text-white  duration-300 px-5 py-2.5 rounded-md text-whie md:w-auto w-full"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+      {/* <svg
         className="absolute top-0 w-full h-6 -mt-5 sm:-mt-10 sm:h-16 text-deep-purple-accent-400"
         preserveAspectRatio="none"
         viewBox="0 0 1440 54"
@@ -18,39 +70,19 @@ const Footer = () => {
           fill="#ffebee"
           d="M0 22L120 16.7C240 11 480 1.00001 720 0.700012C960 1.00001 1200 11 1320 16.7L1440 22V54H1320C1200 54 960 54 720 54C480 54 240 54 120 54H0V22Z"
         />
-      </svg>
+      </svg> */}
       <div className="flex flex-col justify-between w-full">
         <div className="grid grid-cols-1 md:grid-cols-2  px-10 py-10 justify-items-center">
           <div className="space-y-3 flex-1">
             <h1 className="text-4xl">
-              <span className="text-primary">Click</span>
+              <span className="text-secondary">Click</span>
               <span>Shop</span>
             </h1>
             <p className="text-xl text-[#2B2D42] ">
               Book the perfect space for your next meeting. At Booking.com, we
               provide a variety of rooms designed to meet your business needs.
             </p>
-            <div className="flex flex-col gap-4 pt-4">
-              <label
-                htmlFor="newsLetter"
-                className="text-gray-900 text-xl uppercase"
-              >
-                Subscribe
-              </label>
-              <form className="flex">
-                <input
-                  type="text"
-                  placeholder="Your email address"
-                  className="py-2.5 px-[15px] text-[13px] w-full sm:w-[230px] md:w-full lg:w-[230px]  bg-transparent rounded-l-[5px] border border-[#c7c7c7] focus:ring-1 focus:outline-rose-500 border-r-0 focus:border-r-0 "
-                />
-                <button
-                  type="button"
-                  className="default_btn py-2 px-2.5 min-w-[105px] rounded-r-[5px] rounded-l-none hover:bg-white hover:border-rose-500 hover:text-primary"
-                >
-                  SUBSCRIBE
-                </button>
-              </form>
-            </div>
+
             <div className="flex flex-col gap-4 pt-4">
               <h1 className="text-gray-900 text-xl uppercase">CONTACT</h1>
               <p className="flex items-center gap-2 text-lg">

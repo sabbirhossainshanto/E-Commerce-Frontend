@@ -28,7 +28,7 @@ const Search = () => {
         </div>
         {/* <!-- search btn --> */}
         <div className="w-[142px]">
-          <button className="bg-secondary rounded-r-md w-full px-4 py-2.5 text-white text-base font-medium">
+          <button className="bg-primary rounded-r-md w-full px-4 py-2.5 text-white text-base font-medium">
             {(isLoading || isFetching) && searchTerm ? (
               <span className="flex items-center gap-2 justify-center text-base">
                 <span>Please Wait</span>{" "}

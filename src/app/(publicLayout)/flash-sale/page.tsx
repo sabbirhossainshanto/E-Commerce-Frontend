@@ -14,7 +14,7 @@ const FlashSale = () => {
     <section className="flex flex-col items-center justify-center gap-4 pt-14">
       <div className="container pb-14">
         <div className="flex items-start justify-between mb-[30px]">
-          <h2 className="text-[22px] sm:text-[32px] font-medium text-secondary">
+          <h2 className="text-[22px] sm:text-[32px] font-medium text-primary">
             Flash Sale
           </h2>
         </div>
@@ -23,6 +23,11 @@ const FlashSale = () => {
             <ProductCart key={flashSale.id} product={flashSale} />
           ))}
         </div>
+        {flashSale?.data && flashSale?.data?.length === 0 && (
+          <div className="w-full flex items-center justify-center">
+            No flash sale product available!
+          </div>
+        )}
       </div>
     </section>
   );

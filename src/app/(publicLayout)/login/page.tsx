@@ -2,29 +2,23 @@
 
 import { useUser } from "@/src/context/user.provider";
 import { useUserLogin } from "@/src/hooks/auth";
+import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { FaGreaterThan } from "react-icons/fa";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { MdOutlineHome } from "react-icons/md";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { toast } from "sonner";
 
 const Login = () => {
+  const [inputType, setInputType] = useState<"password" | "text">("password");
   const { mutate: handleLogin, isPending, isSuccess } = useUserLogin();
   const { setIsUserLoading, user } = useUser();
   const router = useRouter();
-  const { handleSubmit, register } = useForm({
-    defaultValues: {
-      email: "web@hero.com",
-      password: "ph-password",
-      // email: "jiinat@gmail.com",
-      // password: "jiinat",
-      // email: "sabbirshnt@gmail.com",
-      // password: "1111",
-    },
-  });
+  const { handleSubmit, register, reset } = useForm();
 
   const handleSignIn: SubmitHandler<FieldValues> = async (data) => {
     handleLogin(data, {
@@ -53,6 +47,7 @@ const Login = () => {
       }
     }
   }, [user]);
+
   return (
     <div className="py-10 bg-gray-50">
       <div className="flex items-center gap-2 container">
@@ -67,6 +62,41 @@ const Login = () => {
 
       <div className="w-full max-w-[500px] mx-auto box_shadow rounded px-[30px] py-[24px] mb-14">
         <h4 className="text-[28px] uppercase font-semibold mb-4">Login</h4>
+        <h4 className="text-lg uppercase font-semibold mb-4">
+          Demo Credential:
+        </h4>
+        <div className="flex items-center gap-3 mb-4">
+          <Button
+            onClick={() =>
+              reset({
+                email: "jiinat@gmail.com",
+                password: "jiinat",
+              })
+            }
+          >
+            User Credential
+          </Button>
+          <Button
+            onClick={() =>
+              reset({
+                email: "sabbirhossainshanto3@gmail.com",
+                password: "sabbir2001",
+              })
+            }
+          >
+            Vendor Credential
+          </Button>
+          <Button
+            onClick={() =>
+              reset({
+                email: "sabbirshnt@gmail.com",
+                password: "sabbir2001",
+              })
+            }
+          >
+            Admin Credential
+          </Button>
+        </div>
 
         <form onSubmit={handleSubmit(handleSignIn)}>
           <div>
@@ -81,16 +111,29 @@ const Login = () => {
                 placeholder="example@mail.com"
               />
             </div>
-            <div className="mt-4">
+            <div className="mt-4 relative">
               <label htmlFor="password" className="block">
                 Password <span className="text-primary">*</span>
               </label>
               <input
                 {...register("password", { required: true })}
                 className="w-full border border-[#E9E4E4] rounded focus:ring-0 focus:outline-primary mt-1 py-3 px-2"
-                type="password"
+                type={inputType}
                 placeholder="type password"
               />
+              {inputType === "password" ? (
+                <IoMdEyeOff
+                  onClick={() => setInputType("text")}
+                  className="absolute top-12 right-5 cursor-pointer"
+                  size={20}
+                />
+              ) : (
+                <IoMdEye
+                  onClick={() => setInputType("password")}
+                  className="absolute top-12 right-5 cursor-pointer"
+                  size={20}
+                />
+              )}
             </div>
 
             <div className="flex justify-between items-center mt-6">
@@ -99,7 +142,6 @@ const Login = () => {
                   defaultChecked
                   type="checkbox"
                   className="focus:ring-0 text-primary border border-primary focus:bg-primary focus:outline-none"
-                  id="save-default"
                 />
                 <label htmlFor="save-default" className="text-sm sm:text-base">
                   Remember Me

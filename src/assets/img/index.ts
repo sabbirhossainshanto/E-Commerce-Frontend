@@ -8,6 +8,13 @@ import twitter from "../images/twitter.png";
 import paymentMethod from "../images/payment-method.png";
 import scrollToTop from "../images/scrolling.png";
 import loader from "../images/preloader.gif";
+import support from "../images/24-hours-support.png";
+import sony from "../images/sony.png";
+import dell from "../images/dell.png";
+import microsoft from "../images/microsoft.png";
+import tpLink from "../images/tp-link.png";
+import nike from "../images/nike.png";
+import daraz from "../images/daraz.png";
 
 export default {
   logo,
@@ -20,4 +27,11 @@ export default {
   paymentMethod,
   scrollToTop,
   loader,
+  support,
+  sony,
+  dell,
+  microsoft,
+  tpLink,
+  nike,
+  daraz,
 };

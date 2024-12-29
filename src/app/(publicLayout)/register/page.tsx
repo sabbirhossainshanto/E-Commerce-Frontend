@@ -12,8 +12,15 @@ import { toast } from "sonner";
 import Image from "next/image";
 import { useUserRegister } from "@/src/hooks/auth";
 import { useUser } from "@/src/context/user.provider";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 
 const Register = () => {
+  const [passwordType, setPasswordType] = useState<"password" | "text">(
+    "password"
+  );
+  const [confirmPasswordType, setConfirmPasswordType] = useState<
+    "password" | "text"
+  >("password");
   const { setIsUserLoading } = useUser();
   const [image, setImage] = useState<File | null>(null);
   const {
@@ -82,7 +89,7 @@ const Register = () => {
         <h4 className="text-[28px] uppercase font-semibold ">
           Create an account
         </h4>
-        <p className="mb-4 text_md">Register here if you are a new customer.</p>
+        <p className="mb-4 text_md">Register here if you are a new user.</p>
         <form onSubmit={handleSubmit(handleRegister)}>
           <div>
             <div>
@@ -107,27 +114,53 @@ const Register = () => {
                 placeholder="example@mail.com"
               />
             </div>
-            <div className="mt-4">
+            <div className="mt-4 relative">
               <label htmlFor="password" className="block">
                 Password <span className="text-primary">*</span>
               </label>
               <input
                 {...register("password", { required: true })}
                 className="w-full border border-[#E9E4E4] rounded focus:ring-0 focus:outline-primary mt-1 py-3 px-2"
-                type="password"
+                type={passwordType}
                 placeholder="type password"
               />
+              {passwordType === "password" ? (
+                <IoMdEyeOff
+                  onClick={() => setPasswordType("text")}
+                  className="absolute top-12 right-5 cursor-pointer"
+                  size={20}
+                />
+              ) : (
+                <IoMdEye
+                  onClick={() => setPasswordType("password")}
+                  className="absolute top-12 right-5 cursor-pointer"
+                  size={20}
+                />
+              )}
             </div>
-            <div className="mt-4">
+            <div className="mt-4 relative">
               <label htmlFor="confirm Password" className="block">
                 Confirm Password <span className="text-primary">*</span>
               </label>
               <input
                 {...register("confirmPassword", { required: true })}
                 className="w-full border border-[#E9E4E4] rounded focus:ring-0 focus:outline-primary mt-1 py-3 px-2"
-                type="password"
+                type={confirmPasswordType}
                 placeholder="type password"
               />
+              {confirmPasswordType === "password" ? (
+                <IoMdEyeOff
+                  onClick={() => setConfirmPasswordType("text")}
+                  className="absolute top-12 right-5 cursor-pointer"
+                  size={20}
+                />
+              ) : (
+                <IoMdEye
+                  onClick={() => setConfirmPasswordType("password")}
+                  className="absolute top-12 right-5 cursor-pointer"
+                  size={20}
+                />
+              )}
             </div>
             <div className="mt-4">
               <label htmlFor="Role" className="block">
@@ -184,6 +217,7 @@ const Register = () => {
                   type="checkbox"
                   className="focus:ring-0 text-primary border border-primary focus:bg-primary focus:outline-none"
                   id="save-default"
+                  defaultChecked
                 />
                 <label htmlFor="save-default" className="text-sm sm:text-base">
                   I have read and agree to the{" "}
@@ -210,10 +244,10 @@ const Register = () => {
           </div>
         </form>
         {/* Social Login */}
-        <div className="flex justify-center mt-4 relative after:absolute after:w-full after:h-[1px] after:bg-gray-300 after:top-3">
+        {/* <div className="flex justify-center mt-4 relative after:absolute after:w-full after:h-[1px] after:bg-gray-300 after:top-3">
           <p className="px-2 bg-white z-10">Or login in with</p>
-        </div>
-
+        </div> */}
+        {/* 
         <div className="flex gap-5 mt-4">
           <button className="default_btn w-full rounded bg-facebook hover:bg-white hover:border-[#3B5999] hover:text-[#3B5999]">
             <i className="fab fa-facebook-f me-2"></i> Facebook
@@ -221,7 +255,7 @@ const Register = () => {
           <button className="default_btn w-full bg-google hover:bg-white hover:border-[#D85040] hover:text-[#D85040]">
             <i className="fab fa-google me-2"></i> Google
           </button>
-        </div>
+        </div> */}
 
         <p className="text-center mt-3 mb-0">
           Already have an account.?{" "}
