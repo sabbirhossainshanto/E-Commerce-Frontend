@@ -1,7 +1,8 @@
 "use client";
 
-import Loading from "@/src/components/shared/Loading/Loading";
 import ProductCart from "@/src/components/UI/ProductCart/ProductCart";
+import ProductSkeleton from "@/src/components/UI/ProductSkeleton/ProductSkeleton";
+import { limit } from "@/src/const/const";
 import { useProduct } from "@/src/context/product.provider";
 import { useGetAllCategory } from "@/src/hooks/category";
 import { useGetAllProducts } from "@/src/hooks/product";
@@ -12,12 +13,20 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Input,
+  Pagination,
 } from "@nextui-org/react";
+import { useState } from "react";
 
 const ProductPage = () => {
+  const [page, setPage] = useState(1);
   const { query, setQuery, selectedCategory, setSelectedCategory } =
     useProduct();
-  const { data: products, isLoading } = useGetAllProducts(query);
+  const { data: products, isLoading } = useGetAllProducts([
+    ...query,
+    { name: "limit", value: limit },
+    { name: "page", value: page },
+  ]);
+  const meta = products?.meta;
   const { data: categories } = useGetAllCategory([]);
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,9 +79,9 @@ const ProductPage = () => {
 
   return (
     <div className="container pb-14 pt-12 relative">
-      <div className="grid grid-cols-1 md:grid-cols-4 relative gap-6">
-        <div className="col-span-1">
-          <div className="lg:opacity-100 lg:visible transition-all duration-300 absolute bg-white top-[80px] left-0 lg:static w-[320px] shadow lg:w-full p-4 z-20 opacity-0 invisible">
+      <div className="grid grid-cols-12 gap-6">
+        <div className="col-span-12 md:col-span-3">
+          <div className=" transition-all duration-300 bg-white  shadow p-4 z-20 ">
             <div className="mt-6 sm:mt-2">
               {/* Category */}
               <div className="pb-4 border-b border-[#E9E4E4] mb-4">
@@ -125,22 +134,13 @@ const ProductPage = () => {
             </div>
           </div>
         </div>
-        <div className="col-span-1 lg:col-span-3">
+        <div className="col-span-12 md:col-span-9 h-full">
           {/* Dropdown */}
-          <div className="w-[200px] md:hidden mb-5">
-            <Input
-              onChange={handleSearchChange}
-              onClear={handleRemoveSearch}
-              variant="bordered"
-              isClearable
-              type="text"
-              label="Search Product..."
-            />
-          </div>
+
           <div className="flex items-center gap-5">
-            <Dropdown>
+            <Dropdown size="lg">
               <DropdownTrigger>
-                <Button className="h-[50px]" variant="bordered">
+                <Button className="text-[10px] md:text-sm" variant="bordered">
                   Sort Product
                 </Button>
               </DropdownTrigger>
@@ -159,8 +159,9 @@ const ProductPage = () => {
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
-            <div className="hidden md:block md:w-[200px]">
+            <div className="max-w-[200px]">
               <Input
+                size="sm"
                 onChange={handleSearchChange}
                 onClear={handleRemoveSearch}
                 variant="bordered"
@@ -174,6 +175,7 @@ const ProductPage = () => {
               onClick={() => {
                 setQuery([]);
                 setSelectedCategory(null);
+                setPage(1);
               }}
               className="h-[45px] default_btn"
               variant="bordered"
@@ -193,7 +195,18 @@ const ProductPage = () => {
               <h5>No product available in search query!</h5>
             </div>
           )}
-          {isLoading && <Loading />}
+          {isLoading && <ProductSkeleton mdGridCols="3" />}
+          {!isLoading && (
+            <div className="flex justify-end mt-10">
+              <Pagination
+                loop
+                showControls
+                onChange={(page) => setPage(page)}
+                page={page}
+                total={meta?.total ? Math.ceil(meta?.total / limit) : 1}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

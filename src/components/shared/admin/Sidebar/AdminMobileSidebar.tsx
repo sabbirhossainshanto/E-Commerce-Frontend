@@ -1,23 +1,30 @@
 "use client";
+
+import { adminNavlist } from "@/src/const/admin.navlist";
 import { useUser } from "@/src/context/user.provider";
+import useCloseModal from "@/src/hooks/useCloseModal";
 import { logOut } from "@/src/services/Auth";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
-import { adminNavlist } from "@/src/const/admin.navlist";
-import { LiaAngleRightSolid, LiaAngleUpSolid } from "react-icons/lia";
-import { useState } from "react";
 import { GoDash } from "react-icons/go";
-
+import { LiaAngleRightSolid, LiaAngleUpSolid } from "react-icons/lia";
 interface IProps {
-  collapseSidebar: boolean;
+  setShowMobileSidebar: Dispatch<SetStateAction<boolean>>;
+  showMobileSidebar: boolean;
 }
-const AdminSidebar = ({ collapseSidebar }: IProps) => {
+
+const AdminMobileSidebar = ({
+  showMobileSidebar,
+  setShowMobileSidebar,
+}: IProps) => {
   const [activeMenu, setActiveMenu] = useState<number | null>(0);
   const pathname = usePathname();
   const { user, setIsUserLoading } = useUser();
   const router = useRouter();
+  const mobileSidebarRef = useRef<HTMLDivElement | null>(null);
 
   const handleLogout = () => {
     logOut();
@@ -25,14 +32,16 @@ const AdminSidebar = ({ collapseSidebar }: IProps) => {
     router.push("/");
   };
 
+  useCloseModal(mobileSidebarRef, () => {
+    setShowMobileSidebar(false);
+  });
   return (
     <div
-      className={`bg-[#405189] text-white fixed z-50 hidden  lg:block h-screen transition-all duration-300 ${collapseSidebar ? "w-[100px]" : "w-[300px]"}`}
+      ref={mobileSidebarRef}
+      className={`bg-[#405189] text-white fixed z-50   lg:hidden h-screen transition-all duration-300 w-[300px]  ${showMobileSidebar ? "translate-x-0" : "-translate-x-[300px]"}`}
     >
       <div>
-        <div
-          className={`px-4 py-2 flex gap-5 items-center mt-6 ${collapseSidebar ? "justify-center" : "justify-start"}`}
-        >
+        <div className={`px-4 py-2 flex gap-5 items-center mt-6 justify-start`}>
           <div className="w-12 border border-[#E9E4E4] rounded-full p-1">
             <Link href="/dashboard">
               {user?.profilePhoto && (
@@ -47,34 +56,31 @@ const AdminSidebar = ({ collapseSidebar }: IProps) => {
             </Link>
           </div>
 
-          {!collapseSidebar && (
-            <div className="text-[#abb9e8]">
-              <p>Hello,</p>
-              <h4>{user?.name}</h4>
-            </div>
-          )}
+          <div>
+            <p>Hello,</p>
+            <h4>{user?.name}</h4>
+          </div>
         </div>
 
         <div
-          className={`flex flex-col ${collapseSidebar ? "items-center" : "justify-start"} gap-5  px-4 py-6 text-white   z-10 transition-all duration-300  `}
+          className={`flex flex-col justify-start gap-5  px-4 py-6 text-white   z-10 transition-all duration-300  `}
         >
           {adminNavlist?.map((list, i) => {
-            const { icon: Icon } = list;
             const isActive = activeMenu === i;
+            const { icon: Icon } = list;
             return (
               <div key={i} className="mt-2">
                 <button
                   onClick={() => setActiveMenu(isActive ? null : i)}
-                  className={`${isActive ? "text-white" : "text-[#abb9e8]"} w-full flex gap-10 items-center text-xl   font-medium  group ${collapseSidebar ? "justify-center" : "justify-between"} hover:text-white  transition-colors`}
+                  className={`${isActive ? "text-white" : "text-[#abb9e8]"} w-full flex gap-10 items-center text-xl   font-medium  group justify-between hover:text-white  transition-colors`}
                 >
                   <div className="flex items-center gap-2">
-                    <Icon size={collapseSidebar ? 30 : 22} />
-                    <span>{!collapseSidebar && list?.key}</span>
+                    <Icon size={20} />
+                    <span>{list?.key}</span>
                   </div>
-                  {!collapseSidebar && isActive && <LiaAngleUpSolid />}
-                  {!collapseSidebar && !isActive && <LiaAngleRightSolid />}
+                  {isActive ? <LiaAngleUpSolid /> : <LiaAngleRightSolid />}
                 </button>
-                {!collapseSidebar && list?.children && (
+                {list?.children && (
                   <div
                     className={`transition-all duration-500 overflow-hidden  mt-3 ${
                       isActive
@@ -108,12 +114,9 @@ const AdminSidebar = ({ collapseSidebar }: IProps) => {
               className="flex gap-2 items-center text-[18px] font-medium"
             >
               <span>
-                <AiOutlineLogout
-                  color="#abb9e8"
-                  size={collapseSidebar ? 30 : 22}
-                />
+                <AiOutlineLogout size={20} />
               </span>
-              {!collapseSidebar && "Log Out"}
+              Log Out
             </button>
           </div>
         </div>
@@ -122,4 +125,4 @@ const AdminSidebar = ({ collapseSidebar }: IProps) => {
   );
 };
 
-export default AdminSidebar;
+export default AdminMobileSidebar;

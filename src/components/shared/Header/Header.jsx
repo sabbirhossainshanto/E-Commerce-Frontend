@@ -31,7 +31,7 @@ const Header = () => {
     >
       <div className="container flex items-center justify-between">
         <Link href="/" className="lg:hidden w-[120px]">
-          <span className="text-primary">Click</span>
+          <span className="text-secondary">Click</span>
           <span className="text-white">Shop</span>
         </Link>
         {/* <!-- All categories --> */}

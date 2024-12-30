@@ -11,7 +11,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { toast } from "sonner";
 
-const UserHomePage = () => {
+const AdminHomePage = () => {
   const { user } = useUser();
   const router = useRouter();
   const { setIsUserLoading } = useUser();
@@ -132,4 +132,4 @@ const UserHomePage = () => {
   );
 };
 
-export default UserHomePage;
+export default AdminHomePage;

@@ -1,7 +1,7 @@
 "use client";
 
-import Loading from "@/src/components/shared/Loading/Loading";
 import ProductCart from "@/src/components/UI/ProductCart/ProductCart";
+import ProductSkeleton from "@/src/components/UI/ProductSkeleton/ProductSkeleton";
 import { useGetAllProducts } from "@/src/hooks/product";
 import React from "react";
 
@@ -10,9 +10,6 @@ const RecentProducts = () => {
     { name: "searchTerm", value: "recentViewedProduct" },
   ]);
 
-  if (isLoading) {
-    return <Loading />;
-  }
   return (
     <div className="container pt-14">
       <div className="flex items-start justify-between mb-[30px]">
@@ -25,6 +22,7 @@ const RecentProducts = () => {
           <ProductCart key={product.id} product={product} />
         ))}
       </div>
+      {isLoading && <ProductSkeleton mdGridCols="4" />}
     </div>
   );
 };

@@ -228,6 +228,34 @@ const ProductCart = ({ product }: { product: IProduct }) => {
               <CiHeart size={18} />
             </button>
           </div>
+          <div className="absolute left-0 bottom-6 mt-[15px] group-hover:mt-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex items-center justify-center  gap-4 z-10 w-full">
+            <button
+              onClick={() => handleAddToCompare(product)}
+              className="default_btn primary-color  hover:bg-white !text-[10px]"
+            >
+              {isComparisonPending && !isComparisonSuccess ? (
+                <span className="flex items-center gap-2 justify-center text-sm">
+                  <span>Please Wait</span>{" "}
+                  <TbFidgetSpinner className="animate-spin" />
+                </span>
+              ) : (
+                <span> ADD TO COMPARE</span>
+              )}
+            </button>
+            <button
+              onClick={() => handleAddToCart(product)}
+              className="!text-[10px] default_btn primary-color hover:bg-white "
+            >
+              {isCartPending && !isCartSuccess ? (
+                <span className="flex items-center gap-2 justify-center text-base">
+                  <span>Please Wait</span>{" "}
+                  <TbFidgetSpinner className="animate-spin" />
+                </span>
+              ) : (
+                <span> ADD TO CART</span>
+              )}
+            </button>
+          </div>
         </div>
 
         <div className="p-5 h-[125px] overflow-hidden relative">
@@ -311,35 +339,6 @@ const ProductCart = ({ product }: { product: IProduct }) => {
                 </span>
               </Link>
             </div>
-          </div>
-
-          <div className="absolute left-1.5 top-3 mt-[15px] group-hover:mt-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col gap-4">
-            <button
-              onClick={() => handleAddToCompare(product)}
-              className="default_btn bg-secondary border-none hover:bg-white"
-            >
-              {isComparisonPending && !isComparisonSuccess ? (
-                <span className="flex items-center gap-2 justify-center text-sm">
-                  <span>Please Wait</span>{" "}
-                  <TbFidgetSpinner className="animate-spin" />
-                </span>
-              ) : (
-                <span> ADD TO COMPARE</span>
-              )}
-            </button>
-            <button
-              onClick={() => handleAddToCart(product)}
-              className="default_btn primary-color hover:bg-white "
-            >
-              {isCartPending && !isCartSuccess ? (
-                <span className="flex items-center gap-2 justify-center text-base">
-                  <span>Please Wait</span>{" "}
-                  <TbFidgetSpinner className="animate-spin" />
-                </span>
-              ) : (
-                <span> ADD TO CART</span>
-              )}
-            </button>
           </div>
         </div>
       </div>

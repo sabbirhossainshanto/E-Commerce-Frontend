@@ -1,15 +1,12 @@
 "use client";
 
-import Loading from "@/src/components/shared/Loading/Loading";
 import ProductCart from "@/src/components/UI/ProductCart/ProductCart";
+import ProductSkeleton from "@/src/components/UI/ProductSkeleton/ProductSkeleton";
 import { useGetAllFlashSale } from "@/src/hooks/flashSale";
 
 const FlashSale = () => {
   const { data: flashSale, isLoading } = useGetAllFlashSale();
 
-  if (isLoading) {
-    return <Loading />;
-  }
   return (
     <section className="flex flex-col items-center justify-center gap-4 pt-14">
       <div className="container pb-14">
@@ -28,6 +25,7 @@ const FlashSale = () => {
             No flash sale product available!
           </div>
         )}
+        {isLoading && <ProductSkeleton mdGridCols="4" />}
       </div>
     </section>
   );

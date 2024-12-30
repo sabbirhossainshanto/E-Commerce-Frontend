@@ -24,7 +24,9 @@ const Login = () => {
     handleLogin(data, {
       onSuccess(data) {
         if (data?.success) {
+          setIsUserLoading(true);
           toast.success(data?.message);
+          router.push("/");
         } else {
           toast.error(data?.message);
         }
@@ -33,20 +35,7 @@ const Login = () => {
         toast.error(error?.message);
       },
     });
-    setIsUserLoading(true);
   };
-
-  useEffect(() => {
-    if (user && user?.role) {
-      if (user?.role === "ADMIN") {
-        router.push("/admin");
-      } else if (user?.role === "VENDOR") {
-        router.push("/vendor");
-      } else {
-        router.push("/");
-      }
-    }
-  }, [user]);
 
   return (
     <div className="py-10 bg-gray-50">
