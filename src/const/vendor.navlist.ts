@@ -1,6 +1,7 @@
 import { AiFillProduct } from "react-icons/ai";
 import { FaFirstOrder, FaShoppingBag } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
+import { SlUserFollowing } from "react-icons/sl";
 
 export const vendorNavlist = [
   {
@@ -48,6 +49,16 @@ export const vendorNavlist = [
       {
         path: "/vendor/order-history",
         text: "Order History",
+      },
+    ],
+  },
+  {
+    key: "Follower",
+    icon: SlUserFollowing,
+    children: [
+      {
+        path: "/vendor/followers",
+        text: "View Followers",
       },
     ],
   },
