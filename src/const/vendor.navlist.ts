@@ -1,6 +1,25 @@
+import { AiFillProduct } from "react-icons/ai";
+import { FaFirstOrder, FaShoppingBag } from "react-icons/fa";
+import { MdDashboard } from "react-icons/md";
+
 export const vendorNavlist = [
   {
+    key: "Dashboard",
+    icon: MdDashboard,
+    children: [
+      {
+        path: "/vendor",
+        text: "Dashboard",
+      },
+      {
+        path: "/vendor/manage-profile",
+        text: "Manage Profile",
+      },
+    ],
+  },
+  {
     key: "Shop",
+    icon: FaShoppingBag,
     children: [
       {
         path: "/vendor/manage-shop",
@@ -10,6 +29,7 @@ export const vendorNavlist = [
   },
   {
     key: "Product",
+    icon: AiFillProduct,
     children: [
       {
         path: "/vendor/manage-product",
@@ -23,6 +43,7 @@ export const vendorNavlist = [
   },
   {
     key: "Order",
+    icon: FaFirstOrder,
     children: [
       {
         path: "/vendor/order-history",

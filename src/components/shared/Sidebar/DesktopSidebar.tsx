@@ -1,22 +1,23 @@
 "use client";
 import { useUser } from "@/src/context/user.provider";
 import { logOut } from "@/src/services/Auth";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { AiOutlineLogout } from "react-icons/ai";
-import { adminNavlist } from "@/src/const/admin.navlist";
 import { LiaAngleRightSolid, LiaAngleUpSolid } from "react-icons/lia";
 import { useState } from "react";
 import { GoDash } from "react-icons/go";
+import { INavLists } from "@/src/types";
+import { Home } from "lucide-react";
 
 interface IProps {
   collapseSidebar: boolean;
+  navLists: INavLists[];
 }
-const AdminSidebar = ({ collapseSidebar }: IProps) => {
+const DesktopSidebar = ({ collapseSidebar, navLists }: IProps) => {
   const [activeMenu, setActiveMenu] = useState<number | null>(0);
   const pathname = usePathname();
-  const { user, setIsUserLoading } = useUser();
+  const { setIsUserLoading } = useUser();
   const router = useRouter();
 
   const handleLogout = () => {
@@ -31,41 +32,30 @@ const AdminSidebar = ({ collapseSidebar }: IProps) => {
     >
       <div>
         <div
-          className={`px-4 py-2 flex gap-5 items-center mt-6 ${collapseSidebar ? "justify-center" : "justify-start"}`}
+          className={`px-4 py-2 flex text-2xl  items-center mt-6 ${collapseSidebar ? "justify-center" : "justify-start"}`}
         >
-          <div className="w-12 border border-[#E9E4E4] rounded-full p-1">
-            <Link href="/dashboard">
-              {user?.profilePhoto && (
-                <Image
-                  height={100}
-                  width={100}
-                  loading="lazy"
-                  src={user?.profilePhoto}
-                  alt="user"
-                />
-              )}
-            </Link>
-          </div>
-
-          {!collapseSidebar && (
-            <div className="text-[#abb9e8]">
-              <p>Hello,</p>
-              <h4>{user?.name}</h4>
-            </div>
-          )}
+          <Link href="/">
+            {!collapseSidebar && (
+              <>
+                <span className="text-secondary">Click</span>
+                <span>Shop</span>{" "}
+              </>
+            )}
+            {collapseSidebar && <Home />}
+          </Link>
         </div>
 
         <div
           className={`flex flex-col ${collapseSidebar ? "items-center" : "justify-start"} gap-5  px-4 py-6 text-white   z-10 transition-all duration-300  `}
         >
-          {adminNavlist?.map((list, i) => {
+          {navLists?.map((list, i) => {
             const { icon: Icon } = list;
             const isActive = activeMenu === i;
             return (
               <div key={i} className="mt-2">
                 <button
                   onClick={() => setActiveMenu(isActive ? null : i)}
-                  className={`${isActive ? "text-white" : "text-[#abb9e8]"} w-full flex gap-10 items-center text-xl   font-medium  group ${collapseSidebar ? "justify-center" : "justify-between"} hover:text-white  transition-colors`}
+                  className={`${isActive ? "text-white" : "text-[#abb9e8]"} w-full flex gap-10 items-center text-lg   font-medium  group ${collapseSidebar ? "justify-center" : "justify-between"} hover:text-white  transition-colors`}
                 >
                   <div className="flex items-center gap-2">
                     <Icon size={collapseSidebar ? 30 : 22} />
@@ -86,7 +76,7 @@ const AdminSidebar = ({ collapseSidebar }: IProps) => {
                       <Link
                         key={child?.path}
                         href={child?.path}
-                        className={` pt-1 flex items-center text-xl hover:text-white mb-3 gap-5 transition-colors ${
+                        className={` pt-1 flex items-center text-base hover:text-white mb-3 gap-5 transition-colors ${
                           pathname === child?.path
                             ? "text-white"
                             : "text-[#abb9e8]"
@@ -105,13 +95,10 @@ const AdminSidebar = ({ collapseSidebar }: IProps) => {
           <div className="mt-4">
             <button
               onClick={handleLogout}
-              className="flex gap-2 items-center text-[18px] font-medium"
+              className="flex gap-2 items-center text-lg font-medium text-[#abb9e8] hover:text-white transition-colors"
             >
               <span>
-                <AiOutlineLogout
-                  color="#abb9e8"
-                  size={collapseSidebar ? 30 : 22}
-                />
+                <AiOutlineLogout size={collapseSidebar ? 30 : 22} />
               </span>
               {!collapseSidebar && "Log Out"}
             </button>
@@ -122,4 +109,4 @@ const AdminSidebar = ({ collapseSidebar }: IProps) => {
   );
 };
 
-export default AdminSidebar;
+export default DesktopSidebar;

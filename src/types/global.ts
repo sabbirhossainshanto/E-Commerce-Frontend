@@ -1,5 +1,6 @@
 import { BaseQueryApi } from "@reduxjs/toolkit/query";
 import { ReactNode } from "react";
+import { IconType } from "react-icons";
 
 export interface IChildren {
   children: ReactNode;
@@ -61,4 +62,13 @@ export interface IResponse<T> {
     page: number;
     limit: number;
   };
+}
+
+export interface INavLists {
+  key: string;
+  icon: IconType;
+  children: {
+    path: string;
+    text: string;
+  }[];
 }

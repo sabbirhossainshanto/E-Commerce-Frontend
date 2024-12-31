@@ -1,9 +1,9 @@
 "use client";
 
-import { adminNavlist } from "@/src/const/admin.navlist";
 import { useUser } from "@/src/context/user.provider";
 import useCloseModal from "@/src/hooks/useCloseModal";
 import { logOut } from "@/src/services/Auth";
+import { INavLists } from "@/src/types";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -14,11 +14,13 @@ import { LiaAngleRightSolid, LiaAngleUpSolid } from "react-icons/lia";
 interface IProps {
   setShowMobileSidebar: Dispatch<SetStateAction<boolean>>;
   showMobileSidebar: boolean;
+  navLists: INavLists[];
 }
 
-const AdminMobileSidebar = ({
+const MobileSidebar = ({
   showMobileSidebar,
   setShowMobileSidebar,
+  navLists,
 }: IProps) => {
   const [activeMenu, setActiveMenu] = useState<number | null>(0);
   const pathname = usePathname();
@@ -38,12 +40,12 @@ const AdminMobileSidebar = ({
   return (
     <div
       ref={mobileSidebarRef}
-      className={`bg-[#405189] text-white fixed z-50   lg:hidden h-screen transition-all duration-300 w-[300px]  ${showMobileSidebar ? "translate-x-0" : "-translate-x-[300px]"}`}
+      className={`bg-[#405189] text-white fixed z-50   lg:hidden h-screen transition-all duration-300 w-[200px]  ${showMobileSidebar ? "translate-x-0" : "-translate-x-[300px]"}`}
     >
       <div>
         <div className={`px-4 py-2 flex gap-5 items-center mt-6 justify-start`}>
           <div className="w-12 border border-[#E9E4E4] rounded-full p-1">
-            <Link href="/dashboard">
+            <Link href="/">
               {user?.profilePhoto && (
                 <Image
                   height={100}
@@ -65,14 +67,14 @@ const AdminMobileSidebar = ({
         <div
           className={`flex flex-col justify-start gap-5  px-4 py-6 text-white   z-10 transition-all duration-300  `}
         >
-          {adminNavlist?.map((list, i) => {
+          {navLists?.map((list, i) => {
             const isActive = activeMenu === i;
             const { icon: Icon } = list;
             return (
               <div key={i} className="mt-2">
                 <button
                   onClick={() => setActiveMenu(isActive ? null : i)}
-                  className={`${isActive ? "text-white" : "text-[#abb9e8]"} w-full flex gap-10 items-center text-xl   font-medium  group justify-between hover:text-white  transition-colors`}
+                  className={`${isActive ? "text-white" : "text-[#abb9e8]"} w-full flex gap-10 items-center text-sm   font-medium  group justify-between hover:text-white  transition-colors`}
                 >
                   <div className="flex items-center gap-2">
                     <Icon size={20} />
@@ -90,9 +92,10 @@ const AdminMobileSidebar = ({
                   >
                     {list?.children.map((child) => (
                       <Link
+                        onClick={() => setShowMobileSidebar(false)}
                         key={child?.path}
                         href={child?.path}
-                        className={` pt-1 flex items-center text-xl hover:text-white mb-3 gap-5 transition-colors ${
+                        className={` pt-1 flex items-center text-xs hover:text-white mb-3 gap-5 transition-colors ${
                           pathname === child?.path
                             ? "text-white"
                             : "text-[#abb9e8]"
@@ -125,4 +128,4 @@ const AdminMobileSidebar = ({
   );
 };
 
-export default AdminMobileSidebar;
+export default MobileSidebar;

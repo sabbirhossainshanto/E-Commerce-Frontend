@@ -11,6 +11,7 @@ export * from "./review";
 export * from "./coupon";
 export * from "./subscriber";
 export * from "./wishlist";
+export * from "./overview";
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;

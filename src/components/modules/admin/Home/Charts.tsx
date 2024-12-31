@@ -1,13 +1,13 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
+// import { TrendingUp } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
+  // CardFooter,
   CardHeader,
   CardTitle,
 } from "@/src/components/UI/card";
@@ -17,38 +17,51 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/src/components/UI/chart";
+import { IOverview } from "@/src/types";
 
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-];
-
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "#245bc8",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "#e23670",
-  },
-} satisfies ChartConfig;
-
-const Charts = () => {
+const Charts = ({ data }: { data: IOverview }) => {
+  const orderData = data?.monthlyStats?.map((monthlyStat) => ({
+    month: monthlyStat.month,
+    totalSell: monthlyStat.totalMoney,
+    orderCount: monthlyStat.orderCount,
+  }));
+  const orderConfig = {
+    totalSell: {
+      label: "Total Sell",
+      color: "#245bc8",
+    },
+    orderCount: {
+      label: "Order Count",
+      color: "#e23670",
+    },
+  } satisfies ChartConfig;
+  const userData = data?.monthlyStats?.map((monthlyStat) => ({
+    month: monthlyStat.month,
+    totalUsers: monthlyStat.totalUsers,
+    totalVendors: monthlyStat.totalVendors,
+  }));
+  const userConfig = {
+    totalUsers: {
+      label: "Total Users",
+      color: "#245bc8",
+    },
+    totalVendors: {
+      label: "Total Vendors",
+      color: "#e23670",
+    },
+  } satisfies ChartConfig;
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-10 w-full mt-20 ">
       <Card>
         <CardHeader>
-          <CardTitle>Bar Chart - Multiple</CardTitle>
-          <CardDescription>January - June 2024</CardDescription>
+          <CardTitle>Bar Chart - Total Sell and Order Count</CardTitle>
+          <CardDescription>
+            January - December {new Date().getFullYear()}
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <ChartContainer config={chartConfig}>
-            <BarChart accessibilityLayer data={chartData}>
+          <ChartContainer config={orderConfig}>
+            <BarChart accessibilityLayer data={orderData}>
               <CartesianGrid vertical={false} />
               <XAxis
                 dataKey="month"
@@ -61,28 +74,38 @@ const Charts = () => {
                 cursor={false}
                 content={<ChartTooltipContent indicator="dashed" />}
               />
-              <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-              <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+              <Bar
+                dataKey="totalSell"
+                fill="var(--color-totalSell)"
+                radius={4}
+              />
+              <Bar
+                dataKey="orderCount"
+                fill="var(--color-orderCount)"
+                radius={4}
+              />
             </BarChart>
           </ChartContainer>
         </CardContent>
-        <CardFooter className="flex-col items-start gap-2 text-sm">
+        {/* <CardFooter className="flex-col items-start gap-2 text-sm">
           <div className="flex gap-2 font-medium leading-none">
             Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
           </div>
           <div className="leading-none text-muted-foreground">
             Showing total visitors for the last 6 months
           </div>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle>Bar Chart - Multiple</CardTitle>
-          <CardDescription>January - June 2024</CardDescription>
+          <CardTitle>Bar Chart - Total Users and Vendors</CardTitle>
+          <CardDescription>
+            January - December {new Date().getFullYear()}
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <ChartContainer config={chartConfig}>
-            <BarChart accessibilityLayer data={chartData}>
+          <ChartContainer config={userConfig}>
+            <BarChart accessibilityLayer data={userData}>
               <CartesianGrid vertical={false} />
               <XAxis
                 dataKey="month"
@@ -95,19 +118,27 @@ const Charts = () => {
                 cursor={false}
                 content={<ChartTooltipContent indicator="dashed" />}
               />
-              <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-              <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+              <Bar
+                dataKey="totalUsers"
+                fill="var(--color-totalUsers)"
+                radius={4}
+              />
+              <Bar
+                dataKey="totalVendors"
+                fill="var(--color-totalVendors)"
+                radius={4}
+              />
             </BarChart>
           </ChartContainer>
         </CardContent>
-        <CardFooter className="flex-col items-start gap-2 text-sm">
+        {/* <CardFooter className="flex-col items-start gap-2 text-sm">
           <div className="flex gap-2 font-medium leading-none">
             Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
           </div>
           <div className="leading-none text-muted-foreground">
             Showing total visitors for the last 6 months
           </div>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </div>
   );
