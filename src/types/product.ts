@@ -5,6 +5,7 @@ import { IShop } from "./shop";
 export interface IProduct {
   id: string;
   name: string;
+  features: string[];
   description: string;
   price: number;
   inventory: number;

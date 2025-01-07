@@ -17,7 +17,7 @@ import { IProduct } from "@/src/types";
 import { useDeleteProduct, useGetMyProducts } from "@/src/hooks/product";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import CreateFlashSale from "@/src/components/modal/vendor/CreateFlashSale";
+
 import moment from "moment";
 import { limit } from "@/src/const/const";
 import UpdateFlashSale from "@/src/components/modal/vendor/UpdateFlashSale";
@@ -121,10 +121,7 @@ const ManageFlashSale = () => {
 
   return (
     <div className="col-span-12 lg:col-span-9">
-      <div className="flex justify-end gap-3 mb-5">
-        <CreateFlashSale />
-      </div>
-      <Table aria-label="Example table with custom cells">
+      <Table radius="none" aria-label="Example table with custom cells">
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn

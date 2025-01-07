@@ -28,4 +28,4 @@ export const protectedRoute = [
   "/register",
 ];
 
-export const limit = 10;
+export const limit = 20;

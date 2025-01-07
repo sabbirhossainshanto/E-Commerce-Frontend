@@ -18,8 +18,11 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { calculateDiscount } from "@/src/utils/calculateDiscount";
 import moment from "moment";
+import { Button } from "@nextui-org/button";
 
 const SingleProduct = ({ product }: { product: IProduct }) => {
+  const [tab, setTab] = useState<"description" | "review">("description");
+
   const { user } = useUser();
   const router = useRouter();
   const { data: products } = useGetAllProducts([
@@ -95,16 +98,12 @@ const SingleProduct = ({ product }: { product: IProduct }) => {
 
   return (
     <div className="container">
-      <div className="grid grid-cols-12 gap-6">
+      <div className="grid grid-cols-12 gap-6 bg-white py-5 px-1">
         <div className="col-span-12 lg:col-span-6">
           <div className="flex justify-center items-center">
             <Image
               height={500}
               width={500}
-              style={{
-                height: "auto",
-                width: "auto",
-              }}
               loading="lazy"
               alt="product"
               src={product?.images[activeImg]}
@@ -113,7 +112,7 @@ const SingleProduct = ({ product }: { product: IProduct }) => {
 
           <div className="pt-6">
             <Swiper
-              slidesPerView={3}
+              slidesPerView={5}
               spaceBetween={10}
               modules={[Navigation]}
               className="mySwiper"
@@ -121,7 +120,7 @@ const SingleProduct = ({ product }: { product: IProduct }) => {
               {product?.images.map((image, i) => (
                 <SwiperSlide
                   key={i}
-                  style={{ width: "111px", marginRight: "8px" }}
+                  style={{ width: "100px", marginRight: "8px" }}
                 >
                   {" "}
                   <div className="w-full h-[80px] flex justify-center items-center">
@@ -132,7 +131,7 @@ const SingleProduct = ({ product }: { product: IProduct }) => {
                       loading="lazy"
                       alt="product"
                       className={`w-full h-full object-contain cursor-pointer border p-3 rounded-md ${
-                        activeImg === i ? "border-rose-500" : ""
+                        activeImg === i ? "border-primary" : ""
                       }`}
                       src={image}
                     />
@@ -145,7 +144,7 @@ const SingleProduct = ({ product }: { product: IProduct }) => {
         <div className="col-span-12 lg:col-span-6">
           <div className="product_info_wrapper">
             <div className="product_base_info">
-              <h1 className="text-2xl sm:text-3xl uppercase">
+              <h1 className="text-2xl text-primary sm:text-3xl uppercase">
                 {product?.name}
               </h1>
 
@@ -162,7 +161,7 @@ const SingleProduct = ({ product }: { product: IProduct }) => {
                 <p>
                   <span className="font-medium pr-3">Shop:</span>
                   <Link
-                    className="underline text-rose-500"
+                    className="underline text-primary"
                     href={`/shops/${product?.shopId}`}
                   >
                     {product?.shop?.shopName}
@@ -179,25 +178,29 @@ const SingleProduct = ({ product }: { product: IProduct }) => {
                   </span>
                 ) : (
                   <span className="text-2xl text-primary font-semibold">
-                    {product?.price}
+                    ${product?.price}
                   </span>
                 )}
 
                 {product?.isFlashSale && (
                   <span className="line-through">
-                    {(product?.price).toFixed(2)}
+                    ${(product?.price).toFixed(2)}
                   </span>
                 )}
               </div>
               <div className="mt-2">
-                <p>{product?.description}</p>
+                <h4 className="text-xl font-medium">Key Features</h4>
+                <div className="mt-2 space-y-1">
+                  {product?.features?.map((feature, i) => {
+                    return <p key={i}>{feature}</p>;
+                  })}
+                </div>
               </div>
 
               {/* <!-- quantity --> */}
-              <div className="cart_qnty ms-md-auto">
-                <p>Quantity</p>
+              <div className="mt-5">
                 <div className="flex items-center  mt-1">
-                  <div className="w-8 h-8 border hover:bg-[#E9E4E4] flex justify-center items-center cursor-pointer">
+                  <div className="border hover:bg-[#E9E4E4] flex justify-center items-center cursor-pointer p-3">
                     <button
                       onClick={() =>
                         setQuantity((prev) => (prev >= 2 ? prev - 1 : 1))
@@ -206,35 +209,49 @@ const SingleProduct = ({ product }: { product: IProduct }) => {
                       <FaMinus />
                     </button>
                   </div>
-                  <div className="w-8 h-8 border flex justify-center items-center">
+                  <div className="border flex justify-center items-center px-5 py-2">
                     {quantity}
                   </div>
-                  <div className="w-8 h-8 border hover:bg-[#E9E4E4] flex justify-center items-center cursor-pointer">
+                  <div className="p-3 border hover:bg-[#E9E4E4] flex justify-center items-center cursor-pointer">
                     <button onClick={() => setQuantity((prev) => prev + 1)}>
                       <FaPlus />
                     </button>
                   </div>
+
+                  <button
+                    onClick={() => handleAddToCart(product)}
+                    className="flex gap-2 items-center bg-primary text-sm sm:text-base text-white  px-2 sm:px-8 py-2 rounded uppercase group ml-5"
+                  >
+                    <span className="text-white">
+                      <IoCartOutline size={20} />
+                    </span>
+                    Add to Cart
+                  </button>
                 </div>
               </div>
             </div>
             {/* <!-- add to cart & wishlist --> */}
-            <div className="flex gap-5 mt-6 border-b pb-5">
-              <button
-                onClick={() => handleAddToCart(product)}
-                className="flex gap-2 items-center border border-primary default_btn text-sm sm:text-base text-white hover:bg-white hover:text-rose-500 transition duration-300 px-2 sm:px-8 py-2 rounded uppercase group"
-              >
-                <span className="text-white group-hover:text-rose-500">
-                  <IoCartOutline size={20} />
-                </span>
-                Add to Cart
-              </button>
-            </div>
           </div>
         </div>
       </div>
-
+      <div className="mt-5 flex gap-5">
+        <Button
+          onPress={() => setTab("description")}
+          radius="none"
+          className={`${tab === "description" ? "bg-secondary text-white" : "bg-white shadow-md hover:bg-secondary transition-colors hover:text-white"} w-[100px] rounded`}
+        >
+          Description
+        </Button>
+        <Button
+          onPress={() => setTab("review")}
+          radius="none"
+          className={`${tab === "review" ? "bg-secondary text-white" : "bg-white shadow-md hover:bg-secondary transition-colors hover:text-white"}  w-[100px] rounded`}
+        >
+          Review ({product?.reviews?.length})
+        </Button>
+      </div>
       {/* Product Review */}
-      {product?.reviews?.length > 0 && (
+      {tab === "review" && product?.reviews?.length > 0 && (
         <div className="container pt-14">
           <div className="flex items-start justify-between mb-[30px]">
             <h2 className="text-[22px] sm:text-[32px] font-medium text-secondary">
@@ -276,6 +293,17 @@ const SingleProduct = ({ product }: { product: IProduct }) => {
               </div>
             );
           })}
+        </div>
+      )}
+      {tab === "review" && product?.reviews?.length === 0 && (
+        <div className="bg-white mt-5 py-5 px-2">
+          <p>This product has no reviews yet.</p>
+        </div>
+      )}
+      {tab === "description" && (
+        <div className="bg-white mt-5 p-5">
+          <h3 className="mb-5 text-black text-xl font-medium">Description</h3>
+          <p className="text-black"> {product?.description}</p>
         </div>
       )}
 

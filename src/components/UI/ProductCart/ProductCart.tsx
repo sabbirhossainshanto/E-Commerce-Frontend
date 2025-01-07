@@ -12,11 +12,12 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import CountdownTimer from "../CountDownTimer/CountDownTimer";
 import { useCreateCompare, useGetMyComparison } from "@/src/hooks/compare";
-import { TbFidgetSpinner } from "react-icons/tb";
+import { TbCopyPlus, TbFidgetSpinner } from "react-icons/tb";
 import {
   useAddToWishlist,
   useGetMyWishlistProducts,
 } from "@/src/hooks/wishlist";
+import { IoMdCart } from "react-icons/io";
 
 const ProductCart = ({ product }: { product: IProduct }) => {
   const router = useRouter();
@@ -203,8 +204,8 @@ const ProductCart = ({ product }: { product: IProduct }) => {
 
   return (
     <div className="w-full col-span-1 group">
-      <div className="border border-[#DDDDDD] rounded-[5px] overflow-hidden">
-        <div className="relative bg-[#f3f3f3] px-[30px] py-[30px] sm:py-5">
+      <div className="rounded-[5px] overflow-hidden bg-white shadow-md">
+        <div className="relative px-[30px] py-[30px] sm:py-5">
           <Image
             height={200}
             width={200}
@@ -213,7 +214,6 @@ const ProductCart = ({ product }: { product: IProduct }) => {
             src={product.images?.[0]}
             alt="product"
           />
-
           <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-[#e5e5e58c] z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
             <Link
               href={`/products/${product?.id}`}
@@ -228,45 +228,20 @@ const ProductCart = ({ product }: { product: IProduct }) => {
               <CiHeart size={18} />
             </button>
           </div>
-          <div className="absolute left-0 bottom-6 mt-[15px] group-hover:mt-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex items-center justify-center  gap-4 z-10 w-full">
-            <button
-              onClick={() => handleAddToCompare(product)}
-              className="default_btn primary-color  hover:bg-white !text-[10px]"
-            >
-              {isComparisonPending && !isComparisonSuccess ? (
-                <span className="flex items-center gap-2 justify-center text-sm">
-                  <span>Please Wait</span>{" "}
-                  <TbFidgetSpinner className="animate-spin" />
-                </span>
-              ) : (
-                <span> ADD TO COMPARE</span>
-              )}
-            </button>
-            <button
-              onClick={() => handleAddToCart(product)}
-              className="!text-[10px] default_btn primary-color hover:bg-white "
-            >
-              {isCartPending && !isCartSuccess ? (
-                <span className="flex items-center gap-2 justify-center text-base">
-                  <span>Please Wait</span>{" "}
-                  <TbFidgetSpinner className="animate-spin" />
-                </span>
-              ) : (
-                <span> ADD TO CART</span>
-              )}
-            </button>
-          </div>
         </div>
 
-        <div className="p-5 h-[125px] overflow-hidden relative">
-          <h4 className="text-primary text-lg font-medium mb-[5px]">
-            {product?.name}
-          </h4>
-
-          <div>
-            <div className="flex items-center">
+        <div className="p-5 h-[220px] overflow-hidden relative">
+          <div className="border-b-1 pb-5">
+            <Link
+              href={`/products/${product?.id}`}
+              className="hover:text-secondary text-md hover:underline  font-medium mb-[5px] cursor-pointer"
+            >
+              {product?.name}
+            </Link>
+            <div className="flex items-center  text-secondary">
               {product?.isFlashSale && (
                 <span className=" mr-[5px] font-medium">
+                  $
                   {(
                     product?.price *
                     (1 - product?.discount_percentage / 100)
@@ -277,7 +252,7 @@ const ProductCart = ({ product }: { product: IProduct }) => {
               <span
                 className={` mr-[5px] font-medium ${product?.isFlashSale ? "line-through" : ""}`}
               >
-                {product?.price}
+                ${product?.price}
               </span>
               {product?.isFlashSale && (
                 <div>
@@ -286,59 +261,36 @@ const ProductCart = ({ product }: { product: IProduct }) => {
                 </div>
               )}
             </div>
-
-            <div className="flex items-center justify-start">
-              <div className="flex items-center">
-                <span className="text-[#F6BC3E]">
-                  <svg width="16" height="16" viewBox="0 0 24 24">
-                    <path
-                      fill="currentColor"
-                      d="m5.825 22l1.625-7.025L2 10.25l7.2-.625L12 3l2.8 6.625l7.2.625l-5.45 4.725L18.175 22L12 18.275Z"
-                    ></path>
-                  </svg>
+          </div>
+          <div className="pt-5 flex flex-col  gap-4">
+            <button
+              onClick={() => handleAddToCart(product)}
+              className="flex items-center justify-center gap-5 bg-[#f5f6fc] text-[#3749bb] text-sm py-2 hover:bg-[#3749bb] hover:text-white transition-colors rounded-md font-medium"
+            >
+              <IoMdCart size={20} />
+              {isCartPending && !isCartSuccess ? (
+                <span className="flex items-center gap-2 justify-center text-base">
+                  <span>Please Wait</span>{" "}
+                  <TbFidgetSpinner className="animate-spin" />
                 </span>
-                <span className="text-[#F6BC3E]">
-                  <svg width="16" height="16" viewBox="0 0 24 24">
-                    <path
-                      fill="currentColor"
-                      d="m5.825 22l1.625-7.025L2 10.25l7.2-.625L12 3l2.8 6.625l7.2.625l-5.45 4.725L18.175 22L12 18.275Z"
-                    ></path>
-                  </svg>
+              ) : (
+                <span> ADD TO CART</span>
+              )}
+            </button>
+            <button
+              onClick={() => handleAddToCompare(product)}
+              className="flex items-center justify-center gap-5 bg-gray-100  text-sm py-2 hover:bg-gray-200  transition-colors rounded-md font-medium"
+            >
+              <TbCopyPlus size={18} />
+              {isComparisonPending && !isComparisonSuccess ? (
+                <span className="flex items-center gap-2 justify-center text-sm">
+                  <span>Please Wait</span>{" "}
+                  <TbFidgetSpinner className="animate-spin" />
                 </span>
-                <span className="text-[#F6BC3E]">
-                  <svg width="16" height="16" viewBox="0 0 24 24">
-                    <path
-                      fill="currentColor"
-                      d="m5.825 22l1.625-7.025L2 10.25l7.2-.625L12 3l2.8 6.625l7.2.625l-5.45 4.725L18.175 22L12 18.275Z"
-                    ></path>
-                  </svg>
-                </span>
-                <span className="text-[#F6BC3E]">
-                  <svg width="16" height="16" viewBox="0 0 24 24">
-                    <path
-                      fill="currentColor"
-                      d="m5.825 22l1.625-7.025L2 10.25l7.2-.625L12 3l2.8 6.625l7.2.625l-5.45 4.725L18.175 22L12 18.275Z"
-                    ></path>
-                  </svg>
-                </span>
-                <span className="text-[#F6BC3E]">
-                  <svg width="16" height="16" viewBox="0 0 24 24">
-                    <path
-                      fill="currentColor"
-                      d="m5.825 22l1.625-7.025L2 10.25l7.2-.625L12 3l2.8 6.625l7.2.625l-5.45 4.725L18.175 22L12 18.275Z"
-                    ></path>
-                  </svg>
-                </span>
-              </div>
-              <p className="text-[13px] ml-[9px] text-[#687188]">(150)</p>
-
-              <Link href={`/shops/${product?.shopId}`} className="ml-[20px]">
-                {" "}
-                <span className="underline text-rose-500">
-                  {product?.shop?.shopName}
-                </span>
-              </Link>
-            </div>
+              ) : (
+                <span> ADD TO COMPARE</span>
+              )}
+            </button>
           </div>
         </div>
       </div>

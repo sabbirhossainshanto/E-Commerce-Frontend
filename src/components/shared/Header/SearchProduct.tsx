@@ -1,12 +1,15 @@
 "use client";
 
+import { useGetAllCategory } from "@/src/hooks/category";
 import { useGetAllProducts } from "@/src/hooks/product";
+import { Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { TbFidgetSpinner } from "react-icons/tb";
 
-const Search = () => {
+const SearchProduct = () => {
+  const { data } = useGetAllCategory([]);
   const [searchTerm, setSearchTerm] = useState("");
   const {
     data: products,
@@ -16,29 +19,45 @@ const Search = () => {
 
   return (
     <div className="relative hidden lg:block">
-      <div className="border-[2px] border-[#2b2d42] rounded-md w-[535px] xl:w-[675px] flex">
-        <div className="h-auto flex-grow">
-          <input
-            onChange={(e) => setSearchTerm(e.target.value)}
-            type="text"
-            placeholder="Search product..."
-            className="px-5 py-2.5 border-none text-sm w-full focus:ring-0 focus:outline-none leading-relaxed"
-            value={searchTerm}
-          />
-        </div>
-        {/* <!-- search btn --> */}
-        <div className="w-[142px]">
-          <button className="bg-primary rounded-r-md w-full px-4 py-2.5 text-white text-base font-medium">
-            {(isLoading || isFetching) && searchTerm ? (
-              <span className="flex items-center gap-2 justify-center text-base">
-                <span>Please Wait</span>{" "}
+      <div className="rounded-md w-[500px] h-[45px]  flex">
+        <form className="hidden bg-white w-full lg:flex">
+          <div className="relative flex items-center w-full border rounded-md">
+            <div className="relative border-r">
+              <select
+                name="categoryId"
+                className="appearance-none bg-transparent pr-10 pl-[22px] py-2 text-base font-medium outline-none w-[100px]"
+              >
+                <option>All</option>
+                {data?.data &&
+                  data?.data?.map((category) => {
+                    return (
+                      <option key={category?.id} value={category?.name}>
+                        {category?.name}
+                      </option>
+                    );
+                  })}
+              </select>
+            </div>
+            <input
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="I'm shopping for..."
+              className="w-full bg-transparent py-2 pl-6 pr-[58px] text-base outline-none"
+              type="search"
+              name="searchTerm"
+            />
+            <button
+              type="submit"
+              className="absolute top-0 right-0 flex h-full w-[52px] items-center justify-center rounded-tr-md rounded-br-md border border-secondary  bg-secondary  text-white"
+            >
+              {(isLoading || isFetching) && searchTerm ? (
                 <TbFidgetSpinner className="animate-spin" />
-              </span>
-            ) : (
-              <span> Search</span>
-            )}
-          </button>
-        </div>
+              ) : (
+                <Search />
+              )}
+            </button>
+          </div>
+        </form>
       </div>
       {/* Search Result */}
       <div
@@ -84,4 +103,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default SearchProduct;

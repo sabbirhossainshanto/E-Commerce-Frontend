@@ -8,9 +8,7 @@ const SingleProduct = async ({ params }: { params: { productId: string } }) => {
     await nexiosInstance.get(`/products/${params.productId}`);
 
   return (
-    <div className="pt-12">
-      {data?.data && <SingleProductComponent product={data?.data} />}
-    </div>
+    <div>{data?.data && <SingleProductComponent product={data?.data} />}</div>
   );
 };
 

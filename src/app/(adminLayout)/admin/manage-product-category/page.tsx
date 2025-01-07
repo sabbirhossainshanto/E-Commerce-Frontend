@@ -83,7 +83,10 @@ const ManageProductCategory = () => {
         case "actions":
           return (
             <div className="relative flex items-center justify-end gap-2">
-              <UpdateProductCategory id={category.id} />
+              <UpdateProductCategory
+                refetchCategory={refetchCategory}
+                id={category.id}
+              />
 
               <button
                 onClick={() => handleDeleteCategory(category)}

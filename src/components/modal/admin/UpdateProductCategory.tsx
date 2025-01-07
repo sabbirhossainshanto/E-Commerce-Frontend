@@ -12,7 +12,6 @@ import {
 } from "@nextui-org/react";
 import { EditIcon } from "../../icons";
 import {
-  useGetAllCategory,
   useGetSingleCategory,
   useUpdateSingleCategory,
 } from "@/src/hooks/category";
@@ -21,8 +20,17 @@ import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Image from "next/image";
+import { QueryObserverResult } from "@tanstack/react-query";
+import { ICategories, IResponse } from "@/src/types";
 
-export default function UpdateProductCategory({ id }: { id: string }) {
+interface IProps {
+  id: string;
+  refetchCategory: () => Promise<
+    QueryObserverResult<IResponse<ICategories[]>, Error>
+  >;
+}
+
+export default function UpdateProductCategory({ id, refetchCategory }: IProps) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [image, setImage] = useState<File | null>(null);
   const { data: category } = useGetSingleCategory(id);
@@ -31,7 +39,7 @@ export default function UpdateProductCategory({ id }: { id: string }) {
       name: category?.data?.name,
     },
   });
-  const { refetch: refetchCategories } = useGetAllCategory([]);
+
   const { mutate: updateCategory } = useUpdateSingleCategory();
 
   const handleUpdateCategory: SubmitHandler<FieldValues> = (value) => {
@@ -51,7 +59,7 @@ export default function UpdateProductCategory({ id }: { id: string }) {
           onSuccess(data) {
             if (data?.success) {
               toast.success(data?.message);
-              refetchCategories();
+              refetchCategory();
               onClose();
             } else {
               toast.error(data?.message);

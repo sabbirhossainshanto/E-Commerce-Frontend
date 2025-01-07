@@ -51,7 +51,7 @@ export default function Home() {
 
       <div className="container mt-20">
         <h2 className="text-[28px] text-primary mb-6">SHOP BY CATEGORY</h2>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
           {categories?.data?.map((category) => (
             <CategoryCard key={category.id} category={category} />
           ))}

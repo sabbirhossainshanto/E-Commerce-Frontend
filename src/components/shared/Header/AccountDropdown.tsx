@@ -16,11 +16,13 @@ const AccountDropdown = () => {
   };
   return (
     <div className="relative group">
-      <button className="relative block text-center ml-5">
+      <button className="relative  text-center ml-5 flex flex-col items-center gap-2">
         <span className="text-white flex justify-center">
-          <AiOutlineUser fontWeight={400} size={30} />
+          <AiOutlineUser className="size-7 md:size-9" />
         </span>
-        <span className="text-white text-[11px] leading-[10px]">Account</span>
+        <span className="hidden md:block text-white text-[11px] leading-[10px]">
+          Account
+        </span>
       </button>
 
       <div className="absolute top-full right-[1px] bg-white z-20 rounded-b-[3px] py-5 px-[15px] w-[205px] shadow-sm mt-3.5 group-hover:mt-[5px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">

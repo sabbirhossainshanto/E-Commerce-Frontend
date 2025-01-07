@@ -1,4 +1,3 @@
-import logo from "../images/logo.svg";
 import iPhone12 from "../images/iphone-12.png";
 import iPhone from "../images/iphone.png";
 import iPhoneXR from "../images/iphone-xr.png";
@@ -15,6 +14,7 @@ import microsoft from "../images/microsoft.png";
 import tpLink from "../images/tp-link.png";
 import nike from "../images/nike.png";
 import daraz from "../images/daraz.png";
+import logo from "../images/logo-home4.png";
 
 export default {
   logo,

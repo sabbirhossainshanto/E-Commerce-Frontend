@@ -12,7 +12,12 @@ import {
   Select,
   SelectItem,
 } from "@nextui-org/react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import {
+  FieldValues,
+  SubmitHandler,
+  useFieldArray,
+  useForm,
+} from "react-hook-form";
 import { toast } from "sonner";
 import { useCreateProduct } from "@/src/hooks/product";
 import { useEffect, useState } from "react";
@@ -21,6 +26,7 @@ import Image from "next/image";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { useGetAllCategory } from "@/src/hooks/category";
 import { useQueryClient } from "@tanstack/react-query";
+import { Plus, TrashIcon } from "lucide-react";
 
 export default function CreateProduct() {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
@@ -28,7 +34,14 @@ export default function CreateProduct() {
   const { mutate: createProduct, isPending, isSuccess } = useCreateProduct();
   const queryClient = useQueryClient();
   const { data: categories } = useGetAllCategory([]);
-  const { handleSubmit, register, reset } = useForm();
+  const { handleSubmit, register, reset, control } = useForm();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "features",
+  });
+  const handleFieldAppend = () => {
+    append({ name: "features" });
+  };
 
   const handleUpdateProduct: SubmitHandler<FieldValues> = (values) => {
     const payload = Object.fromEntries(
@@ -130,6 +143,33 @@ export default function CreateProduct() {
                       ))}
                     </Select>
                   )}
+                </div>
+                <div className="flex justify-between items-center mb-5">
+                  <h1 className="text-xl">Add Features</h1>
+                  <Button isIconOnly onClick={() => handleFieldAppend()}>
+                    <Plus />
+                  </Button>
+                </div>
+
+                <div className="space-y-5">
+                  {fields.map((field, index) => (
+                    <div key={field.id} className="flex gap-2 items-center">
+                      <Input
+                        labelPlacement="outside"
+                        label="Features"
+                        placeholder="Features"
+                        variant="bordered"
+                        name={`features.${index}.value`}
+                      />
+                      <Button
+                        isIconOnly
+                        className="size-5 mt-auto"
+                        onClick={() => remove(index)}
+                      >
+                        <TrashIcon />
+                      </Button>
+                    </div>
+                  ))}
                 </div>
 
                 <Input

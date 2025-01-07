@@ -37,8 +37,16 @@ export const vendorNavlist = [
         text: "Manage Product",
       },
       {
+        path: "/vendor/create-product",
+        text: "Add Product",
+      },
+      {
         path: "/vendor/manage-flash-sale",
         text: "Manage Flash Sale",
+      },
+      {
+        path: "/vendor/create-flash-sale",
+        text: "Create Flash Sale",
       },
     ],
   },

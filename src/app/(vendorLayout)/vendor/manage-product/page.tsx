@@ -16,7 +16,7 @@ import React, { useState } from "react";
 import { IProduct } from "@/src/types";
 import { useDeleteProduct, useGetMyProducts } from "@/src/hooks/product";
 import UpdateProduct from "@/src/components/modal/vendor/UpdateProduct";
-import CreateProduct from "@/src/components/modal/vendor/CreateProduct";
+
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import moment from "moment";
@@ -129,10 +129,7 @@ const ManageProduct = () => {
 
   return (
     <div className="col-span-12 lg:col-span-9">
-      <div className="flex justify-end gap-3 mb-5">
-        <CreateProduct />
-      </div>
-      <Table aria-label="Example table with custom cells">
+      <Table radius="none" aria-label="Example table with custom cells">
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn

@@ -30,7 +30,7 @@ const Hero = () => {
               <div className="container">
                 <div className="sm:flex items-center justify-center">
                   <div className="w-full sm:w-1/2 pr-3">
-                    <div className="max-w-full py-24 lg:py-28 lg:pl-8 xl:pl-[95px] text-center sm:text-left">
+                    <div className="max-w-full py-24 lg:py-28">
                       <p className="text-base mb-2 text-primary">
                         Get up to 50% off Today only
                       </p>
@@ -51,7 +51,7 @@ const Hero = () => {
                     </div>
                   </div>
                   <div className="pl-3 w-1/2 hidden sm:block">
-                    <div className="w-full flex items-center justify-end lg:justify-center">
+                    <div className="w-full flex items-center justify-end ">
                       <Image
                         height={280}
                         width={280}
@@ -70,7 +70,7 @@ const Hero = () => {
               <div className="container">
                 <div className="sm:flex items-center justify-center">
                   <div className="w-full sm:w-1/2 px-3">
-                    <div className="max-w-full py-24 lg:py-28 lg:pl-8  text-center sm:text-left">
+                    <div className="max-w-full py-24 lg:py-28  text-center sm:text-left">
                       <p className="text-base mb-2 text-primary">
                         Get up to 50% off Today only
                       </p>
@@ -90,8 +90,8 @@ const Hero = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="px-3 sm:w-1/2 hidden sm:block">
-                    <div className="w-full flex items-center justify-end lg:justify-center">
+                  <div className="px-l sm:w-1/2 hidden sm:block">
+                    <div className="w-full flex items-center justify-end ">
                       <Image
                         height={280}
                         width={280}
@@ -111,7 +111,7 @@ const Hero = () => {
               <div className="container">
                 <div className="sm:flex items-center justify-center">
                   <div className="w-full sm:w-1/2 px-3">
-                    <div className="max-w-full py-24 lg:py-28 lg:pl-8 xl:pl-[95px] text-center sm:text-left">
+                    <div className="max-w-full py-24 lg:py-28">
                       <p className="text-base mb-2 text-primary">
                         Get up to 50% off Today only
                       </p>
@@ -131,8 +131,8 @@ const Hero = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="px-3 sm:w-1/2 hidden sm:block">
-                    <div className="w-full flex items-center justify-end lg:justify-center">
+                  <div className="pl-3 sm:w-1/2 hidden sm:block">
+                    <div className="w-full flex items-center justify-end ">
                       <Image
                         height={280}
                         width={280}
@@ -151,7 +151,7 @@ const Hero = () => {
               <div className="container">
                 <div className="sm:flex items-center justify-center">
                   <div className="w-full sm:w-1/2 pr-3">
-                    <div className="max-w-full py-24 lg:py-28 lg:pl-8 xl:pl-[95px] text-center sm:text-left">
+                    <div className="max-w-full py-24 lg:py-28">
                       <p className="text-base mb-2 text-primary">
                         Get up to 50% off Today only
                       </p>
@@ -172,7 +172,7 @@ const Hero = () => {
                     </div>
                   </div>
                   <div className="pl-3 w-1/2 hidden sm:block">
-                    <div className="w-full flex items-center justify-end lg:justify-center">
+                    <div className="w-full flex items-center justify-end ">
                       <Image
                         height={280}
                         width={280}
@@ -191,7 +191,7 @@ const Hero = () => {
               <div className="container">
                 <div className="sm:flex items-center justify-center">
                   <div className="w-full sm:w-1/2 px-3">
-                    <div className="max-w-full py-24 lg:py-28 lg:pl-8  text-center sm:text-left">
+                    <div className="max-w-full py-24 lg:py-28 ">
                       <p className="text-base mb-2 text-primary">
                         Get up to 50% off Today only
                       </p>
@@ -211,8 +211,8 @@ const Hero = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="px-3 sm:w-1/2 hidden sm:block">
-                    <div className="w-full flex items-center justify-end lg:justify-center">
+                  <div className="pl-3 sm:w-1/2 hidden sm:block">
+                    <div className="w-full flex items-center justify-end ">
                       <Image
                         height={280}
                         width={280}
