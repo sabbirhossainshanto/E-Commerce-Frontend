@@ -23,8 +23,8 @@ export const Navbar = () => {
     <header
       className={`w-full bg-[#101725] dark:bg-dark  z-40 shadow-2xl fixed top-0 left-0 right-0`}
     >
-      <div className="relative">
-        <div className="w-full  lg:py-4">
+      <div className="relative ">
+        <div className="w-full  lg:py-4 border-b border-gray-800">
           <div className="container px-4 lg:px-0 mx-auto">
             <div className="relative flex items-center justify-between">
               <div className="w-48 max-w-full sm:w-60 lg:w-48">
@@ -47,8 +47,8 @@ export const Navbar = () => {
                   </div>
                 ) : (
                   <div className="flex items-center justify-end w-full space-x-4 text-white">
-                    <button>Login</button>
-                    <button>Register</button>
+                    <Link href="/login">Login</Link>
+                    <Link href="/register">Register</Link>
                   </div>
                 )}
               </div>
@@ -97,11 +97,11 @@ export const Navbar = () => {
                     </li>
 
                     <li
-                      className={`max-lg:border-b max-lg:py-3 relative lg:after:absolute hover:text-secondary lg:after:bg-secondary ${pathname === "/shop" ? "lg:after:w-full !text-secondary" : " lg:after:w-0 text-white"}  lg:hover:after:w-full font-medium lg:after:h-[2px] lg:after:block lg:after:-bottom-1 lg:after:transition-all lg:after:duration-300 lg:mx-4 lg:inline-flex`}
+                      className={`max-lg:border-b max-lg:py-3 relative lg:after:absolute hover:text-secondary lg:after:bg-secondary ${pathname === "/shop" ? "lg:after:w-full !text-secondary" : " lg:after:w-0 text-white"}  lg:hover:after:w-full font-medium lg:after:h-[2px] lg:after:block lg:after:-bottom-1 lg:after:transition-all lg:after:duration-300 lg:ml-4 lg:inline-flex`}
                     >
                       <Link href="/shops">Shop</Link>
                     </li>
-                    <li
+                    {/* <li
                       className={`max-lg:border-b max-lg:py-3 relative lg:after:absolute hover:text-secondary lg:after:bg-secondary ${pathname === "/compare" ? "lg:after:w-full !text-secondary" : " lg:after:w-0 text-white"}  lg:hover:after:w-full font-medium lg:after:h-[2px] lg:after:block lg:after:-bottom-1 lg:after:transition-all lg:after:duration-300 lg:mx-4 lg:inline-flex`}
                     >
                       <Link href="/compare">Compare</Link>
@@ -114,7 +114,7 @@ export const Navbar = () => {
                       >
                         Join as Vendor
                       </Link>
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
               </div>

@@ -5,7 +5,7 @@ import { useUserLogin } from "@/src/hooks/auth";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { FaGreaterThan } from "react-icons/fa";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
@@ -16,7 +16,7 @@ import { toast } from "sonner";
 const Login = () => {
   const [inputType, setInputType] = useState<"password" | "text">("password");
   const { mutate: handleLogin, isPending, isSuccess } = useUserLogin();
-  const { setIsUserLoading, user } = useUser();
+  const { setIsUserLoading } = useUser();
   const router = useRouter();
   const { handleSubmit, register, reset } = useForm();
 
@@ -38,7 +38,7 @@ const Login = () => {
   };
 
   return (
-    <div className="py-10 bg-gray-50">
+    <div className="py-10 ">
       <div className="flex items-center gap-2 container">
         <MdOutlineHome
           onClick={() => router.push("/")}
@@ -49,13 +49,15 @@ const Login = () => {
         <span className="text-lg">Login</span>
       </div>
 
-      <div className="w-full max-w-[500px] mx-auto box_shadow rounded px-[30px] py-[24px] mb-14">
+      <div className="w-full max-w-[500px] mx-auto bg-white shadow-md rounded px-[30px] py-[24px] mb-14">
         <h4 className="text-[28px] uppercase font-semibold mb-4">Login</h4>
         <h4 className="text-lg uppercase font-semibold mb-4">
           Demo Credential:
         </h4>
         <div className="flex items-center gap-3 mb-4">
           <Button
+            radius="sm"
+            color="primary"
             onClick={() =>
               reset({
                 email: "jiinat@gmail.com",
@@ -66,6 +68,8 @@ const Login = () => {
             User Credential
           </Button>
           <Button
+            radius="sm"
+            color="primary"
             onClick={() =>
               reset({
                 email: "sabbirhossainshanto3@gmail.com",
@@ -76,6 +80,8 @@ const Login = () => {
             Vendor Credential
           </Button>
           <Button
+            radius="sm"
+            color="primary"
             onClick={() =>
               reset({
                 email: "sabbirshnt@gmail.com",
@@ -149,7 +155,7 @@ const Login = () => {
           <div className="mt-4">
             <button
               type="submit"
-              className="default_btn rounded w-full hover:bg-white hover:border-rose-500 hover:text-primary"
+              className="default_btn rounded w-full hover:bg-white hover:border-primary hover:text-primary"
             >
               {isPending && !isSuccess ? (
                 <span className="flex items-center gap-2 justify-center text-base">

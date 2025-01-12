@@ -37,9 +37,9 @@ const Footer = () => {
   };
 
   return (
-    <div className="relative mt-16 bg-[#ffebee]">
+    <div className="relative mt-16 bg-[#101725] text-white">
       <div className="md:flex md:justify-between md:items-center sm:px-12 px-4 bg-primary py-7">
-        <h1 className="lg:text-3xl text-2xl md:mb-0 mb-6 lg:leading-normal font-semibold md:w-2/5 text-white">
+        <h1 className="lg:text-3xl text-2xl md:mb-0 mb-6 lg:leading-normal font-semibold md:w-2/5 ">
           <span className="text-[#56d879]">Subscribe</span> us for get news{" "}
           <br />
           events and offers
@@ -74,17 +74,15 @@ const Footer = () => {
       <div className="flex flex-col justify-between w-full">
         <div className="grid grid-cols-1 md:grid-cols-2  px-10 py-10 justify-items-center">
           <div className="space-y-3 flex-1">
-            <h1 className="text-4xl">
-              <span className="text-secondary">Click</span>
-              <span>Shop</span>
-            </h1>
-            <p className="text-xl text-[#2B2D42] ">
-              Book the perfect space for your next meeting. At Booking.com, we
-              provide a variety of rooms designed to meet your business needs.
+            <Image src={img.logo} alt="" />
+            <p className="text-xl ">
+              Discover the best deals for all your shopping needs. At TopDeal,
+              we bring you a wide range of products to suit every lifestyle,
+              delivered right to your doorstep.
             </p>
 
             <div className="flex flex-col gap-4 pt-4">
-              <h1 className="text-gray-900 text-xl uppercase">CONTACT</h1>
+              <h1 className=" text-xl uppercase">CONTACT</h1>
               <p className="flex items-center gap-2 text-lg">
                 <CiLocationOn size={25} />
                 <span>
@@ -148,7 +146,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="bg-[#2b2d42] ">
+        <div className="">
           <div className="flex flex-col gap-4 sm:flex-row items-center justify-between py-4  px-10">
             <Link href="/">
               <span className="flex items-center gap-2 text-white">

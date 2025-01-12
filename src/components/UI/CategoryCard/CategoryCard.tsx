@@ -18,7 +18,7 @@ const CategoryCard = ({ category }: { category: ICategories }) => {
       <Link
         onClick={() => handleFilterByCategory(category)}
         href="/products"
-        className="group h-[120px] rounded-md  flex flex-col items-center justify-center relative bg-white gap-5 shadow-md"
+        className="group h-[120px] rounded-md  flex flex-col items-center justify-center relative bg-white gap-5 shadow-md hover:-translate-y-1 duration-200"
       >
         <img className="size-16" src={category?.image} alt="" />
         <h4 className="leading-6 text-gray-700 text-sm lg:text-base  font-medium group-hover:text-secondary transition-colors text-center">

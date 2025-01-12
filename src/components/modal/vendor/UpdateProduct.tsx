@@ -97,6 +97,7 @@ export default function UpdateProduct({ id }: { id: string }) {
         <EditIcon />
       </button>
       <Modal
+        radius="sm"
         size="2xl"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
@@ -111,6 +112,7 @@ export default function UpdateProduct({ id }: { id: string }) {
               <ModalBody>
                 <div className="flex items-center gap-5">
                   <Input
+                    radius="sm"
                     labelPlacement="outside"
                     {...register("name", { required: true })}
                     label="Name"
@@ -118,6 +120,7 @@ export default function UpdateProduct({ id }: { id: string }) {
                     variant="bordered"
                   />
                   <Input
+                    radius="sm"
                     labelPlacement="outside"
                     {...register("price", { required: true })}
                     label="Price"
@@ -127,6 +130,7 @@ export default function UpdateProduct({ id }: { id: string }) {
                 </div>
                 <div className="flex items-center gap-5">
                   <Input
+                    radius="sm"
                     labelPlacement="outside"
                     {...register("inventory", { required: true })}
                     label="Inventory"
@@ -134,6 +138,7 @@ export default function UpdateProduct({ id }: { id: string }) {
                     variant="bordered"
                   />
                   <Input
+                    radius="sm"
                     {...register("description", { required: true })}
                     labelPlacement="outside"
                     label="Description"
@@ -189,10 +194,15 @@ export default function UpdateProduct({ id }: { id: string }) {
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
+                <Button
+                  radius="sm"
+                  color="danger"
+                  variant="flat"
+                  onPress={onClose}
+                >
                   Cancel
                 </Button>
-                <Button type="submit" color="primary">
+                <Button radius="sm" type="submit" color="primary">
                   {isPending && !isSuccess ? (
                     <span className="flex items-center gap-2 justify-center text-base">
                       <span>Please Wait</span>{" "}

@@ -92,7 +92,12 @@ export default function UpdateProductCategory({ id, refetchCategory }: IProps) {
       >
         <EditIcon />
       </button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+      <Modal
+        radius="sm"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="top-center"
+      >
         <ModalContent>
           {(onClose) => (
             <form onSubmit={handleSubmit(handleUpdateCategory)}>
@@ -101,6 +106,7 @@ export default function UpdateProductCategory({ id, refetchCategory }: IProps) {
               </ModalHeader>
               <ModalBody>
                 <Input
+                  radius="sm"
                   {...register("name", { required: true })}
                   label="Category"
                   placeholder="Enter category name"
@@ -148,10 +154,15 @@ export default function UpdateProductCategory({ id, refetchCategory }: IProps) {
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
+                <Button
+                  radius="sm"
+                  color="danger"
+                  variant="flat"
+                  onPress={onClose}
+                >
                   Cancel
                 </Button>
-                <Button type="submit" color="primary">
+                <Button radius="sm" type="submit" color="primary">
                   Update
                 </Button>
               </ModalFooter>

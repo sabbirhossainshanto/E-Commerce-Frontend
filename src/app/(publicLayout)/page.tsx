@@ -23,7 +23,7 @@ export default function Home() {
       {/* Recommended for you section */}
       <div className="container mt-20">
         <div className="flex items-start justify-between mb-[30px]">
-          <h2 className="text-[22px] sm:text-[32px] font-medium text-primary">
+          <h2 className="text-[22px] sm:text-[32px] font-medium ">
             Recommended For You
           </h2>
           <div className="pt-2">
@@ -50,7 +50,7 @@ export default function Home() {
       {/* Shop By category section */}
 
       <div className="container mt-20">
-        <h2 className="text-[28px] text-primary mb-6">SHOP BY CATEGORY</h2>
+        <h2 className="text-[28px]  mb-6">SHOP BY CATEGORY</h2>
         <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
           {categories?.data?.map((category) => (
             <CategoryCard key={category.id} category={category} />
@@ -60,7 +60,7 @@ export default function Home() {
       {/* Flash same  section */}
       <div className="container mt-20">
         <div className="flex items-start justify-between mb-[30px]">
-          <h2 className="text-[22px] sm:text-[32px] font-medium text-primary">
+          <h2 className="text-[22px] sm:text-[32px] font-medium ">
             Flash Sale
           </h2>
           <div className="pt-2">

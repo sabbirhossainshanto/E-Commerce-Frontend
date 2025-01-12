@@ -108,6 +108,8 @@ const ManageUser = () => {
           return (
             <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
               <Select
+                radius="sm"
+                color="primary"
                 onChange={(e) =>
                   handleUpdateShopStatus({
                     status: e.target.value as "ACTIVE" | "BLOCKED",
@@ -132,7 +134,7 @@ const ManageUser = () => {
 
   return (
     <div className="col-span-12 lg:col-span-9">
-      <Table aria-label="Example table with custom cells">
+      <Table radius="sm" aria-label="Example table with custom cells">
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn

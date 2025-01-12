@@ -128,11 +128,11 @@ const ManageUser = () => {
           return (
             <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
               <Select
+                radius="sm"
                 onChange={(e) =>
                   handleUpdateOrderStatus(e.target.value, order as TOrder)
                 }
                 placeholder={order.status}
-                className="max-w-xs"
                 aria-label="Role"
               >
                 <SelectItem key={OrderStatus.PENDING}>Pending</SelectItem>
@@ -150,7 +150,7 @@ const ManageUser = () => {
 
   return (
     <div className="col-span-12 lg:col-span-9">
-      <Table aria-label="Example table with custom cells">
+      <Table radius="sm" aria-label="Example table with custom cells">
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn

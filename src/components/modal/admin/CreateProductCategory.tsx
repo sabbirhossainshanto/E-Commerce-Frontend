@@ -58,9 +58,16 @@ export default function CreateProductCategory() {
 
   return (
     <>
-      <Button onPress={onOpen}>Add New</Button>
+      <Button radius="sm" color="primary" className="my-4" onPress={onOpen}>
+        Add New
+      </Button>
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+      <Modal
+        radius="sm"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="top-center"
+      >
         <ModalContent>
           {(onClose) => (
             <form onSubmit={handleSubmit(handleCreateCategory)}>
@@ -69,6 +76,7 @@ export default function CreateProductCategory() {
               </ModalHeader>
               <ModalBody>
                 <Input
+                  radius="sm"
                   {...register("name", { required: true })}
                   label="Category"
                   placeholder="Enter category name"
@@ -108,10 +116,15 @@ export default function CreateProductCategory() {
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
+                <Button
+                  radius="sm"
+                  color="danger"
+                  variant="flat"
+                  onPress={onClose}
+                >
                   Cancel
                 </Button>
-                <Button type="submit" color="primary">
+                <Button radius="sm" type="submit" color="primary">
                   {isPending && !isSuccess ? (
                     <span className="flex items-center gap-2 justify-center text-base">
                       <span>Please Wait</span>{" "}

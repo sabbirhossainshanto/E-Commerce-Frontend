@@ -11,7 +11,7 @@ const FlashSale = () => {
     <section className="flex flex-col items-center justify-center gap-4 pt-14">
       <div className="container pb-14">
         <div className="flex items-start justify-between mb-[30px]">
-          <h2 className="text-[22px] sm:text-[32px] font-medium text-primary">
+          <h2 className="text-[22px] sm:text-[32px] font-medium ">
             Flash Sale
           </h2>
         </div>

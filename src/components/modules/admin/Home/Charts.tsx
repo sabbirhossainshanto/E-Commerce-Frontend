@@ -54,7 +54,7 @@ const Charts = ({ data }: { data: IOverview }) => {
     <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-10 w-full mt-20 ">
       <Card>
         <CardHeader>
-          <CardTitle>Bar Chart - Total Sell and Order Count</CardTitle>
+          <CardTitle>Total Sell and Order Count</CardTitle>
           <CardDescription>
             January - December {new Date().getFullYear()}
           </CardDescription>
@@ -98,7 +98,7 @@ const Charts = ({ data }: { data: IOverview }) => {
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle>Bar Chart - Total Users and Vendors</CardTitle>
+          <CardTitle>Total Users and Vendors</CardTitle>
           <CardDescription>
             January - December {new Date().getFullYear()}
           </CardDescription>

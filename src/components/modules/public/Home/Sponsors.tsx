@@ -5,9 +5,7 @@ import Marquee from "react-fast-marquee";
 const Sponsors = () => {
   return (
     <div className="my-20 container w-full  cursor-pointer rounded-xl">
-      <h2 className="text-[22px] sm:text-[32px] font-medium text-primary">
-        Sponsored By
-      </h2>
+      <h2 className="text-[22px] sm:text-[32px] font-medium ">Sponsored By</h2>
 
       <Marquee>
         <div className="flex justify-between w-full gap-20 mt-5">

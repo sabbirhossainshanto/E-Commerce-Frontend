@@ -74,7 +74,7 @@ const Register = () => {
   };
 
   return (
-    <div className="py-10 bg-gray-50">
+    <div className="py-10 ">
       <div className="flex items-center gap-2 container">
         <MdOutlineHome
           onClick={() => router.push("/")}
@@ -85,7 +85,7 @@ const Register = () => {
         <span className="text-lg">Register</span>
       </div>
 
-      <div className="w-full max-w-[500px] mx-auto box_shadow rounded px-[30px] py-[24px] mb-14">
+      <div className="w-full max-w-[500px] mx-auto bg-white shadow-md rounded px-[30px] py-[24px] mb-14">
         <h4 className="text-[28px] uppercase font-semibold ">
           Create an account
         </h4>
@@ -174,7 +174,7 @@ const Register = () => {
                   User
                 </option>
                 <option value="VENDOR">Vendor</option>
-                <option value="ADMIN">Admin</option>
+                {/* <option value="ADMIN">Admin</option> */}
               </select>
             </div>
 
@@ -230,7 +230,7 @@ const Register = () => {
           <div className="mt-4">
             <button
               type="submit"
-              className="default_btn rounded w-full hover:bg-white hover:border-rose-500 hover:text-primary"
+              className="default_btn rounded w-full hover:bg-white hover:border-primary hover:text-primary"
             >
               {isPending && !isSuccess ? (
                 <span className="flex items-center gap-2 justify-center text-base">

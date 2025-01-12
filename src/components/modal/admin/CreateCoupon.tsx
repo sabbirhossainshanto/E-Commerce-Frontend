@@ -54,8 +54,11 @@ export default function CreateCoupon() {
 
   return (
     <>
-      <Button onPress={onOpen}>Add New</Button>
+      <Button className="my-4" radius="sm" color="primary" onPress={onOpen}>
+        Add New
+      </Button>
       <Modal
+        radius="sm"
         size="2xl"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
@@ -70,6 +73,7 @@ export default function CreateCoupon() {
               <ModalBody>
                 <div className="flex items-center gap-5">
                   <Input
+                    radius="sm"
                     labelPlacement="outside"
                     {...register("code", { required: true })}
                     label="Code"
@@ -78,6 +82,7 @@ export default function CreateCoupon() {
                     variant="bordered"
                   />
                   <Input
+                    radius="sm"
                     type="number"
                     labelPlacement="outside"
                     {...register("discount", { required: true })}
@@ -88,6 +93,7 @@ export default function CreateCoupon() {
                 </div>
                 <div className="flex items-center gap-5">
                   <Select
+                    radius="sm"
                     label="Discount Type"
                     labelPlacement="outside"
                     {...register("discountType", { required: true })}
@@ -100,6 +106,7 @@ export default function CreateCoupon() {
                     <SelectItem key="FIXED">Fixed</SelectItem>
                   </Select>
                   <Input
+                    radius="sm"
                     type="number"
                     {...register("minimumOrderValue", { required: true })}
                     labelPlacement="outside"
@@ -110,6 +117,7 @@ export default function CreateCoupon() {
                 </div>
                 <div className="flex items-center gap-5">
                   <Input
+                    radius="sm"
                     type="number"
                     {...register("usageLimit", { required: true })}
                     labelPlacement="outside"
@@ -118,6 +126,7 @@ export default function CreateCoupon() {
                     variant="bordered"
                   />
                   <DatePicker
+                    radius="sm"
                     onChange={(value) => setExpiryDate(value)}
                     labelPlacement="outside"
                     variant="bordered"
@@ -127,10 +136,15 @@ export default function CreateCoupon() {
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
+                <Button
+                  radius="sm"
+                  color="danger"
+                  variant="flat"
+                  onPress={onClose}
+                >
                   Cancel
                 </Button>
-                <Button type="submit" color="primary">
+                <Button radius="sm" type="submit" color="primary">
                   {isPending && !isSuccess ? (
                     <span className="flex items-center gap-2 justify-center text-base">
                       <span>Please Wait</span>{" "}

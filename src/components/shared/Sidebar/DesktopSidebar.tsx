@@ -9,6 +9,8 @@ import { useState } from "react";
 import { GoDash } from "react-icons/go";
 import { INavLists } from "@/src/types";
 import { Home } from "lucide-react";
+import Image from "next/image";
+import img from "@/src/assets/img";
 
 interface IProps {
   collapseSidebar: boolean;
@@ -28,19 +30,14 @@ const DesktopSidebar = ({ collapseSidebar, navLists }: IProps) => {
 
   return (
     <div
-      className={`bg-[#405189] text-white fixed z-50 hidden  lg:block h-screen transition-all duration-300 ${collapseSidebar ? "w-[100px]" : "w-[300px]"}`}
+      className={`bg-[#101725] text-white fixed z-50 hidden  lg:block h-screen transition-all duration-300 ${collapseSidebar ? "w-[100px]" : "w-[300px]"}`}
     >
       <div>
         <div
           className={`px-4 py-2 flex text-2xl  items-center mt-6 ${collapseSidebar ? "justify-center" : "justify-start"}`}
         >
           <Link href="/">
-            {!collapseSidebar && (
-              <>
-                <span className="text-secondary">Click</span>
-                <span>Shop</span>{" "}
-              </>
-            )}
+            {!collapseSidebar && <Image src={img.logo} alt="" />}
             {collapseSidebar && <Home />}
           </Link>
         </div>

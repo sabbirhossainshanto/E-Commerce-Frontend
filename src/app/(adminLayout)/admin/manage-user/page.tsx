@@ -138,11 +138,13 @@ const ManageUser = () => {
           return (
             <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
               <Select
+                color="primary"
+                radius="sm"
                 onChange={(e) =>
                   handleChangeRole(e.target.value as IUserRole, user)
                 }
                 placeholder={user.role}
-                className="max-w-xs"
+                className="max-w-xs "
                 disabledKeys={[user.role]}
                 aria-label="Role"
               >
@@ -166,7 +168,7 @@ const ManageUser = () => {
         case "actions":
           return (
             <div className="relative flex justify-end items-center gap-2">
-              <Dropdown>
+              <Dropdown radius="sm">
                 <DropdownTrigger>
                   <Button isIconOnly size="sm" variant="light">
                     <VerticalDotsIcon className="text-default-300" />
@@ -175,6 +177,7 @@ const ManageUser = () => {
                 <DropdownMenu>
                   {user?.status === "ACTIVE" ? (
                     <DropdownItem
+                      color="warning"
                       onClick={() =>
                         handleUpdateStatusOrDelete("BLOCKED", user)
                       }
@@ -183,12 +186,14 @@ const ManageUser = () => {
                     </DropdownItem>
                   ) : (
                     <DropdownItem
+                      color="success"
                       onClick={() => handleUpdateStatusOrDelete("ACTIVE", user)}
                     >
                       Active
                     </DropdownItem>
                   )}
                   <DropdownItem
+                    color="danger"
                     onClick={() => handleUpdateStatusOrDelete("DELETE", user)}
                   >
                     Delete
@@ -206,7 +211,7 @@ const ManageUser = () => {
 
   return (
     <div className="col-span-12 lg:col-span-9">
-      <Table aria-label="Example table with custom cells">
+      <Table radius="sm" aria-label="Example table with custom cells">
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn

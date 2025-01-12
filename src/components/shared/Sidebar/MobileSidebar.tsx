@@ -40,7 +40,7 @@ const MobileSidebar = ({
   return (
     <div
       ref={mobileSidebarRef}
-      className={`bg-[#405189] text-white fixed z-50   lg:hidden h-screen transition-all duration-300 w-[200px]  ${showMobileSidebar ? "translate-x-0" : "-translate-x-[300px]"}`}
+      className={`bg-[#101725] text-white fixed z-50   lg:hidden h-screen transition-all duration-300 w-[200px]  ${showMobileSidebar ? "translate-x-0" : "-translate-x-[300px]"}`}
     >
       <div>
         <div className={`px-4 py-2 flex gap-5 items-center mt-6 justify-start`}>

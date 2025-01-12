@@ -28,7 +28,7 @@ const AccountDropdown = () => {
       <div className="absolute top-full right-[1px] bg-white z-20 rounded-b-[3px] py-5 px-[15px] w-[205px] shadow-sm mt-3.5 group-hover:mt-[5px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
         <div>
           <p className="text-sm leading-[18px] font-medium text-secondary text-center">
-            Welcome to CLICKONLINE
+            Welcome to TopDeal
           </p>
         </div>
         {user?.role === "ADMIN" && (

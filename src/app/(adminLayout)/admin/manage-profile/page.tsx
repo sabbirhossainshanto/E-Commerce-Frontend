@@ -64,7 +64,7 @@ const AdminHomePage = () => {
     <div className="col-span-12 lg:col-span-9">
       <form
         onSubmit={handleSubmit(handleUpdateProfile)}
-        className=" box_shadow p-6"
+        className="bg-white shadow-md p-6"
       >
         {/* <UpdateProfile /> */}
 

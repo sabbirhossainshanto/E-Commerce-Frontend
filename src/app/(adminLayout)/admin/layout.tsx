@@ -7,11 +7,23 @@ import { useUser } from "@/src/context/user.provider";
 import Image from "next/image";
 import MobileSidebar from "@/src/components/shared/Sidebar/MobileSidebar";
 import { adminNavlist } from "@/src/const/admin.navlist";
+import { MdFullscreen, MdOutlineFullscreenExit } from "react-icons/md";
 
 const AdminLayout = ({ children }: IChildren) => {
+  const [showFullScreen, setShowFullScreen] = useState(false);
   const { user } = useUser();
   const [collapseSidebar, setCollapseSidebar] = useState<boolean>(false);
   const [showMobileSidebar, setShowMobileSidebar] = useState<boolean>(false);
+
+  const handleToggleFullScreen = () => {
+    if (showFullScreen) {
+      setShowFullScreen(false);
+      document.exitFullscreen();
+    } else {
+      setShowFullScreen(true);
+      document.body.requestFullscreen();
+    }
+  };
 
   return (
     <div className="relative flex flex-col h-screen">
@@ -41,7 +53,14 @@ const AdminLayout = ({ children }: IChildren) => {
                 }}
               />
             </div>
-            <div className="h-full">
+            <div className="h-full flex">
+              <button onClick={handleToggleFullScreen}>
+                {showFullScreen ? (
+                  <MdOutlineFullscreenExit size={30} />
+                ) : (
+                  <MdFullscreen size={30} />
+                )}
+              </button>
               {user?.profilePhoto && (
                 <div className="bg-[#f3f3f9] h-full flex flex-col items-center justify-center px-5 ">
                   <Image

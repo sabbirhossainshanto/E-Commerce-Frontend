@@ -50,7 +50,7 @@ const ShopCard = ({ shop }: { shop: IShop }) => {
     }
   }, [fetchData]);
   return (
-    <div className="col-span-12 lg:col-span-9">
+    <div className="col-span-12 lg:col-span-9 bg-white">
       <div className="md:flex justify-between items-center border rounded p-5">
         {shopData?.shopLogo && (
           <div className="w-20 h-20">
