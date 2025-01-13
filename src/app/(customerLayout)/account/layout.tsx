@@ -11,7 +11,7 @@ const AccountPayout = ({ children }: IChildren) => {
     <div className="relative flex flex-col min-h-screen">
       <Navbar />
       <BreadCrumbs />
-      <main className="flex-grow px-2 lg:px-0 pt-[155px] h-full">
+      <main className="flex-grow px-2 lg:px-0 pt-[110px] h-full">
         <div className="container grid grid-cols-12 gap-6 pb-14">
           <UserSidebar />
           {children}

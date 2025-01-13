@@ -86,7 +86,7 @@ const ProductPage = () => {
               {/* Category */}
               <div className="pb-4 border-b border-[#E9E4E4] mb-4">
                 <div className="flex justify-between items-start">
-                  <h4 className="text-xl text-left font-medium mb-3 text-primary uppercase">
+                  <h4 className="text-xl text-left font-medium mb-3  uppercase">
                     Categories
                   </h4>
                 </div>
@@ -105,10 +105,7 @@ const ProductPage = () => {
                           className="focus:ring-0 text-rose-500 focus:bg-primary focus:outline-rose-500"
                           id={`cat-${category?.id}`}
                         />
-                        <label
-                          htmlFor="cat-women"
-                          className="cursor-pointer text-primary"
-                        >
+                        <label htmlFor="cat-women" className="cursor-pointer ">
                           {category?.name}
                         </label>
                       </div>
@@ -138,9 +135,13 @@ const ProductPage = () => {
           {/* Dropdown */}
 
           <div className="flex items-center gap-5">
-            <Dropdown size="lg">
+            <Dropdown radius="sm" size="lg">
               <DropdownTrigger>
-                <Button className="text-[10px] md:text-sm" variant="bordered">
+                <Button
+                  radius="sm"
+                  className="text-[10px] md:text-sm bg-primary text-white"
+                  variant="bordered"
+                >
                   Sort Product
                 </Button>
               </DropdownTrigger>
@@ -172,12 +173,14 @@ const ProductPage = () => {
             </div>
 
             <Button
+              className="bg-primary text-white"
+              radius="sm"
+              color="primary"
               onClick={() => {
                 setQuery([]);
                 setSelectedCategory(null);
                 setPage(1);
               }}
-              className="h-[45px] default_btn"
               variant="bordered"
             >
               Reset

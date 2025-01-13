@@ -64,7 +64,7 @@ const UserHomePage = () => {
     <div className="col-span-12 lg:col-span-9">
       <form
         onSubmit={handleSubmit(handleUpdateProfile)}
-        className=" box_shadow p-6"
+        className="p-6 bg-white shadow-md"
       >
         {/* <UpdateProfile /> */}
 

@@ -100,7 +100,7 @@ export default function CreateFlashSale() {
   };
 
   return (
-    <div className="col-span-12 lg:col-span-9 my-5">
+    <div className="col-span-12 lg:col-span-9 my-5 bg-white shadow-md p-5 rounded-sm">
       <form className="space-y-5" onSubmit={handleSubmit(handleUpdateProduct)}>
         <div className="flex items-center gap-5">
           <Input

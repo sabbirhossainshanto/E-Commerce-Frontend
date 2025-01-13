@@ -39,7 +39,7 @@ const OrderHistory = () => {
         return (
           <div
             key={order?.id}
-            className="md:flex justify-between items-center border rounded p-5 mt-2"
+            className="md:flex justify-between items-center border rounded p-5 mt-2 bg-white shadow-md"
           >
             <div className="w-20 h-20">
               <Image

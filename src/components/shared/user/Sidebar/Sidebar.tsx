@@ -25,9 +25,9 @@ const UserSidebar = () => {
   return (
     <div className="col-span-12 lg:col-span-3 relative">
       <div>
-        <div className="box_shadow px-4 py-2 flex gap-5 items-center">
+        <div className="bg-white shadow-md px-4 py-2 flex gap-5 items-center">
           <div className="w-12 border border-[#E9E4E4] rounded-full p-1">
-            <Link href="my-account.html">
+            <Link href="/">
               {user?.profilePhoto && (
                 <Image
                   height={100}
@@ -40,7 +40,7 @@ const UserSidebar = () => {
             </Link>
           </div>
 
-          <div className="acprof_cont">
+          <div>
             <p>Hello,</p>
             <h4>{user?.name}</h4>
           </div>
@@ -84,9 +84,9 @@ const UserSidebar = () => {
           <div className="mt-4">
             <button
               onClick={handleLogout}
-              className="flex gap-2 items-center text-[18px] font-medium hover:text-primary group"
+              className="flex gap-2 items-center text-[18px] font-medium hover:text-secondary group"
             >
-              <span className="group-hover:text-primary">
+              <span className="group-hover:text-secondary">
                 <AiOutlineLogout />
               </span>
               Log Out

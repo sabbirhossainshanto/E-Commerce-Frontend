@@ -74,7 +74,7 @@ const CreateProduct = () => {
   };
 
   return (
-    <div className="col-span-12 lg:col-span-9 mt-4">
+    <div className="col-span-12 lg:col-span-9 mt-4 bg-white p-5 shadow-md rounded-sm">
       <form onSubmit={handleSubmit(handleUpdateProduct)} className="space-y-5">
         <div className="flex items-center gap-5">
           <Input

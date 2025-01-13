@@ -13,6 +13,7 @@ import MenuDropdown from "./MenuDropdoen";
 import Comparison from "../../modal/Comparison";
 import CartDropdown from "./CartDropdown";
 import AccountDropdown from "./AccountDropdown";
+import Category from "./Category";
 
 export const Navbar = () => {
   const pathname = usePathname();
@@ -58,7 +59,7 @@ export const Navbar = () => {
         <div>
           <div className="container px-4 lg:px-0 mx-auto">
             <div className="relative flex items-center justify-between">
-              <div className="lg:w-60">
+              <div className="lg:w-60 relative group">
                 <div className="relative py-4">
                   <div className="inline-flex cursor-pointer items-center justify-between whitespace-nowrap rounded-[5px] bg-secondary  pl-4 pr-[18px] py-[9px] text-base font-medium text-white hover:bg-opacity-90">
                     <span className="pr-[10px] text-white">
@@ -70,7 +71,9 @@ export const Navbar = () => {
                     </span>
                   </div>
                 </div>
+                <Category />
               </div>
+
               <MenuDropdown />
               <div className="hidden md:flex items-center justify-between">
                 <div className="w-full text-right">

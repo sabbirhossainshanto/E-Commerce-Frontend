@@ -9,7 +9,7 @@ import {
   useGetMyWishlistProducts,
 } from "@/src/hooks/wishlist";
 import { IWishlist } from "@/src/types";
-import { Pagination } from "@nextui-org/react";
+import { Button, Pagination } from "@nextui-org/react";
 import Image from "next/image";
 import { useState } from "react";
 import { IoCartOutline } from "react-icons/io5";
@@ -116,7 +116,7 @@ const Wishlist = () => {
         return (
           <div
             key={wishlist?.id}
-            className="md:flex justify-between items-center border rounded p-5 mt-2"
+            className="md:flex justify-between items-center border rounded p-5 mt-2 bg-white shadow-md"
           >
             <div className="w-20 h-20">
               <Image
@@ -152,9 +152,10 @@ const Wishlist = () => {
 
             <div className="mt-6 md:mt-0">
               <div className="flex items-center gap-5">
-                <button
-                  onClick={() => handleAddToCart(wishlist)}
-                  className="mt-3  default_btn hover:bg-white primary-color flex items-center gap-3"
+                <Button
+                  radius="sm"
+                  onPress={() => handleAddToCart(wishlist)}
+                  className="mt-3  bg-primary text-white  flex items-center gap-3"
                 >
                   {isCartPending && !isCartSuccess ? (
                     <span className="flex items-center gap-2 justify-center text-base">
@@ -167,7 +168,7 @@ const Wishlist = () => {
                       <span>Add To Cart</span>
                     </>
                   )}
-                </button>
+                </Button>
 
                 <div className="ml-5">
                   <RiDeleteBin6Line

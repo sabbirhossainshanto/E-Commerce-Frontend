@@ -10,7 +10,7 @@ const Loading = () => {
         width={500}
         src={img.loader}
         alt="Loader"
-        className="w-[30rem] h-[30rem] object-cover"
+        className="w-full h-[30rem] object-cover"
       />
     </div>
   );

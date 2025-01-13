@@ -80,9 +80,7 @@ const CartProduct = ({
   return (
     <div className="absolute top-full right-0 bg-white z-20 p-4 w-[300px] rounded-b-[3px] mt-3.5 group-hover:mt-[5px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
       <div className="mb-3 border-b border-[#d8d8d8]">
-        <h4 className="text-base text-secondary mb-2">
-          {cartProducts?.length} Items
-        </h4>
+        <h4 className="text-base  mb-2">{cartProducts?.length} Items</h4>
       </div>
       <div>
         {cartProducts?.map((cartProduct) => {
@@ -113,7 +111,7 @@ const CartProduct = ({
               </div>
 
               <div className="flex-grow pl-4">
-                <h5 className="text-base text-secondary hover:text-primary transition duration-300">
+                <h5 className="text-base hover:text-primary transition duration-300">
                   {cartProduct?.product?.name}
                 </h5>
                 <p className="text-[#464545] text-sm">
@@ -170,7 +168,7 @@ const CartProduct = ({
         })}
       </div>
       <div className="mt-4 pt-4 border-t border-[#d8d8d8] flex justify-between">
-        <h4 className="text-base text-secondary">SUB TOTAL:</h4>
+        <h4 className="text-base ">SUB TOTAL:</h4>
         <h4 className="text-base ml-2">{totalAmount?.toFixed(2)}</h4>
       </div>
       <div className="flex mt-4 gap-4">
@@ -183,7 +181,7 @@ const CartProduct = ({
         {cartProducts && cartProducts?.length > 0 && (
           <Link
             href="/checkout"
-            className="w-1/2 flex items-center justify-center rounded-[3px] py-2 px-2.5 border border-rose-500  bg-white hover:bg-rose-500 hover:text-white  text-center text-sm text-rose-500 transition duration-300"
+            className="w-1/2 flex items-center justify-center rounded-[3px] py-2 px-2.5  bg-primary    text-center text-sm text-white transition duration-300"
           >
             CHECKOUT
           </Link>

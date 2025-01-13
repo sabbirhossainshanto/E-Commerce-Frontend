@@ -44,8 +44,8 @@ const ChangePassword = () => {
 
   return (
     <div className="col-span-12 lg:col-span-9">
-      <div className="py-10 bg-gray-50">
-        <div className="w-full max-w-[500px] mx-auto box_shadow rounded px-[30px] py-[24px] mb-14">
+      <div className="py-10 ">
+        <div className="w-full max-w-[500px] mx-auto box_shadow rounded px-[30px] py-[24px] mb-14 bg-white shadow-md">
           <h4 className="text-[28px] uppercase font-semibold mb-4">
             Change Password
           </h4>
@@ -114,7 +114,7 @@ const ChangePassword = () => {
             <div className="mt-4">
               <button
                 type="submit"
-                className="default_btn rounded w-full hover:bg-white hover:border-rose-500 hover:text-primary"
+                className="default_btn rounded w-full hover:bg-white hover:border-primary hover:text-primary"
               >
                 {isPending && !isSuccess ? (
                   <span className="flex items-center gap-2 justify-center text-base">

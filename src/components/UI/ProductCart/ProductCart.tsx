@@ -236,7 +236,7 @@ const ProductCart = ({ product }: { product: IProduct }) => {
               href={`/products/${product?.id}`}
               className="hover:text-secondary text-md hover:underline  font-medium mb-[5px] cursor-pointer"
             >
-              {product?.name}
+              {product?.name?.substring(0, 70)}
             </Link>
             <div className="flex items-center  text-secondary">
               {product?.isFlashSale && (
@@ -265,7 +265,7 @@ const ProductCart = ({ product }: { product: IProduct }) => {
           <div className="pt-5 flex flex-col  gap-4">
             <button
               onClick={() => handleAddToCart(product)}
-              className="flex items-center justify-center gap-5 bg-[#f5f6fc] text-[#3749bb] text-sm py-2 hover:bg-[#3749bb] hover:text-white transition-colors rounded-md font-medium"
+              className="flex items-center justify-center gap-5 bg-[#f5f6fc] text-[#3749bb] text-sm py-3 hover:bg-[#3749bb] hover:text-white transition-colors rounded-md font-medium"
             >
               <IoMdCart size={20} />
               {isCartPending && !isCartSuccess ? (
@@ -279,7 +279,7 @@ const ProductCart = ({ product }: { product: IProduct }) => {
             </button>
             <button
               onClick={() => handleAddToCompare(product)}
-              className="flex items-center justify-center gap-5 bg-gray-100  text-sm py-2 hover:bg-gray-200  transition-colors rounded-md font-medium"
+              className="flex items-center justify-center gap-5 bg-gray-100  text-sm py-3 hover:bg-gray-200  transition-colors rounded-md font-medium"
             >
               <TbCopyPlus size={18} />
               {isComparisonPending && !isComparisonSuccess ? (

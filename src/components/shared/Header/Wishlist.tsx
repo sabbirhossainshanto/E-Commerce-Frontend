@@ -18,7 +18,7 @@ const Wishlist = () => {
         Wish List
       </span>
       {data?.data && data?.data?.length > 0 && (
-        <span className="absolute bg-secondary -top-1 right-0 text-white text-[11px] w-[18px] h-[18px] leading-[18px] text-center rounded-full overflow-hidden">
+        <span className="absolute bg-primary -top-1 right-0 text-white text-[11px] w-[18px] h-[18px] leading-[18px] text-center rounded-full overflow-hidden">
           {data?.data?.length}
         </span>
       )}

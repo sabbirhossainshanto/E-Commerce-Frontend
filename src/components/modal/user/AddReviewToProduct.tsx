@@ -49,10 +49,19 @@ export default function AddReviewToProduct({
 
   return (
     <>
-      <Button onPress={onOpen} className="mt-3 bg-green-500">
+      <Button
+        radius="sm"
+        onPress={onOpen}
+        className="mt-3 bg-primary text-white"
+      >
         Leave a Review
       </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+      <Modal
+        radius="sm"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="top-center"
+      >
         <ModalContent>
           {(onClose) => (
             <form onSubmit={handleSubmit(handleAddReviewToProduct)}>
@@ -61,6 +70,7 @@ export default function AddReviewToProduct({
               </ModalHeader>
               <ModalBody>
                 <Select
+                  radius="sm"
                   variant="bordered"
                   style={{
                     height: "50px",
@@ -79,6 +89,7 @@ export default function AddReviewToProduct({
                 </Select>
 
                 <Input
+                  radius="sm"
                   {...register("comment", { required: true })}
                   label="Comment"
                   placeholder="Enter comment"
@@ -86,10 +97,15 @@ export default function AddReviewToProduct({
                 />
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
+                <Button
+                  radius="sm"
+                  color="danger"
+                  variant="flat"
+                  onPress={onClose}
+                >
                   Cancel
                 </Button>
-                <Button type="submit" color="primary">
+                <Button radius="sm" type="submit" color="primary">
                   {!isSuccess && isPending ? (
                     <span className="flex items-center gap-2 justify-center text-base">
                       <span>Please Wait</span>{" "}
