@@ -14,18 +14,42 @@ import Comparison from "../../modal/Comparison";
 import CartDropdown from "./CartDropdown";
 import AccountDropdown from "./AccountDropdown";
 import Category from "./Category";
+import { useEffect, useState } from "react";
 
 export const Navbar = () => {
+  const [hiddenNavbarOnScroll, setHiddenNavbarOnScroll] = useState(false);
   const pathname = usePathname();
   const { user } = useUser();
   const { data: comparisons } = useGetMyComparison();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 70) {
+        setHiddenNavbarOnScroll(true);
+      } else {
+        setHiddenNavbarOnScroll(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <header
       className={`w-full bg-[#101725] dark:bg-dark  z-40 shadow-2xl fixed top-0 left-0 right-0`}
     >
       <div className="relative ">
-        <div className="w-full  lg:py-4 border-b border-gray-800">
+        <div
+          className={`w-full transition-all duration-200   ${
+            hiddenNavbarOnScroll
+              ? "opacity-0 h-0 py-0"
+              : "opacity-100 h-auto lg:py-4 border-b border-gray-800"
+          }`}
+        >
           <div className="container px-4 lg:px-0 mx-auto">
             <div className="relative flex items-center justify-between">
               <div className="w-48 max-w-full sm:w-60 lg:w-48">
@@ -61,7 +85,7 @@ export const Navbar = () => {
             <div className="relative flex items-center justify-between">
               <div className="lg:w-60 relative group">
                 <div className="relative py-4">
-                  <div className="inline-flex cursor-pointer items-center justify-between whitespace-nowrap rounded-[5px] bg-secondary  pl-4 pr-[18px] py-[9px] text-base font-medium text-white hover:bg-opacity-90">
+                  <div className="inline-flex cursor-pointer items-center justify-between whitespace-nowrap rounded-[5px] bg-primary  pl-4 pr-[18px] py-[9px] text-base font-medium text-white hover:bg-opacity-90">
                     <span className="pr-[10px] text-white">
                       <Menu />
                     </span>

@@ -36,7 +36,7 @@ type TOrder = Pick<IOrder, "id" | "isPaid" | "status" | "quantity"> & {
   ShopName: string;
 };
 
-const ManageUser = () => {
+const ManageOrder = () => {
   const [page, setPage] = useState(1);
   const {
     data,
@@ -192,4 +192,4 @@ const ManageUser = () => {
   );
 };
 
-export default ManageUser;
+export default ManageOrder;

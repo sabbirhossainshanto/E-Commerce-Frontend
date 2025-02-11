@@ -9,27 +9,35 @@ import React, { useState } from "react";
 import { TbFidgetSpinner } from "react-icons/tb";
 
 const SearchProduct = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const { data } = useGetAllCategory([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const {
-    data: products,
-    isLoading,
-    isFetching,
-  } = useGetAllProducts([{ name: "searchTerm", value: searchTerm }]);
-
+  const payload = [{ name: "searchTerm", value: searchTerm }];
+  if (selectedCategory) {
+    payload.push({ name: "category", value: selectedCategory });
+  }
+  const { data: products, isLoading, isFetching } = useGetAllProducts(payload);
+  const filterCategory = data?.data?.filter(
+    (category) => category?.products?.length > 0
+  );
   return (
     <div className="relative hidden lg:block">
-      <div className="rounded-md w-[500px] h-[45px]  flex">
+      <div className="rounded-md w-[600px] h-[45px]  flex">
         <form className="hidden bg-white w-full lg:flex">
           <div className="relative flex items-center w-full border rounded-md">
             <div className="relative border-r">
               <select
+                onChange={(e) =>
+                  setSelectedCategory(
+                    e.target.value === "All" ? null : e.target.value
+                  )
+                }
                 name="categoryId"
-                className="appearance-none bg-transparent pr-10 pl-[22px] py-2 text-base font-medium outline-none w-[100px]"
+                className="appearance-none bg-transparent pr-10 pl-[22px] py-2 text-base font-medium outline-none w-fit"
               >
                 <option>All</option>
-                {data?.data &&
-                  data?.data?.map((category) => {
+                {filterCategory &&
+                  filterCategory?.map((category) => {
                     return (
                       <option key={category?.id} value={category?.name}>
                         {category?.name}
@@ -46,9 +54,10 @@ const SearchProduct = () => {
               type="search"
               name="searchTerm"
             />
+            n
             <button
-              type="submit"
-              className="absolute top-0 right-0 flex h-full w-[52px] items-center justify-center rounded-tr-md rounded-br-md border border-secondary  bg-secondary  text-white"
+              type="button"
+              className="absolute top-0 right-0 flex h-full w-[52px] items-center justify-center rounded-tr-md rounded-br-md border border-primary  bg-primary  text-white"
             >
               {(isLoading || isFetching) && searchTerm ? (
                 <TbFidgetSpinner className="animate-spin" />
@@ -84,7 +93,7 @@ const SearchProduct = () => {
                   )}
                 </div>
                 <div className="pl-2">
-                  <h4 className="text-lg font-medium text-secondary mb-1.5">
+                  <h4 className="text-lg font-medium  mb-1.5">
                     {product?.name}
                   </h4>
                   <div className="mb-[5px] font-medium leading-[22px]">

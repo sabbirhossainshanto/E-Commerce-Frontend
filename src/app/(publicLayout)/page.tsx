@@ -4,6 +4,7 @@ import Hero from "@/src/components/modules/public/Home/Hero";
 import Sponsors from "@/src/components/modules/public/Home/Sponsors";
 import CategoryCard from "@/src/components/UI/CategoryCard/CategoryCard";
 import ProductCart from "@/src/components/UI/ProductCart/ProductCart";
+import TopRanking from "@/src/components/UI/TopRanking/TopRanking";
 import { useGetAllCategory } from "@/src/hooks/category";
 import { useGetAllFlashSale } from "@/src/hooks/flashSale";
 import { useGetAllProducts } from "@/src/hooks/product";
@@ -20,6 +21,18 @@ export default function Home() {
       <Hero />
       {/* Advertisement */}
       <Advertisement />
+      {/* Shop By category section */}
+
+      <div className="container mt-20">
+        <h2 className="text-[22px] sm:text-[32px] font-medium mb-6">
+          SHOP BY CATEGORY
+        </h2>
+        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
+          {categories?.data?.map((category) => (
+            <CategoryCard key={category.id} category={category} />
+          ))}
+        </div>
+      </div>
       {/* Recommended for you section */}
       <div className="container mt-20">
         <div className="flex items-start justify-between mb-[30px]">
@@ -47,16 +60,12 @@ export default function Home() {
           ))}
         </div>
       </div>
-      {/* Shop By category section */}
+      {/* Top Arrival */}
 
-      <div className="container mt-20">
-        <h2 className="text-[28px]  mb-6">SHOP BY CATEGORY</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
-          {categories?.data?.map((category) => (
-            <CategoryCard key={category.id} category={category} />
-          ))}
-        </div>
-      </div>
+      {products?.data && products?.data?.length > 0 && (
+        <TopRanking products={products?.data} />
+      )}
+
       {/* Flash same  section */}
       <div className="container mt-20">
         <div className="flex items-start justify-between mb-[30px]">

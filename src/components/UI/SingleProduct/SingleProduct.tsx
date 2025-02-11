@@ -301,7 +301,7 @@ const SingleProduct = ({ product }: { product: IProduct }) => {
         </div>
       )}
       {tab === "description" && (
-        <div className="bg-white mt-5 p-5">
+        <div className="bg-white mt-5 p-2">
           <h3 className="mb-5 text-black text-xl font-medium">Description</h3>
           <p className="text-black"> {product?.description}</p>
         </div>
@@ -311,7 +311,7 @@ const SingleProduct = ({ product }: { product: IProduct }) => {
       {products?.data && products?.data?.length > 0 && (
         <div className="container pt-14">
           <div className="flex items-start justify-between mb-[30px]">
-            <h2 className="text-[22px] sm:text-[32px] font-medium text-secondary">
+            <h2 className="text-[22px] sm:text-[32px] font-medium ">
               Related Product
             </h2>
             <div className="pt-2">

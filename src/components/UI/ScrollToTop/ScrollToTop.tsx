@@ -1,7 +1,7 @@
 "use client";
-import img from "@/src/assets/img";
-import Image from "next/image";
+
 import React, { useEffect, useState } from "react";
+import { FaArrowUp } from "react-icons/fa";
 
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -30,12 +30,12 @@ const ScrollToTop = () => {
     <>
       {isVisible && (
         <button
+          className="bg-primary"
           onClick={scrollToTop}
           style={{
             position: "fixed",
             bottom: "20px",
             right: "20px",
-            backgroundColor: "white",
             color: "white",
             border: "none",
             borderRadius: "50%",
@@ -44,7 +44,7 @@ const ScrollToTop = () => {
             boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
           }}
         >
-          <Image height={50} width={50} alt="ScrollTop" src={img.scrollToTop} />
+          <FaArrowUp size={25} />
         </button>
       )}
     </>

@@ -8,48 +8,34 @@ import {
   TableCell,
   User,
   Chip,
-  Pagination,
   Spinner,
 } from "@nextui-org/react";
+
 import { IOrder } from "@/src/types";
-import React, { useState } from "react";
-import { useGetMyShop } from "@/src/hooks/shop";
-import { useRouter } from "next/navigation";
-import { limit } from "@/src/const/const";
-import { useGetShopOrder } from "@/src/hooks/order";
+import { useGetAllOrder } from "@/src/hooks/order";
+import React from "react";
 
 const columns = [
   { name: "PRODUCT", uid: "product" },
   { name: "QUANTITY", uid: "quantity" },
   { name: "ISPAID", uid: "isPaid" },
-  { name: "PRICE", uid: "price" },
-  { name: "DELIVERY", uid: "status" },
+  { name: "STATUS", uid: "status" },
 ];
 
 type TOrder = Pick<IOrder, "id" | "isPaid" | "status" | "quantity"> & {
+  actions: string;
   product: string;
   image: string;
   name: string;
   ShopName: string;
-  price: number;
 };
 
-const OrderHistory = () => {
-  const [page, setPage] = useState(1);
-  const { data } = useGetMyShop();
-
-  const shopId = data?.data?.id;
-  const { data: shopOrder, isLoading } = useGetShopOrder({
-    limit,
-    page,
-    shopId: shopId as string,
-  });
-  const meta = shopOrder?.meta;
-  const router = useRouter();
+const RecentOrder = () => {
+  const { data, isLoading } = useGetAllOrder([{ name: "limit", value: 10 }]);
 
   const orderData =
-    shopOrder?.data?.map((order) => ({
-      id: order?.productId,
+    data?.data?.map((order) => ({
+      id: order.id,
       isPaid: order?.isPaid,
       status: order?.status,
       quantity: order?.quantity,
@@ -58,7 +44,7 @@ const OrderHistory = () => {
       shopName: order?.shop?.shopName,
       ShopName: order.shop?.shopName,
       product: order.product?.name,
-      price: order?.quantity * order?.product?.price,
+      actions: "default",
     })) || [];
 
   const renderCell = React.useCallback(
@@ -69,8 +55,6 @@ const OrderHistory = () => {
         case "product":
           return (
             <User
-              className="cursor-pointer"
-              onClick={() => router.push(`/products/${order?.id}`)}
               avatarProps={{ radius: "lg", src: order.image }}
               description={order?.ShopName}
               name={order?.name}
@@ -116,12 +100,16 @@ const OrderHistory = () => {
 
   return (
     <div className="col-span-12 lg:col-span-9">
-      <Table radius="none" aria-label="Example table with custom cells">
+      <Table
+        shadow="md"
+        radius="sm"
+        aria-label="Example table with custom cells"
+      >
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn
               key={column.uid}
-              align={column.uid === "status" ? "center" : "start"}
+              align={column.uid === "actions" ? "center" : "start"}
             >
               {column.name}
             </TableColumn>
@@ -143,20 +131,8 @@ const OrderHistory = () => {
           )}
         </TableBody>
       </Table>
-
-      {!isLoading && (
-        <div className="my-10 flex justify-end">
-          <Pagination
-            loop
-            showControls
-            onChange={(page) => setPage(page)}
-            page={page}
-            total={meta?.total ? Math.ceil(meta.total / limit) : 1}
-          />
-        </div>
-      )}
     </div>
   );
 };
 
-export default OrderHistory;
+export default RecentOrder;

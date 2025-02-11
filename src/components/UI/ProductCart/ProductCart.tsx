@@ -209,7 +209,7 @@ const ProductCart = ({ product }: { product: IProduct }) => {
           <Image
             height={200}
             width={200}
-            style={{ height: "200px", width: "200px" }}
+            style={{ height: "100px", width: "200px" }}
             className="w-full  object-contain"
             src={product.images?.[0]}
             alt="product"
@@ -230,15 +230,15 @@ const ProductCart = ({ product }: { product: IProduct }) => {
           </div>
         </div>
 
-        <div className="p-5 h-[220px] overflow-hidden relative">
+        <div className="p-5 h-[230px] overflow-hidden relative flex flex-col">
           <div className="border-b-1 pb-5">
             <Link
               href={`/products/${product?.id}`}
               className="hover:text-secondary text-md hover:underline  font-medium mb-[5px] cursor-pointer"
             >
-              {product?.name?.substring(0, 70)}
+              {product?.name?.substring(0, 40)}
             </Link>
-            <div className="flex items-center  text-secondary">
+            <div className="flex items-center  text-primary">
               {product?.isFlashSale && (
                 <span className=" mr-[5px] font-medium">
                   $
@@ -250,19 +250,19 @@ const ProductCart = ({ product }: { product: IProduct }) => {
               )}
 
               <span
-                className={` mr-[5px] font-medium ${product?.isFlashSale ? "line-through" : ""}`}
+                className={` mr-[5px] font-medium  ${product?.isFlashSale ? "line-through text-secondary" : ""}`}
               >
                 ${product?.price}
               </span>
-              {product?.isFlashSale && (
-                <div>
-                  {" "}
-                  <CountdownTimer saleEndTime={product?.sale_end_time} />
-                </div>
-              )}
             </div>
+            {product?.isFlashSale && (
+              <div>
+                {" "}
+                <CountdownTimer saleEndTime={product?.sale_end_time} />
+              </div>
+            )}
           </div>
-          <div className="pt-5 flex flex-col  gap-4">
+          <div className="pt-5 flex flex-col  gap-4 mt-auto">
             <button
               onClick={() => handleAddToCart(product)}
               className="flex items-center justify-center gap-5 bg-[#f5f6fc] text-[#3749bb] text-sm py-3 hover:bg-[#3749bb] hover:text-white transition-colors rounded-md font-medium"

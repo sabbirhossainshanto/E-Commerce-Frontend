@@ -80,13 +80,16 @@ const Hero = () => {
                         Apple iPhone XR
                       </h1>
                       <div className="mb-1 leading-[22px] font-medium">
-                        <span className=" mr-1">$450.00</span>
-                        <span className="text-sm line-through text-[#687188]">
+                        <span className=" mr-1 text-primary">$450.00</span>
+                        <span className="text-sm line-through text-secondary">
                           $550.45
                         </span>
                       </div>
                       <div className="mt-[30px]">
-                        <Link className="primary-btn" href="#">
+                        <Link
+                          className="bg-primary px-4 py-3 text-white"
+                          href="/products"
+                        >
                           SHOP NOW
                         </Link>
                       </div>
@@ -117,16 +120,19 @@ const Hero = () => {
                         Get up to 50% off Today only
                       </p>
                       <h1 className="text-[36px] sm:text-[29px] md:text-[36px] xl:text-[40px] leading-10  font-medium mb-4">
-                        iPhone 11 Pro Max{" "}
+                        Apple Watch{" "}
                       </h1>
                       <div className="mb-1 leading-[22px] font-medium">
-                        <span className=" mr-1">$450.00</span>
-                        <span className="text-sm line-through text-[#687188]">
+                        <span className="text-primary mr-1">$450.00</span>
+                        <span className="text-sm line-through text-secondary">
                           $550.45
                         </span>
                       </div>
                       <div className="mt-[30px]">
-                        <Link className="primary-btn" href="#">
+                        <Link
+                          className="bg-primary px-4 py-3 text-white"
+                          href="/products"
+                        >
                           SHOP NOW
                         </Link>
                       </div>
@@ -137,7 +143,7 @@ const Hero = () => {
                       <Image
                         height={280}
                         width={280}
-                        src={img.iPhone}
+                        src={img.watch}
                         className="max-h-[280px] object-right"
                         alt="phone"
                       />
@@ -158,16 +164,19 @@ const Hero = () => {
                         Get up to 50% off Today only
                       </p>
                       <h1 className="text-[36px] sm:text-[29px] md:text-[36px] xl:text-[40px] leading-10  font-medium mb-4">
-                        iPhone 12 Pro Max{" "}
+                        Beats Headphones{" "}
                       </h1>
                       <div className="mb-1 leading-[22px] font-medium">
-                        <span className=" mr-1">$450.00</span>
-                        <span className="text-sm line-through text-[#687188]">
+                        <span className=" mr-1 text-primary">$450.00</span>
+                        <span className="text-sm line-through text-secondary">
                           $550.45
                         </span>
                       </div>
                       <div className="mt-[30px]">
-                        <Link className="primary-btn" href="#">
+                        <Link
+                          className="bg-primary px-4 py-3 text-white"
+                          href="/products"
+                        >
                           SHOP NOW
                         </Link>
                       </div>
@@ -178,7 +187,7 @@ const Hero = () => {
                       <Image
                         height={280}
                         width={280}
-                        src={img.iPhone12}
+                        src={img.headPhone}
                         className="max-h-[280px] object-right"
                         alt="phone"
                       />
@@ -201,13 +210,16 @@ const Hero = () => {
                         Apple iPhone XR
                       </h1>
                       <div className="mb-1 leading-[22px] font-medium">
-                        <span className=" mr-1">$450.00</span>
-                        <span className="text-sm line-through text-[#687188]">
+                        <span className=" mr-1 text-primary">$450.00</span>
+                        <span className="text-sm line-through text-secondary">
                           $550.45
                         </span>
                       </div>
                       <div className="mt-[30px]">
-                        <Link className="primary-btn" href="#">
+                        <Link
+                          className="bg-primary px-4 py-3 text-white"
+                          href="/products"
+                        >
                           SHOP NOW
                         </Link>
                       </div>
@@ -218,7 +230,7 @@ const Hero = () => {
                       <Image
                         height={280}
                         width={280}
-                        src={img.iPhoneXR}
+                        src={img.iPhone12}
                         className="max-h-[280px] object-right"
                         alt="phone"
                       />
@@ -241,13 +253,16 @@ const Hero = () => {
                         iPhone 11 Pro Max{" "}
                       </h1>
                       <div className="mb-1 leading-[22px] font-medium">
-                        <span className=" mr-1">$450.00</span>
-                        <span className="text-sm line-through text-[#687188]">
+                        <span className=" mr-1 text-primary">$450.00</span>
+                        <span className="text-sm line-through text-secondary">
                           $550.45
                         </span>
                       </div>
                       <div className="mt-[30px]">
-                        <Link className="primary-btn" href="#">
+                        <Link
+                          className="bg-primary px-4 py-3 text-white"
+                          href="/products"
+                        >
                           SHOP NOW
                         </Link>
                       </div>

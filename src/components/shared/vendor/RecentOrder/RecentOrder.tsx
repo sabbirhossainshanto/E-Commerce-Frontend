@@ -8,14 +8,12 @@ import {
   TableCell,
   User,
   Chip,
-  Pagination,
   Spinner,
 } from "@nextui-org/react";
 import { IOrder } from "@/src/types";
-import React, { useState } from "react";
+import React from "react";
 import { useGetMyShop } from "@/src/hooks/shop";
 import { useRouter } from "next/navigation";
-import { limit } from "@/src/const/const";
 import { useGetShopOrder } from "@/src/hooks/order";
 
 const columns = [
@@ -34,17 +32,16 @@ type TOrder = Pick<IOrder, "id" | "isPaid" | "status" | "quantity"> & {
   price: number;
 };
 
-const OrderHistory = () => {
-  const [page, setPage] = useState(1);
+const RecentOrder = () => {
   const { data } = useGetMyShop();
 
   const shopId = data?.data?.id;
   const { data: shopOrder, isLoading } = useGetShopOrder({
-    limit,
-    page,
+    limit: 10,
+    page: 1,
     shopId: shopId as string,
   });
-  const meta = shopOrder?.meta;
+
   const router = useRouter();
 
   const orderData =
@@ -143,20 +140,8 @@ const OrderHistory = () => {
           )}
         </TableBody>
       </Table>
-
-      {!isLoading && (
-        <div className="my-10 flex justify-end">
-          <Pagination
-            loop
-            showControls
-            onChange={(page) => setPage(page)}
-            page={page}
-            total={meta?.total ? Math.ceil(meta.total / limit) : 1}
-          />
-        </div>
-      )}
     </div>
   );
 };
 
-export default OrderHistory;
+export default RecentOrder;

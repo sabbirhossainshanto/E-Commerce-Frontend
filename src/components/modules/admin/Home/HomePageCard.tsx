@@ -18,12 +18,12 @@ const HomePageCard = ({ data }: { data: IOverview }) => {
                   Total Shop
                 </p>
               </div>
-              <div className="flex-shrink-0">
+              {/* <div className="flex-shrink-0">
                 <h5 className="text-success text-sm mb-0">
                   <i className="ri-arrow-right-up-line text-lg align-middle"></i>{" "}
                   +16.24 %
                 </h5>
-              </div>
+              </div> */}
             </div>
             <div className="flex items-end justify-between mt-4">
               <div>
@@ -56,12 +56,12 @@ const HomePageCard = ({ data }: { data: IOverview }) => {
                   Active Shop
                 </p>
               </div>
-              <div className="flex-shrink-0">
+              {/* <div className="flex-shrink-0">
                 <h5 className="text-success text-sm mb-0">
                   <i className="ri-arrow-right-up-line text-lg align-middle"></i>{" "}
                   +16.24 %
                 </h5>
-              </div>
+              </div> */}
             </div>
             <div className="flex items-end justify-between mt-4">
               <div>
@@ -94,12 +94,12 @@ const HomePageCard = ({ data }: { data: IOverview }) => {
                   Blocked Shop
                 </p>
               </div>
-              <div className="flex-shrink-0">
+              {/* <div className="flex-shrink-0">
                 <h5 className="text-success text-sm mb-0">
                   <i className="ri-arrow-right-up-line text-lg align-middle"></i>{" "}
                   +16.24 %
                 </h5>
-              </div>
+              </div> */}
             </div>
             <div className="flex items-end justify-between mt-4">
               <div>
@@ -132,12 +132,12 @@ const HomePageCard = ({ data }: { data: IOverview }) => {
                   Total User
                 </p>
               </div>
-              <div className="flex-shrink-0">
+              {/* <div className="flex-shrink-0">
                 <h5 className="text-success text-sm mb-0">
                   <i className="ri-arrow-right-up-line text-lg align-middle"></i>{" "}
                   +16.24 %
                 </h5>
-              </div>
+              </div> */}
             </div>
             <div className="flex items-end justify-between mt-4">
               <div>
@@ -169,12 +169,12 @@ const HomePageCard = ({ data }: { data: IOverview }) => {
                   Active User
                 </p>
               </div>
-              <div className="flex-shrink-0">
+              {/* <div className="flex-shrink-0">
                 <h5 className="text-success text-sm mb-0">
                   <i className="ri-arrow-right-up-line text-lg align-middle"></i>{" "}
                   +16.24 %
                 </h5>
-              </div>
+              </div> */}
             </div>
             <div className="flex items-end justify-between mt-4">
               <div>
@@ -206,12 +206,12 @@ const HomePageCard = ({ data }: { data: IOverview }) => {
                   Blocked
                 </p>
               </div>
-              <div className="flex-shrink-0">
+              {/* <div className="flex-shrink-0">
                 <h5 className="text-success text-sm mb-0">
                   <i className="ri-arrow-right-up-line text-lg align-middle"></i>{" "}
                   +16.24 %
                 </h5>
-              </div>
+              </div> */}
             </div>
             <div className="flex items-end justify-between mt-4">
               <div>

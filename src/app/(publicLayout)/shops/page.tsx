@@ -3,6 +3,7 @@
 import { limit } from "@/src/const/const";
 import { useGetAllShop } from "@/src/hooks/shop";
 import { Pagination } from "@nextui-org/react";
+import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -18,7 +19,7 @@ const ShopPage = () => {
   return (
     <div className="container pt-14">
       <h2 className="text-[22px] sm:text-[32px] font-medium ">Shops</h2>
-      <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
         {data?.data?.map((shop) => {
           return (
             <div
@@ -32,11 +33,11 @@ const ShopPage = () => {
                       alt="Fitness Freak"
                       src={shop?.shopLogo}
                       loading="lazy"
-                      width={250}
-                      height={250}
+                      width={50}
+                      height={10}
                       decoding="async"
                       data-nimg="1"
-                      className="w-28 mx-auto rounded-full"
+                      className=" mx-auto rounded-full"
                       style={{ color: "transparent" }}
                     />
                   )}
@@ -45,7 +46,9 @@ const ShopPage = () => {
                 <p className="text-gray-600 text-sm mb-2 h-16 line-clamp-3">
                   {shop?.shopDetails}
                 </p>
-                <p className="text-gray-600 text-sm mb-2">{shop?.createdAt}</p>
+                <p className="text-gray-600 text-sm mb-2">
+                  {moment(shop?.createdAt).format("DD-MM-YYYY")}
+                </p>
                 <div className="flex space-x-2 mt-auto">
                   {/* <button className="px-4 py-2 rounded bg-primary text-white">
                     Follow

@@ -3,6 +3,7 @@
 import { useGetMyShop } from "@/src/hooks/shop";
 import Link from "next/link";
 import { AiFillProduct } from "react-icons/ai";
+import RecentOrder from "@/src/components/shared/vendor/RecentOrder/RecentOrder";
 
 export default function VendorHomePage() {
   const { data } = useGetMyShop();
@@ -103,6 +104,10 @@ export default function VendorHomePage() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="mt-20">
+        <h1 className="my-3 text-lg md:text-2xl font-medium">Recent Order</h1>
+        <RecentOrder />
       </div>
     </div>
   );

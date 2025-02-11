@@ -21,6 +21,8 @@ import banner3 from "../images/banner3.jpg";
 import banner4 from "../images/banner4.jpg";
 import banner5 from "../images/banner5.jpg";
 import banner6 from "../images/banner6.jpg";
+import watch from "../images/apple-watch.png";
+import headPhone from "../images/headphone-3.png";
 
 export default {
   logo,
@@ -46,4 +48,6 @@ export default {
   banner4,
   banner5,
   banner6,
+  watch,
+  headPhone,
 };
